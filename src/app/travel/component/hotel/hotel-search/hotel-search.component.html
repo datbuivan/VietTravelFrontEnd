@@ -1,0 +1,43 @@
+<div class="w-full relative h-full">
+    <div class="w-full font-bold text-xl h-16 content-center mb-2">
+        <span>BỘ LỌC TÌM KIẾM</span>
+    </div>
+    <div class="w-full grid grid-cols-1 py-3 px-2 bg-slate-100 sticky overflow-auto top-8 rounded-sm">
+        <div class="col-span-1 w-full pb-4 mb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Loại hình chỗ ở:</span>
+            </div>
+            <div class="grid grid-cols-2 w-full gap-2">
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Tất cả" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-2">
+                    <p-button label="Khách sạn" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Căn hộ nhà ở" variant="outlined" severity="contrast" />
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 w-full pb-4 mb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Xếp hạng sao:</span>
+            </div>
+            <div class="w-full">
+                <p-rating [(ngModel)]="value" class="text-3xl" />
+            </div>
+        </div>
+        <div class="col-span-1 w-full pb-4 mb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Ngân sách:</span>
+            </div>
+            <div class="w-full px-4">
+                <p-slider [(ngModel)]="value" styleClass="w-full" />
+            </div>
+        </div>
+
+        <div class="col-span-1 w-full">
+            <p-button label="Áp dụng" severity="info" />
+        </div>
+    </div>
+</div>

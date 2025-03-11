@@ -1,0 +1,64 @@
+<div class="w-full relative h-full">
+    <div class="w-full font-bold text-xl h-16 content-center mb-2">
+        <span>BỘ LỌC TÌM KIẾM</span>
+    </div>
+    <div class="w-full grid grid-cols-1 py-3 px-2 bg-slate-100 sticky overflow-auto top-8 rounded-sm">
+        <div class="col-span-1 w-full pb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Ngân sách:</span>
+            </div>
+            <div class="grid grid-cols-2 w-full gap-2">
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Dưới 5 triệu" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-2">
+                    <p-button label="Từ 5 - 10 triệu" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Từ 10 - 20 triệu" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-2">
+                    <p-button label="Trên 20 triệu" variant="outlined" severity="contrast" />
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 w-full pb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Điểm khởi hành: </span>
+            </div>
+            <div class="w-full">
+                <p-select [(ngModel)]="selectedCity" [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+            </div>
+        </div>
+        <div class="col-span-1 w-full pb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Ngày đi: </span>
+            </div>
+            <div class="w-full">
+                <p-datepicker [(ngModel)]="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+            </div>
+        </div>
+        <div class="col-span-1 w-full pb-4">
+            <div class="w-full font-bold pb-2">
+                <span>Dòng Tour:</span>
+            </div>
+            <div class="grid grid-cols-2 w-full gap-2">
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Cao cấp" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-2">
+                    <p-button label="Tiêu chuẩn" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-1">
+                    <p-button label="Tiết kiệm" variant="outlined" severity="contrast" />
+                </div>
+                <div class="w-full col-span-1 col-start-2">
+                    <p-button label="Giá tốt" variant="outlined" severity="contrast" />
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 w-full">
+            <p-button label="Áp dụng" severity="info" />
+        </div>
+    </div>
+</div>

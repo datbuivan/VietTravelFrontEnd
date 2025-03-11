@@ -1,0 +1,28 @@
+<div class="card p-fluid">
+    <div class="w-full font-bold italic flex items-center text-4xl text-indigo-600 justify-center h-20">
+        <span>Các Tour du lịch mới nhất</span>
+    </div>
+    <div class="w-full flex items-center justify-center">
+        <p-carousel [value]="tours" [numVisible]="4" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
+            <ng-template let-tour #item>
+                <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
+                    <div class="mb-4">
+                        <div class="relative mx-auto">
+                            <img src="images/uploadImage/{{ tour.imageUrl }}" [alt]="tour.name" class="w-full rounded-border" />
+                        </div>
+                    </div>
+                    <div class="mb-4 font-medium">{{ tour.name }}</div>
+                    <div class="flex justify-between items-center">
+                        <div class="mt-0 font-semibold text-xl">
+                            <span>{{ tour.price + ' đ' }}</span>
+                        </div>
+                        <div>
+                            <p-button label="Xem Tour" class="pr-2" severity="info" />
+                            <span class="pi pi-star">3.0</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+</div>

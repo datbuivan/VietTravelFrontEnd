@@ -1,0 +1,80 @@
+<div class="card-container">
+    <div class="flex card p-fluid">
+        <div class="w-1/4 sm:w-full md:w-1/3 pl-20">
+            <div class="w-full text-3xl font-bold pl-4 pb-8">
+                <img src="images/icon/logo.png" alt="" class="w-[100px] h-[100px]" />
+                VIET TRAVEL
+            </div>
+            <div class="w-full sm:w-full md:w-full text-blue-600 pb-4">ĐĂNG NHẬP</div>
+            <div class="w-full sm:w-5/6 md:w-5/6 pb-3">
+                <div class="flex flex-col w-5/6 pb-3">
+                    <input pInputText [(ngModel)]="userName" type="text" placeholder="Nhập tài khoản" />
+                </div>
+                <div class="flex flex-col w-5/6 pb-2">
+                    <p-password [(ngModel)]="passWord" [feedback]="false" placeholder="Nhập mật khẩu" />
+                </div>
+                <div class="w-full pb-2">
+                    <a class="italic text-blue-600">Quên mật khẩu</a>
+                    <div id="Message"></div>
+                </div>
+                <div class="flex flex-col w-full sm:w-full md:w-5/6 bg-cyan-500 rounded-md flex items-center justify-center text-white h-10">
+                    <a href="">Đăng nhập</a>
+                </div>
+            </div>
+            <div class="text-center w-full sm:w-5/6 md:w-5/6 pb-2">
+                <div class="w-5/6">--Or--</div>
+            </div>
+            <div class="w-full sm:w-5/6 md:w-5/6 h-24">
+                <div class="w-5/6 sm:w-full md:w-5/6 rounded-md bg-red-500 flex items-center justify-center text-white mb-4 h-10">
+                    <a href="">Đăng nhập bằng Google</a>
+                </div>
+                <div class="w-5/6 sm:w-full md:w-5/6 bg-green-500 rounded-md flex items-center justify-center text-white h-10">
+                    <a href="">Đăng kí</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-3/4 sm:w-full md:w-3/4 pl-24">
+            <p-galleria
+                #galleria
+                [value]="images"
+                [(activeIndex)]="activeIndex"
+                [numVisible]="5"
+                [showThumbnails]="showThumbnails"
+                [showItemNavigators]="true"
+                [showItemNavigatorsOnHover]="true"
+                [circular]="true"
+                [autoPlay]="true"
+                [transitionInterval]="3000"
+                [containerStyle]="{ 'max-width': '940px' }"
+                [containerClass]="galleriaClass()"
+            >
+                <ng-template #item let-item>
+                    <img [src]="item.itemImageSrc" [ngStyle]="{ width: !fullscreen ? '100%' : '', display: !fullscreen ? 'block' : '' }" />
+                </ng-template>
+                <ng-template #thumbnail let-item>
+                    <div class="grid gap-4 justify-center">
+                        <img [src]="item.thumbnailImageSrc" style="display: block" />
+                    </div>
+                </ng-template>
+            </p-galleria>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal" id="Warning">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">THÔNG BÁO</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="WarningMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,15 @@
+:host ::ng-deep {
+    .p-tabpanels {
+        padding: 0;
+    }
+
+    .p-datepicker,
+    .p-button,
+    .p-select {
+        width: 100%;
+    }
+
+    .p-select-empty-message {
+        display: none !important;
+    }
+}

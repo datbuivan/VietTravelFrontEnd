@@ -1,0 +1,60 @@
+<p-tabs value="0">
+    <p-tablist>
+        <p-tab class="w-1/2 pi pi-car" value="0">Tour chọn gói</p-tab>
+        <p-tab class="w-1/2 pi pi-warehouse" value="1">Khách sạn</p-tab>
+    </p-tablist>
+    <p-tabpanels class="mt-2">
+        <p-tabpanel [formGroup]="tourForm" value="0">
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Bạn muốn đi đâu?</span>
+                <div class="w-full">
+                    <p-select [options]="cities" formControlName="tourCity" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Chọn tour du lịch" class="w-full md:w-56" />
+                </div>
+            </div>
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Ngày đi</span>
+                <div class="w-full">
+                    <p-datepicker formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+                </div>
+            </div>
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Ngân sách</span>
+                <div class="w-full">
+                    <p-select [options]="prices" formControlName="price" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Chọn mức giá" class="w-full md:w-56" />
+                </div>
+            </div>
+            <p-button label="Tìm kiếm" class="h-10" severity="info" (click)="onSubmitTour()"><i class="pi pi-search mr-2"></i></p-button>
+        </p-tabpanel>
+        <p-tabpanel [formGroup]="hotelForm" value="1">
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Địa điểm?</span>
+                <div class="w-full">
+                    <p-select [options]="cities" formControlName="city" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Khách sạn, địa điểm, thành phố" class="w-full md:w-56" />
+                </div>
+            </div>
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Ngày nhận phòng/ trả phòng</span>
+                <div class="w-full">
+                    <p-datepicker formControlName="date" selectionMode="range" [readonlyInput]="true" />
+                </div>
+            </div>
+            <div class="w-full pb-4">
+                <span class="italic text-blue-600 font-bold mb-4">Số khách</span>
+                <div class="w-full">
+                    <p-select [editable]="false" placeholder="{{ getSummary() }}" styleClass="guest-dropdown" (onClick)="toggleDropdown()"></p-select>
+                </div>
+                <p-panel *ngIf="dropdownVisible" class="guest-dropdown-content">
+                    <div class="guest-item flex">
+                        <div class="w-1/3">
+                            <span class="font-bold">Người lớn<br /><small>Từ 12 trở lên</small></span>
+                        </div>
+                        <div class="w-1/3">
+                            <p-inputNumber formControlName="people" [min]="1" [max]="10" [showButtons]="true"></p-inputNumber>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+            <p-button label="Tìm kiếm" class="h-10" severity="info" (click)="onSubmitHotel()"><i class="pi pi-search mr-2"></i></p-button>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

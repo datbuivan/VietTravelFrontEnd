@@ -1,0 +1,14 @@
+:host::ng-deep {
+    .main-tour-item {
+        height: 20rem;
+        padding: 1rem 0 0 0;
+    }
+
+    .p-scroller-viewport {
+        flex: none;
+    }
+
+    .p-button {
+        height: 100%;
+    }
+}
