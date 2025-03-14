@@ -6,12 +6,13 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../service/layout.service';
 import { Menubar } from 'primeng/menubar';
 import { Overlay } from 'primeng/overlay';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @Component({
     selector: 'app-topbar',
     styleUrls: ['./app.topbar.scss'],
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, Menubar],
+    imports: [RouterModule, CommonModule, StyleClassModule, Menubar, SplitButtonModule],
     template: ` <div class="layout-topbar ">
         <div class="layout-topbar-logo-container lg:w-1/6 md:w-1/6">
             <!-- <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
@@ -53,10 +54,7 @@ import { Overlay } from 'primeng/overlay';
 
         <div class="layout-topbar-actions lg:w-1/6 md:w-1/6">
             <div class="layout-config-menu ml-auto">
-                <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
-                </button>
-                <button type="button" class="layout-topbar-action">
+                <button class="layout-topbar-action">
                     <i class="pi pi-user"></i>
                     <span>Profile</span>
                 </button>
