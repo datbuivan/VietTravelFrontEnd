@@ -8,10 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
 import { CarouselModule } from 'primeng/carousel';
 import { RoomItemComponent } from '../room-item/room-item.component';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @Component({
     selector: 'app-hotel-details',
-    imports: [BreadcrumbModule, RouterModule, CommonModule, GalleriaModule, ButtonModule, AccordionModule, CarouselModule, RoomItemComponent, RoomItemComponent],
+    imports: [BreadcrumbModule, RouterModule, CommonModule, GalleriaModule, ButtonModule, AccordionModule, CarouselModule, RoomItemComponent, RoomItemComponent, ScrollPanelModule],
     templateUrl: './hotel-details.component.html',
     styleUrl: './hotel-details.component.scss',
     standalone: true

@@ -1,8 +1,28 @@
 :host::ng-deep {
+
+    .note {
+        .p-accordionheader {
+            font-weight: 700;
+            font-size: 1.2rem;
+
+        }
+
+        .p-accordioncontent-content {
+            font-size: 1rem;
+            line-height: 2.5rem;
+            padding-bottom: 1rem;
+            text-align: justify;
+        }
+    }
+
     .p-galleria-item {
         img {
             width: 200px;
         }
+    }
+
+    .p-breadcrumb {
+        padding-left: 0;
     }
 
     .p-button {

@@ -7,10 +7,11 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
 import { TourService } from '../../../services/tour.service';
+import { AccordionModule } from 'primeng/accordion';
 
 @Component({
     selector: 'app-tour-details',
-    imports: [BreadcrumbModule, RouterModule, CommonModule, FormsModule, GalleriaModule, ButtonModule, DatePickerModule],
+    imports: [BreadcrumbModule, RouterModule, CommonModule, FormsModule, GalleriaModule, ButtonModule, DatePickerModule, AccordionModule],
     templateUrl: './tour-details.component.html',
     styleUrl: './tour-details.component.scss',
     standalone: true
