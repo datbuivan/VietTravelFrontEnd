@@ -1,0 +1,81 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <h2 class="card-title">{{ tour.name }}</h2>
+        <div class="tour-details">
+            <!-- Hình ảnh tour -->
+            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.images?.length">
+                <div class="col-span-12">
+                    <label class="field-label">Hình Ảnh Tour</label>
+                    <div class="flex overflow-x-auto gap-4 mt-2">
+                        <div class="flex-none" *ngFor="let picture of tour?.images">
+                            <img [src]="picture" class="tour-image" width="250" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin cơ bản -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-3">
+                    <label class="field-label">Giá Người Lớn</label>
+                    <p>{{ tour.price | vnd }}</p>
+                </div>
+                <div class="col-span-12 md:col-span-3">
+                    <label class="field-label">Giá Trẻ Em</label>
+                    <p>{{ tour.childPrice | vnd }}</p>
+                </div>
+                <div class="col-span-12 md:col-span-3">
+                    <label class="field-label">Phụ Thu Phòng Đơn</label>
+                    <p>{{ tour.singleRoomSurcharge | vnd }}</p>
+                </div>
+                <div class="col-span-12 md:col-span-3">
+                    <label class="field-label">Thành Phố</label>
+                    <p>{{ tour.cityId }}</p>
+                    <!-- Có thể thay bằng tên thành phố nếu có API -->
+                </div>
+            </div>
+
+            <!-- Ngày khởi hành -->
+            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.tourStartDates?.length">
+                <div class="col-span-12">
+                    <label class="field-label">Ngày Khởi Hành</label>
+                    <div class="flex flex-row overflow-x-auto gap-2 mt-2">
+                        <div *ngFor="let startDate of tour.tourStartDates" class="start-date-card">
+                            <div class="bg-red-500 text-white p-2 rounded-md text-sm min-w-[100px] text-center">
+                                {{ startDate.startDate | date: 'dd/MM/yyyy' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lịch trình -->
+            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.tourSchedules?.length">
+                <div class="col-span-9">
+                    <label class="field-label">Lịch Trình Tour</label>
+                    <div class="overflow-y-auto max-h-[300px]">
+                        <p-table *ngIf="tour?.tourSchedules" [value]="tour.tourSchedules" [tableStyle]="{ 'min-width': '20rem' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Mô Tả</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-schedule>
+                                <tr>
+                                    <td>{{ schedule.dayNumber }}</td>
+                                    <td>{{ schedule.description }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút Quay lại -->
+            <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
+                <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary" [routerLink]="['/admin/tours']"></p-button>
+            </div>
+        </div>
+    </div>
+</div>

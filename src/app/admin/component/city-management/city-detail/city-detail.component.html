@@ -1,0 +1,39 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <h2 class="card-title">{{ city?.name }}</h2>
+        <div class="city-details">
+            <!-- Hình ảnh thành phố -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12">
+                    <label class="field-label">Hình Ảnh Thành Phố</label>
+                    <div class="flex overflow-x-auto gap-4 mt-2">
+                        <div class="flex-none">
+                            <img [src]="city?.image?.url" class="city-image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin cơ bản -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label class="field-label">Tiêu Đề Giới Thiệu</label>
+                    <p>{{ city?.titleIntroduct }}</p>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label class="field-label">Khu Vực</label>
+                    <p *ngIf="city">{{ getRegionName(city.regionId) }}</p>
+                </div>
+                <div class="col-span-12">
+                    <label class="field-label">Nội Dung Giới Thiệu</label>
+                    <p>{{ city?.contentIntroduct }}</p>
+                </div>
+            </div>
+
+            <!-- Nút Quay lại -->
+            <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
+                <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary" [routerLink]="['/admin/cities']"></p-button>
+            </div>
+        </div>
+    </div>
+</div>

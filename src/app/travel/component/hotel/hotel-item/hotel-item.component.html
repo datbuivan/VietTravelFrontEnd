@@ -7,15 +7,15 @@
     </div>
     <div class="p-4">
         <div class="inline-flex items-center bg-blue-100 text-blue-600 text-sm font-semibold px-3 py-1 rounded-full"><i class="pi pi-home mr-2"></i> Khách sạn</div>
-        <h2 class="text-lg font-semibold mt-2">Aquasun Hotel Phu Quoc</h2>
-        <p class="text-gray-600 text-sm">Hẻm 124 Đường Trần Hưng Đạo</p>
+        <h2 class="text-lg font-semibold mt-2 line-clamp-1">{{ hotel.name }}</h2>
+        <p class="text-gray-600 text-sm line-clamp-1">{{ hotel.address }}</p>
         <div class="flex items-center my-2 text-yellow-400">
             <i class="pi pi-star"> 3.5</i>
         </div>
         <div class="text-sm font-semibold">
             Giá mỗi đêm:
-            <span class="text-red-500 text-xl font-bold">1.040.605 đ</span>
+            <span class="text-red-500 text-xl font-bold">{{ hotel.minPrice | currency: '' : 'đ' : '1.0-0' : 'vi-VN' }}</span>
         </div>
-        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" routerLink="{{ hotel.id }}">Xem phòng</button>
+        <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" c>Xem phòng</button>
     </div>
 </div>

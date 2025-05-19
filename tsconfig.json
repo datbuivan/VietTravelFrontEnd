@@ -17,6 +17,17 @@
         "importHelpers": true,
         "target": "ES2022",
         "module": "ES2022",
+        "baseUrl": "src",
+        "paths": {
+            "@app/*": ["app/*"],
+            "@admin/*" : ["app/admin/*"],
+            "@travel/*" : ["app/travel/*"],
+            "@shared/*" : ["app/shared/*"],
+            "@core/*" : ["app/core/*"],
+            "@environments/*" : ["environments/*"],
+            "@primeNg/*" : ["node_modules/primeng/*"],
+            "@services/*" : ["app/services/*"]
+        }
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,
@@ -24,5 +35,5 @@
         "strictInputAccessModifiers": true,
         "strictTemplates": true,
         "disableImageSizeWarning": true
-    }
+    },
 }

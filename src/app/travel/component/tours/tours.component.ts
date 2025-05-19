@@ -3,12 +3,13 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Select } from 'primeng/select';
-import { TourSearchComponent } from './tour-search/tour-search.component';
-import { TourItemComponent } from './tour-item/tour-item.component';
+import { TourSearchComponent } from '@travel/component/tours/tour-search/tour-search.component';
+import { TourItemComponent } from '@travel/component/tours/tour-item/tour-item.component';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { RouterModule } from '@angular/router';
-import { TourService } from '../../services/tour.service';
+import { TourService } from '@services/common/tour.service';
+import { Tour } from '@shared/models/tour';
 @Component({
     selector: 'app-tours',
     imports: [ButtonModule, RouterModule, Select, FormsModule, BreadcrumbModule, ReactiveFormsModule, DatePickerModule, TourSearchComponent, TourItemComponent, CommonModule],
@@ -18,8 +19,8 @@ import { TourService } from '../../services/tour.service';
 })
 export class ToursComponent implements OnInit {
     selectedOption: any | undefined;
-    tours: any[] = [];
-    tour: any;
+    tours: Tour[] = [];
+    tour!: Tour;
     items = [
         { icon: 'pi pi-home', route: '/' },
         { label: 'Tour', route: '/tour' }
@@ -37,10 +38,22 @@ export class ToursComponent implements OnInit {
     ngOnInit(): void {
         this.getTours();
     }
+
     getTours() {
-        this.tours = this.tourService.getTours();
+        this.tourService.getTours().subscribe({
+            next: (response) => {
+                this.tours = response;
+            },
+            error: (error) => console.error(error)
+        });
     }
+
     getTour(id: number) {
-        this.tour = this.tourService.getTour(id);
+        this.tourService.getTour(id).subscribe({
+            next: (response) => {
+                this.tour = response;
+            },
+            error: (error) => console.error(error)
+        });
     }
 }

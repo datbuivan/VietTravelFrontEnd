@@ -1,0 +1,113 @@
+:host {
+    display: block;
+    background-color: #f5f7fa;
+
+    .container {
+        top: 6rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        height: calc(100vh - 8rem);
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+
+            .card-title {
+                color: #1a3c34;
+                margin-bottom: 2rem;
+                font-size: 1.8rem;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .city-details {
+                .grid {
+                    margin-bottom: 1.5rem;
+
+                    .field-label {
+                        font-weight: 600;
+                        color: #1a3c34;
+                        margin-bottom: 0.5rem;
+                        display: block;
+                    }
+
+                    p {
+                        color: #333;
+                        font-size: 1rem;
+                    }
+                }
+
+                .overflow-x-auto {
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: thin;
+                    scrollbar-color: #888 #f1f1f1;
+
+                    &::-webkit-scrollbar {
+                        height: 8px;
+                    }
+
+                    &::-webkit-scrollbar-track {
+                        background: #f1f1f1;
+                        border-radius: 4px;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background: #888;
+                        border-radius: 4px;
+                    }
+
+                    &::-webkit-scrollbar-thumb:hover {
+                        background: #555;
+                    }
+                }
+
+                .city-image {
+                    width: 96px;
+                    height: 96px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
+
+                .button-container {
+                    text-align: center;
+                    margin-top: 2rem;
+
+                    .p-button {
+                        padding: 0.75rem 2rem;
+                        border-radius: 8px;
+                        font-weight: 600;
+
+                        &.p-button-secondary {
+                            background-color: #888;
+                            border-color: #888;
+
+                            &:hover {
+                                background-color: #555;
+                                border-color: #555;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .card {
+            padding: 1.5rem;
+        }
+
+        .grid {
+            margin-bottom: 1rem;
+        }
+
+        .city-image {
+            width: 80px;
+            height: 80px;
+        }
+    }
+}

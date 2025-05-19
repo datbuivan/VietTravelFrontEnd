@@ -1,0 +1,459 @@
+<div class="card-container booking-main">
+    <div class="w-full lg:flex flex-col card p-fluid gap-8 booking-header">
+        <div class="relative w-full h-24 flex items-center justify-center back">
+            <p-button label="Quay lại" variant="text" severity="success" class="pi pi-arrow-left absolute left-4 top-1 -translate-y-1/2" />
+            <span class="text-3xl font-bold text-blue-800 uppercase">Đặt Tour</span>
+        </div>
+        <div class="w-full">
+            <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+                <p-step-list>
+                    <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-receipt"></i>
+                                </span>
+                            </button>
+                        </ng-template>
+                    </p-step>
+
+                    <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-ticket"></i>
+                                </span>
+                            </button>
+                        </ng-template>
+                    </p-step>
+
+                    <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                            <button class="bg-transparent border-0 inline-flex flex-col gap-2" (click)="activateCallback()">
+                                <span
+                                    class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center"
+                                    [ngClass]="{
+                                        'bg-primary text-primary-contrast border-primary': value <= activeStep,
+                                        'border-surface': value > activeStep
+                                    }"
+                                >
+                                    <i class="pi pi-id-card"></i>
+                                </span>
+                            </button>
+                        </ng-template>
+                    </p-step>
+                </p-step-list>
+                <p-step-panels>
+                    <p-step-panel [value]="1">
+                        <ng-template #content let-activateCallback="activateCallback">
+                            <div class="w-full flex gap-6 px-20">
+                                <div class="w-[60%]">
+                                    <div class="booking-contact" [formGroup]="contactForm">
+                                        <div class="mb-6">
+                                            <span class="text-lg font-bold uppercase mb-6">Thông tin liên lạc</span>
+                                        </div>
+                                        <div class="w-full mb-6 rounded-lg bg-blue-200 h-12">
+                                            <div class="flex h-12 items-center gap-3 px-4">
+                                                <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-300">
+                                                    <i class="pi pi-user"></i>
+                                                </div>
+                                                <span class="text-lg">
+                                                    <a href="" title="Đăng nhập"><b class="text-blue-600">Đăng nhập</b></a>
+                                                    để nhận ưu đãi, tích điểm và quản lý đơn hàng dễ dàng hơn!
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mb-6">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div class="col-span-1 flex flex-col gap-2">
+                                                    <label for="username" class="font-bold">Họ tên</label>
+                                                    <input pInputText id="username" formControlName="name" aria-describedby="username-help" />
+                                                </div>
+                                                <div class="col-span-1 flex flex-col gap-2">
+                                                    <label for="phone" class="font-bold">Điện thoại</label>
+                                                    <input pInputText id="phone" formControlName="phone" aria-describedby="phone-help" />
+                                                </div>
+                                                <div class="col-span-1 flex flex-col gap-2">
+                                                    <label for="email" class="font-bold">Email</label>
+                                                    <input pInputText id="email" aria-describedby="email-help" />
+                                                </div>
+                                                <div class="col-span-1 flex flex-col gap-2">
+                                                    <label for="address" class="font-bold">Địa chỉ</label>
+                                                    <input pInputText id="address" formControlName="address" aria-describedby="address-help" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mb-6">
+                                            <div class="w-full mb-6">
+                                                <span class="font-bold uppercase">Hành khách</span>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="grid grid-cols-2 gap-4">
+                                                    <div class="col-span-1 border-2">
+                                                        <div class="grid grid-cols-2 gap-2 p-4">
+                                                            <div class="col-span-1 flex flex-col gap-2">
+                                                                <span class="font-bold">Người lớn</span>
+                                                                <small>từ 12 trở lên</small>
+                                                            </div>
+                                                            <div class="col-span-1">
+                                                                <p-input-number formControlName="adult"></p-input-number>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-span-1 border-2">
+                                                        <div class="grid grid-cols-2 gap-2 p-4">
+                                                            <div class="col-span-1 flex flex-col gap-2">
+                                                                <span class="font-bold">Trẻ em</span>
+                                                                <small>Dưới 12 tuổi</small>
+                                                            </div>
+                                                            <div class="col-span-1">
+                                                                <p-input-number formControlName="child"></p-input-number>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mb-6">
+                                            <div class="w-full mb-4">
+                                                <span class="font-bold uppercase pb-6">Ghi Chú</span>
+                                            </div>
+                                            <div class="w-full mb-6">
+                                                <div class="w-full flex flex-col">
+                                                    <div class="mb-2">
+                                                        <span class="text-lg">Quý khách có ghi chú lưu ý gì, hãy nói với chúng tôi</span>
+                                                    </div>
+                                                    <p-floatlabel class="w-full">
+                                                        <textarea formControlName="note" pTextarea id="note_label" rows="8" style="resize: none" class="h-full w-full"></textarea>
+                                                        <label for="note_label">Vui lòng nhập nội dung lời nhắn bằng tiếng Anh hoặc tiếng Việt</label>
+                                                    </p-floatlabel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mb-6">
+                                            <div class="w-full mb-4">
+                                                <span class="font-bold uppercase pb-6">Để đăng ký online, Quý khách vui lòng xem các thông tin sau</span>
+                                            </div>
+                                            <div class="w-full rounded-xl border">
+                                                <div class="w-full p-4">
+                                                    <div class="h-[35rem] overflow-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                                                        <p class="text-center text-lg">
+                                                            <span>
+                                                                <strong>ĐIỀU KHOẢN THỎA THUẬN SỬ DỤNG DỊCH VỤ DU LỊCH NỘI ĐỊA</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                Quý khách cần đọc những điều khoản dưới đây trước khi đăng ký và trải nghiệm dịch vụ do Vietravel tổ chức. Việc Quý khách tiếp tục sử dụng trang web này xác nhận việc Quý khách đã chấp
+                                                                thuận và tuân thủ những điều khoản dưới đây.
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Nội dung dưới đây gồm có 02 phần: </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Phần I: Điều kiện bán vé các chương trình du lịch nội địa </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Phần II: Chính sách bảo vệ dữ liệu cá nhân</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Chi tiết nội dung như sau</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>PHẦN I: ĐIỀU KIỆN BÁN VÉ CÁC CHƯƠNG TRÌNH DU LỊCH NỘI ĐỊA</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>1. GIÁ VÉ DU LỊCH</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Giá vé du lịch được tính theo tiền Đồng (Việt Nam - VNĐ). Trường hợp khách thanh toán bằng ngoại tệ sẽ được quy đổi ra VNĐ theo tỷ giá của Ngân hàng Đầu tư và Phát triển Việt Nam - Chi
+                                                                nhánh TP.HCM tại thời điểm thanh toán.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Giá vé chỉ bao gồm những khoản được liệt kê một cách rõ ràng trong phần “Bao gồm” trong các chương trình du lịch. Vietravel không có nghĩa vụ thanh toán bất cứ chi phí nào không nằm
+                                                                trong phần “Bao gồm”.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>2. GIÁ DÀNH CHO TRẺ EM</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >- Trẻ em dưới 12 tuổi : 50% giá tour người lớn đối với tuyến xe, 75% giá tour người lớn đối với tuyến có vé máy bay (không có chế độ giường riêng). Hai người lớn chỉ được kèm 1 trẻ em
+                                                                dưới 12 tuổi, trẻ em thứ hai trở lên phải mua 1 suất giường đơn.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">- Trẻ em từ 12 tuổi trở lên: mua một vé như người lớn.</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>3. THANH TOÁN</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Khi đăng ký, Quý khách vui lòng cung cấp đầy đủ thông tin và đóng một khoản tiền cọc để giữ chỗ. Số tiền cọc khác nhau tùy theo chương trình mà Quý khách chọn, số tiền còn lại sẽ thanh
+                                                                toán trước ngày khởi hành tối thiểu 05 ngày làm việc.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Thanh toán bằng tiền mặt, cà thẻ tại văn phòng Vietravel hoặc chuyển khoản tới tài khoản ngân hàng của Vietravel.</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">Tên Tài Khoản : Công ty CP Du lịch và Tiếp thị GTVT Việt Nam Vietravel</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>4. HỦY VÉ VÀ PHÍ HỦY VÉ DU LỊCH</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"> &nbsp;&nbsp;&nbsp;4.1. Trường hợp bị hủy bỏ do Vietravel: </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Nếu Vietravel không thực hiện được chuyến du lịch, Vietravel phải báo ngay cho khách hàng biết và thanh toán lại cho khách hàng toàn bộ số tiền khách hàng đã đóng trong vòng 03 ngày kể
+                                                                từ lúc việc thông báo hủy chuyến du lịch bằng tiền mặt hoặc chuyển khoản và chịu toàn bộ chi phí đã trả cho các nhà cung cấp trước đó.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">&nbsp;&nbsp;&nbsp; 4.2. Trường hợp bị hủy bỏ do khách hàng:</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Sau khi đóng tiền, nếu Quý khách muốn chuyển/hủy tour xin vui lòng mang Vé Du Lịch đến văn phòng đăng ký tour để làm thủ tục chuyển/hủy tour và chịu mất phí theo quy định của Vietravel
+                                                                nếu có. Dựa vào thời điểm khách hàng xác nhận hủy tour bằng văn bản với Vietravel:</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">- Đối với tất cả các tuyến du lịch, áp dụng điều kiện hủy tour ghi trong Biên nhận thu tiền và tờ rơi chương trình du lịch</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                - Riêng đối với chương trình có ngủ đêm trên du thuyền, du lịch caravan, thể thao, mạo hiểm, sự kiện sẽ áp dụng theo điều kiện hủy tour trong tờ rơi chương trình du lịch.
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >- Đối với khách hàng đăng ký Dòng Tour Giá Tốt, các tour có ưu đãi nhân dịp sự kiện, hội chợ, ưu đãi trực tuyến, ưu đãi giờ chót thì điều kiện là không hoàn, không hủy, không thay đổi
+                                                                được.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">&nbsp;&nbsp;&nbsp;4.3. Trường hợp bất khả kháng:</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >- Nếu chương trình du lịch bị hủy bỏ hoặc thay đổi bởi một trong hai bên vì một lý do bất khả kháng (hỏa hoạn, thời tiết, tai nạn, thiên tai, chiến tranh, dịch bệnh, hoãn, dời, hủy
+                                                                chuyến hoặc thay đổi khác của các phương tiện vận chuyển công cộng hoặc các sự kiện bất khả kháng khác theo quy định pháp luật…), thì Vietravel sẽ không chịu bất kỳ nghĩa vụ bồi hoàn các
+                                                                tổn thất đã xảy ra và không chịu bất kỳ trách nhiệm pháp lý nào. Tuy nhiên, mỗi bên có trách nhiệm cố gắng tối đa để giúp đỡ bên bị thiệt hại nhằm giảm thiểu các tổn thất gây ra vì lý do
+                                                                bất khả kháng. Việc hoàn tiền dịch vụ trong trường hợp hủy tour do sự kiện bất khả kháng sẽ tùy thuộc vào quy định và điều kiện của các đối tác cung ứng dịch vụ, thời gian hoàn tiền (nếu
+                                                                có) từ 60 - 90 ngày.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">&nbsp;&nbsp;&nbsp;4.4. Thay đổi lộ trình:</span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Tùy theo tình hình thực tế, Vietravel giữ quyền thay đổi lộ trình, sắp xếp lại thứ tự các điểm tham quan hoặc hủy bỏ chuyến đi du lịch bất cứ lúc nào mà Vietravel thấy cần thiết vì sự
+                                                                thuận tiện hoặc an toàn cho khách hàng.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>5. NHỮNG YÊU CẦU ĐẶC BIỆT TRONG CHUYẾN DU LỊCH</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Các yêu cầu đặc biệt của Quý khách phải được báo trước cho Vietravel ngay tại thời điểm đăng ký. Vietravel sẽ cố gắng đáp ứng những yêu cầu này trong khả năng của mình song sẽ không
+                                                                chịu trách nhiệm về bất kỳ sự từ chối cung cấp dịch vụ từ phía các nhà vận chuyển, khách sạn, nhà hàng và các nhà cung cấp dịch vụ độc lập khác.</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                <strong>6. LƯU TRÚ</strong>
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"
+                                                                >Khách sạn được cung cấp trên cơ sở những phòng có hai giường đơn (TWN) hoặc một giường đôi (DBL) tùy theo cơ cấu phòng của các khách sạn. Khách sạn do Vietravel đặt cho các chương trình
+                                                                tham quan có tiêu chuẩn tương ứng với các mức giá vé mà khách chọn khi đăng ký đi du lịch. Nếu cần thiết thay đổi về bất kỳ lý do nào, khách sạn thay thế sẽ tương đương với tiêu chuẩn
+                                                                của khách sạn ban đầu và sẽ được báo cho du khách trước khi khởi hành. Những yêu cầu đặc biệt của khách hàng nếu thông báo trước cho Vietravel sẽ được đáp ứng tùy theo khả năng cung cấp
+                                                                của khách sạn và khách hàng phải trả thêm tiền đối với các yêu cầu này (nếu có).</span
+                                                            >
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm">
+                                                                Vietravel có quyền không đáp ứng những yêu cầu này nếu khách sạn từ chối cung cấp dịch vụ. Giờ nhận phòng tại các khách sạn là sau 14g00 hoặc 15g00 và phải trả phòng là trước 12g00 hoặc
+                                                                11g00 theo quy định của khách sạn. Đối với các trường hợp khách lưu trú tại hệ thống khách sạn/Resort 5 sao tuân thủ theo điều kiện hủy phạt của khách sạn/Resort cho từng thời điểm.
+                                                            </span>
+                                                        </p>
+                                                        <p class="text-justify">
+                                                            <span class="text-sm"></span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-[40%]">
+                                    <div class="order-booking">
+                                        <div class="w-full mb-6">
+                                            <span class="text-lg font-bold uppercase mb-6">Tóm tắt chuyến đi </span>
+                                        </div>
+                                        <div class="w-full p-8 bg-[#f8f8f8]">
+                                            <div class="w-full flex flex-row gap-4">
+                                                <div class="w-[40%] round-xl">
+                                                    <p-image class="round-xl" src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image" />
+                                                </div>
+                                                <div class="w-[60%] title-booking text-justify gap-1">
+                                                    <div class="flex flex-col">
+                                                        <span class="font-bold text-lg">Phú Quốc: Thiên đường giải trí Vinwonder - Safari World - Hòn Thơm Nature Park - Cáp Treo Vượt Biển - Công Viên Nước Aquatopia I Lễ 30/4</span>
+                                                    </div>
+                                                    <div class="flex gap-1 items-center">
+                                                        <i class="pi pi-ticket"></i>
+                                                        <small>Mã tour: </small>
+                                                        <span class="font-bold text-sm">NDSGN879-020-300425VU-V</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 border" />
+                                            <div class="w-full">
+                                                <div class="w-full grid grid-cols-2 gap-4">
+                                                    <div class="span-col-1 flex gap-1">
+                                                        <i class="content-center pi pi-map-marker text-lg"></i>
+                                                        <span class="content-center text-lg">Khởi hành: </span>
+                                                        <span class="text-lg font-bold text-bule-400">TP. Hồ Chí Minh</span>
+                                                    </div>
+                                                    <div class="col-span-1 flex gap-1">
+                                                        <i class="content-center pi pi-clock text-lg"></i>
+                                                        <span class="content-center text-lg">Thời gian: </span>
+                                                        <span class="content-center text-lg">Trong ngày</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 border" />
+                                            <div class="w-full">
+                                                <div class="w-full flex gap-1">
+                                                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M19.3074 7.63582C19.3074 7.63582 20.4246 5.92462 19.364 4.86396C18.3033 3.8033 16.5921 4.92053 16.5921 4.92053L13.0566 8.45606L5.45753 6.04247L3.57191 7.92809L9.75674 11.7559L7.87112 13.6415L4.40158 13.9432L3.69448 14.6503L7.34315 16.8848L9.60589 20.5617L10.313 19.8546L10.5864 16.3568L12.472 14.4712L16.2998 20.656L18.1854 18.7704L15.7719 11.1714L19.3074 7.63582Z"
+                                                            stroke="#000000"
+                                                            stroke-linejoin="round"
+                                                        />
+                                                    </svg>
+                                                    <span class="content-center text-lg font-bold">Thông tin chuyến bay: </span>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 border" />
+                                            <div class="w-full">
+                                                <div class="w-full flex flex-col mb-4">
+                                                    <div class="w-full flex justify-between items-center mb-2">
+                                                        <div class="w-[70%] flex gap-1">
+                                                            <svg fill="#000000" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                    d="M.221 16.268a15.064 15.064 0 0 0 1.789 1.9C2.008 18.111 2 18.057 2 18a5.029 5.029 0 0 1 3.233-4.678 1 1 0 0 0 .175-1.784A2.968 2.968 0 0 1 4 9a2.988 2.988 0 0 1 5.022-2.2 5.951 5.951 0 0 1 2.022-.715 4.994 4.994 0 1 0-7.913 6.085 7.07 7.07 0 0 0-2.91 4.098zM23.779 16.268a7.07 7.07 0 0 0-2.91-4.1 4.994 4.994 0 1 0-7.913-6.086 5.949 5.949 0 0 1 2.022.715 2.993 2.993 0 1 1 3.614 4.74 1 1 0 0 0 .175 1.784A5.029 5.029 0 0 1 22 18c0 .057-.008.111-.01.167a15.065 15.065 0 0 0 1.789-1.899z"
+                                                                />
+                                                                <path
+                                                                    d="M18.954 20.284a7.051 7.051 0 0 0-3.085-5.114A4.956 4.956 0 0 0 17 12a5 5 0 1 0-8.869 3.17 7.051 7.051 0 0 0-3.085 5.114 14.923 14.923 0 0 0 1.968.849C7.012 21.088 7 21.046 7 21a5.031 5.031 0 0 1 3.233-4.678 1 1 0 0 0 .175-1.785A2.964 2.964 0 0 1 9 12a3 3 0 1 1 6 0 2.964 2.964 0 0 1-1.408 2.537 1 1 0 0 0 .175 1.785A5.031 5.031 0 0 1 17 21c0 .046-.012.088-.013.133a14.919 14.919 0 0 0 1.967-.849z"
+                                                                />
+                                                            </svg>
+                                                            <span class="text-lg font-bold">Khách hàng + Phụ thu</span>
+                                                        </div>
+                                                        <div class="w-[30%] flex justify-end items-center">
+                                                            <span class="text-lg font-bold text-red-600">159.990.000&nbsp; đ</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full flex flex-col mb-4">
+                                                    <div class="w-full flex justify-between items-center mb-2">
+                                                        <div class="w-[70%] flex gap-1">
+                                                            <span class="text-base font-bold">Người lớn</span>
+                                                        </div>
+                                                        <div class="w-[30%] flex justify-end items-center">
+                                                            <span class="text-base font-bold">1 x 159.990.000&nbsp; đ</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-full flex justify-between items-center">
+                                                        <div class="w-[70%] flex gap-1">
+                                                            <span class="text-base font-bold">Phụ thu phòng đơn</span>
+                                                        </div>
+                                                        <div class="w-[30%] flex justify-end items-center">
+                                                            <span class="text-base font-bold">1.500.000&nbsp; đ</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 border" />
+                                            <div class="w-full flex flex-row w-fulljustify-start items-start gap-8 mb-4">
+                                                <div class="grow shrink text-xl font-bold">Tổng tiền</div>
+                                                <div class="grow-2 shrink text-2xl font-bold text-red-600">159.990.000&nbsp; đ</div>
+                                            </div>
+                                            <div class="w-full submit-booking">
+                                                <p-button label="Đặt ngay" [raised]="true" severity="danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex pt-6 justify-end">
+                                <p-button (onClick)="activateCallback(2)" label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                    <p-step-panel [value]="2">
+                        <ng-template #content let-activateCallback="activateCallback">
+                            <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                                <div class="text-center mt-4 mb-4 text-xl font-semibold">Choose your interests</div>
+                                <div class="flex flex-wrap justify-center gap-4"></div>
+                            </div>
+                            <div class="flex pt-6 justify-between">
+                                <p-button (onClick)="activateCallback(1)" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+                                <p-button (onClick)="activateCallback(3)" label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                    <p-step-panel [value]="3">
+                        <ng-template #content let-activateCallback="activateCallback">
+                            <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                                <div class="text-center mt-4 mb-4 text-xl font-semibold">Account created successfully</div>
+                                <div class="text-center"></div>
+                            </div>
+                            <div class="flex pt-6 justify-start">
+                                <p-button (onClick)="activateCallback(2)" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+                </p-step-panels>
+            </p-stepper>
+        </div>
+    </div>
+</div>

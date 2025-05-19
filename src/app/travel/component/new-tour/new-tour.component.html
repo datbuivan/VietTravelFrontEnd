@@ -1,28 +1,33 @@
-<div class="card p-fluid">
-    <div class="w-full font-bold italic flex items-center text-4xl text-indigo-600 justify-center h-20">
-        <span>Các Tour du lịch mới nhất</span>
+<div class="p-fluid">
+    <div class="w-full font-bold italic flex flex-col items-center text-4xl text-indigo-800 justify-center h-20 mb-4">
+        <span class="uppercase mb-4">Các Tour du lịch mới nhất</span>
+        <div class="w-[10%] h-[5px] rounded-lg bg-blue-800"></div>
     </div>
     <div class="w-full flex items-center justify-center">
-        <p-carousel [value]="tours" [numVisible]="4" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
-            <ng-template let-tour #item>
-                <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-                    <div class="mb-4">
-                        <div class="relative mx-auto">
-                            <img src="images/uploadImage/{{ tour.imageUrl }}" [alt]="tour.name" class="w-full rounded-border" />
+        <div class="tour-list grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div *ngFor="let tour of tours" class="tour-card">
+                <div>
+                    <p-image [src]="tour.image" alt="Tour Image" class="tour-image" />
+                    <div class="tour-content">
+                        <div class="tour-rating">
+                            <i class="pi pi-star-fill" style="color: #f1c40f"></i>
+                            <span>{{ tour.rating }}</span>
+                            <i class="pi pi-heart-fill" style="color: #e74c3c; margin-left: 0.5rem"></i>
                         </div>
-                    </div>
-                    <div class="mb-4 font-medium">{{ tour.name }}</div>
-                    <div class="flex justify-between items-center">
-                        <div class="mt-0 font-semibold text-xl">
-                            <span>{{ tour.price + ' đ' }}</span>
+                        <h3 class="tour-title">{{ tour.title }}</h3>
+                        <div class="tour-price">
+                            <span class="original-price">{{ tour.price }}</span>
+                            <span class="discount-price">{{ tour.discountPrice }}</span>
                         </div>
-                        <div>
-                            <p-button label="Xem Tour" class="pr-2" severity="info" />
-                            <span class="pi pi-star">3.0</span>
+                        <p-button label="Đặt từ hôm nay" styleClass="p-button-primary"></p-button>
+                        <div class="tour-info">
+                            <span><i class="pi pi-clock"></i> {{ tour.days }}</span>
+                            <span><i class="pi pi-users"></i> {{ tour.people }}</span>
+                            <span><i class="pi pi-map-marker"></i> {{ tour.location }}</span>
                         </div>
                     </div>
                 </div>
-            </ng-template>
-        </p-carousel>
+            </div>
+        </div>
     </div>
 </div>

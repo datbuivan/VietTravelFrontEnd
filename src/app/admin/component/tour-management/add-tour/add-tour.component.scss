@@ -1,0 +1,119 @@
+:host {
+    display: block;
+    background-color: #f5f7fa;
+
+    .container {
+        top: 6rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        height: calc(100vh - 8rem);
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+
+            .card-title {
+                color: #1a3c34;
+                margin-bottom: 2rem;
+                font-size: 1.8rem;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .form-container {
+                .grid {
+                    margin-bottom: 1.5rem;
+
+                    .field-label {
+                        font-weight: 600;
+                        color: #1a3c34;
+                        margin-bottom: 0.5rem;
+                        display: block;
+
+                        .required {
+                            color: #e74c3c;
+                        }
+                    }
+
+                    .p-inputtext,
+                    .p-dropdown,
+                    .p-inputnumber {
+                        width: 100%;
+                        border-radius: 8px;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            border-color: #3498db;
+                        }
+
+                        &.p-invalid {
+                            border-color: #e74c3c;
+                        }
+                    }
+
+                    .p-error {
+                        color: #e74c3c;
+                        font-size: 0.85rem;
+                        margin-top: 0.25rem;
+                    }
+
+
+                }
+
+                .button-container {
+                    text-align: center;
+                    margin-top: 2rem;
+
+                    .p-button {
+                        padding: 0.75rem 2rem;
+                        border-radius: 8px;
+                        font-weight: 600;
+
+                        &.p-button-success {
+                            background-color: #2ecc71;
+                            border-color: #2ecc71;
+
+                            &:hover {
+                                background-color: #27ae60;
+                                border-color: #27ae60;
+                            }
+                        }
+
+                        &[disabled] {
+                            opacity: 0.6;
+                            cursor: not-allowed;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Responsive
+    @media (max-width: 768px) {
+        padding: 1rem;
+
+        .card {
+            padding: 1.5rem;
+        }
+
+        .p-grid {
+            margin-bottom: 1rem;
+
+            .p-field {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}
+
+:host ::ng-deep {
+    .p-fileupload .p-fileupload-content {
+        max-height: 12rem;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+    }
+}

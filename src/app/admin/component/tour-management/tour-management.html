@@ -1,0 +1,178 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <div class="flex justify-between items-center mb-4">
+            <div class="font-semibold text-xl mb-4">Danh Sách Tour Du Lịch</div>
+            <button pButton label="Thêm Tour" icon="pi pi-plus" class="p-button-info mb-2" [routerLink]="['/admin/add-tour']"></button>
+        </div>
+        <p-table #dt1 dataKey="id" [value]="tours" [rows]="5" [rowHover]="true" [showGridlines]="true" [paginator]="true" [globalFilterFields]="['name', 'pictures', 'price', 'childPrice', 'singleRoomSurcharge']" responsiveLayout="scroll">
+            <ng-template #caption>
+                <div class="flex justify-between items-center flex-column sm:flex-row">
+                    <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>
+                    <p-iconfield iconPosition="left" class="ml-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" placeholder="Search keyword" />
+                    </p-iconfield>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th style="min-width: 4rem">
+                        <div class="flex justify-between items-center">STT</div>
+                    </th>
+                    <th style="min-width: 8rem">
+                        <div class="flex justify-between items-center">Tên Tour</div>
+                    </th>
+                    <th style="min-width: 8rem">
+                        <div class="flex justify-between items-center">Hình Ảnh</div>
+                    </th>
+                    <th style="min-width: 8rem">
+                        <div class="flex justify-between items-center">Giá Người Lớn</div>
+                    </th>
+                    <th style="min-width: 8rem">
+                        <div class="flex justify-between items-center">Giá Trẻ Em</div>
+                    </th>
+                    <th style="min-width: 10rem">
+                        <div class="flex justify-between items-center">Giá Phòng Đơn</div>
+                    </th>
+                    <th style="min-width: 8rem">
+                        <div class="flex justify-between items-center">Thành Phố</div>
+                    </th>
+                    <th style="min-width: 12rem">
+                        <div class="flex justify-between items-center"></div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-tour let-i="rowIndex">
+                <tr>
+                    <td>
+                        <p>{{ i + 1 }}</p>
+                    </td>
+                    <td>
+                        <p class="line-clamp-2">{{ tour.name }}</p>
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <p-image src="https://res.cloudinary.com/docff5snu/image/upload/v1745675652/tour_images/phuquoc.jpg" alt="Image" width="80" />
+                        </div>
+                    </td>
+                    <td><p>{{ tour.price | vnd }}</p></td>
+                    <td><p>{{ tour.childPrice | vnd }}</p></td>
+                    <td><p>{{ tour.singleRoomSurcharge | vnd }}</p></td>
+                    <td><p>{{ tour.cityId }}</p></td>
+                    <td>
+                        <div class="flex gap-2">
+                            <button pButton icon="pi pi-eye" class="p-button-info" [routerLink]="['/admin/tour', tour.id]"></button>
+                            <button pButton icon="pi pi-pencil" class="p-button-warning" [routerLink]="['/admin/tour', tour.id, 'edit']"></button>
+                            <button pButton icon="pi pi-trash" class="p-button-danger" (click)="deleteTour(tour.id)"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td colspan="8">Không có Tour nào được tìm thấy.</td>
+                </tr>
+            </ng-template>
+            <ng-template #loadingbody>
+                <tr>
+                    <td colspan="8">Dữ liệu đang được loading, vui lòng chờ một chút</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<!-- <p-dialog header="Thêm Tour" [modal]="true" [(visible)]="tourDialog" [style]="{ width: '45rem' }">
+        <div [formGroup]="tourForm" class="flex flex-col gap-4">
+            <div>
+                <label for="name" class="block font-bold mb-1">Tên Tour</label>
+                <input pInputText id="name" type="text" formControlName="name" fluid />
+                <small class="p-error block" *ngIf="tourForm.get('name')?.invalid && (tourForm.get('name')?.dirty || tourForm.get('name')?.touched)">Tên tour là bắt buộc.</small>
+            </div>
+            <div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="gap-2 col-span-1">
+                        <label for="price" class="block mb-1">Giá người lớn</label>
+                        <input pInputText type="number" id="price" formControlName="price" class="flex-auto w-full" />
+                        <small class="text-red-500" *ngIf="tourForm.get('price')?.invalid && (tourForm.get('price')?.dirty || tourForm.get('price')?.touched || submitted)">giá Tour không được để trống.</small>
+                    </div>
+                    <div class="gap-2 col-span-1">
+                        <label for="childPrice" class="block mb-1">Giá trẻ em</label>
+                        <input pInputText type="number" id="childPrice" formControlName="childPrice" class="flex-auto w-full" />
+                    </div>
+                    <div class="gap-2 col-span-1">
+                        <label for="singleRoomSurcharge" class="block mb-1">Giá phòng đơn</label>
+                        <input pInputText type="number" id="singleRoomSurcharge" formControlName="singleRoomSurcharge" class="flex-auto w-full" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label for="city" class="block font-bold mb-1">Thành Phố</label>
+                <p-select Id="city" optionLabel="label" formControlName="cityId" optionValue="label" placeholder="Chọn thành phố" fluid />
+            </div>
+
+            <div>
+                <label for="images" class="block font-bold mb-1">Hình ảnh</label>
+                <p-fileupload name="images" [auto]="true" (onUpload)="onUpload($event)" [multiple]="true" accept="image/*" maxFileSize="1000000" [customUpload]="false" mode="advanced">
+                    <ng-template #empty>
+                        <div>Drag and drop files to here to upload.</div>
+                    </ng-template>
+                    <ng-template #content>
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileupload>
+            </div>
+            <div>
+                <div class="flex itens-center justify-center">
+                    <label class="block font-semibold mb-2">Ngày Khởi Hành</label>
+                    <div class="ml-auto">
+                        <p-button icon="pi pi-plus" variant="text" [raised]="true" severity="danger" class="mt-2 flex justify-end" (click)="addTourStartDate()" />
+                    </div>
+                </div>
+                <div formArrayName="tourStartDates" class="pl-4">
+                    <div *ngFor="let startDateControl of tourStartDateControls.controls; let i = index" [formGroupName]="i" class="grid grid-cols-4 gap-4 mb-2">
+                        <div class="col-span-2 flex flex-col">
+                            <label htmlFor="startDate{{ i }}" class="mb-1">Ngày</label>
+                            <p-date-picker [minDate]="today" dateFormat="dd/mm/yy" formControlName="startDate" [inputId]="'startDate' + i"></p-date-picker>
+                            <small class="p-error block" *ngIf="startDateControl.get('startDate')?.invalid && (startDateControl.get('startDate')?.dirty || startDateControl.get('startDate')?.touched)">Ngày khởi hành là bắt buộc.</small>
+                        </div>
+                        <div class="col-span-1 flex flex-col">
+                            <label htmlFor="availableSlots{{ i }}" class="mb-1">Số chỗ</label>
+                            <p-inputNumber formControlName="availableSlots" [inputId]="'availableSlots' + i"></p-inputNumber>
+                        </div>
+                        <div class="col-span-1 content-end ml-auto pb-[2px]">
+                            <button pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-sm" (click)="removeTourStartDate(i)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex itens-center justify-center">
+                    <label class="block font-semibold mb-2">Lịch trình</label>
+                    <div class="ml-auto">
+                        <p-button icon="pi pi-plus" variant="text" [raised]="true" severity="danger" class="mt-2 flex justify-end" (click)="addTourSchedule()" />
+                    </div>
+                </div>
+                <div formArrayName="tourSchedules" class="pl-4">
+                    <div *ngFor="let scheduleControl of tourScheduleControls.controls; let i = index" [formGroupName]="i" class="grid grid-cols-4 gap-4 mb-2">
+                        <div class="col-span-3 flex flex-col">
+                            <label htmlFor="title{{ i }}" class="mb-1">Tiêu đề ngày {{ i + 1 }}</label>
+                            <input type="text" pInputText [id]="'title' + i" formControlName="title" />
+                        </div>
+                        <div class="col-span-1 content-end ml-auto pb-[2px]">
+                            <button pButton type="button" icon="pi pi-trash" class="p-button-danger p-button-sm" (click)="removeTourSchedule(i)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 mt-4">
+                <p-button label="Hủy" severity="secondary" (click)="tourDialog = false" />
+                <p-button label="Lưu" (click)="submitForm()" />
+            </div>
+        </div>
+    </p-dialog> -->

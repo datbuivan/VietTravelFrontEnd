@@ -1,17 +1,45 @@
 <div class="card-container home-main">
-    <div class="w-full lg:flex card p-fluid gap-8">
-        <div class="lg:w-1/4 sm:w-full w-full lg:pl-20 md:pl-20">
-            <div class="w-full text-3xl font-bold pb-8">
-                <img src="images/icon/logo.png" alt="" class="w-[100px] h-[100px]" />
-                <span>VIET TRAVEL</span>
-            </div>
-            <div class="w-full pb-3">
+    <div class="mx-auto mb-16 max-w-2xl p-fluid lg:flex lg:max-w-7xl lg:gap-4 lg:px-8">
+        <div class="sm:w-full w-full lg:w-2/5">
+            <div class="w-full">
                 <app-search></app-search>
             </div>
         </div>
-        <div class="lg:w-3/4 sm:w-full w-full lg:pr-24 md:pr-24">
+        <div class="sm:w-full w-full lg:w-3/5">
             <p-image src="images/uploadImage/hanoicity.jpg" alt="Image" />
         </div>
     </div>
-    <app-newtour></app-newtour>
+    <div class="mx-auto mb-16 max-w-2xl p-fluid lg:flex lg:max-w-7xl lg:gap-8 lg:px-8">
+        <app-home-explore></app-home-explore>
+    </div>
+    <div class="mx-auto mb-16 max-w-2xl p-fluid lg:flex lg:max-w-7xl lg:gap-8 lg:px-8">
+        <app-newtour></app-newtour>
+    </div>
+    <div class="mx-auto max-w-2xl p-fluid lg:flex lg:max-w-7xl lg:gap-8 lg:px-8">
+        <div class="p-fluid">
+            <div class="w-full font-bold italic flex flex-col items-center text-4xl text-indigo-800 justify-center h-20">
+                <span class="uppercase mb-4">Điểm đến yêu thích</span>
+                <div class="w-[10%] h-[5px] rounded-lg bg-blue-8 00"></div>
+            </div>
+            <div class="w-full items-center flex text-xl justify-center mb-4">
+                <span class="w-1/2 font-medium">Hãy chọn một điểm đến du lịch nổi tiếng dưới đây để khám phá các chuyến đi độc quyền của chúng tôi với mức giá vô cùng hợp lý.</span>
+            </div>
+            <div class="w-full flex items-center justify-center">
+                <p-tabs [value]="regionId" (valueChange)="onRegionIdChange($event)">
+                    <p-tablist *ngIf="regions && regions.length > 0">
+                        <ng-container *ngFor="let region of regions">
+                            <p-tab [value]="region.id">{{ region.name }}</p-tab>
+                        </ng-container>
+                    </p-tablist>
+                    <p-tabpanels *ngIf="regions && regions.length > 0">
+                        <ng-container *ngFor="let region of regions">
+                            <p-tabpanel [value]="region.id">
+                                <app-home-favourite [regionId]="region.id"></app-home-favourite>
+                            </p-tabpanel>
+                        </ng-container>
+                    </p-tabpanels>
+                </p-tabs>
+            </div>
+        </div>
+    </div>
 </div>

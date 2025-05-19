@@ -6,7 +6,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
-import { TourService } from '../../../services/tour.service';
+import { TourService } from '@services/common/tour.service';
 import { AccordionModule } from 'primeng/accordion';
 
 @Component({

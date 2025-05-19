@@ -1,0 +1,109 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <h2 class="card-title">Thêm Tour Mới</h2>
+        <div [formGroup]="tourForm" class="form-container">
+            <!-- Dòng 1: Tên Tour và Thành phố -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label for="name" class="field-label">Tên Tour <span class="required">*</span></label>
+                    <input id="name" pInputText formControlName="name" type="text" pTooltip="Nhập tên tour du lịch" tooltipPosition="top" class="w-full rounded-lg" [class.p-invalid]="tourForm.get('name')?.invalid && tourForm.get('name')?.touched" />
+                    <small *ngIf="tourForm.get('name')?.invalid && tourForm.get('name')?.touched" class="p-error text-red-600"> Tên tour phải có ít nhất 3 ký tự </small>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="cityId" class="field-label">Thành phố <span class="required">*</span></label>
+                    <p-select
+                        id="cityId"
+                        formControlName="cityId"
+                        [options]="cities"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Chọn thành phố"
+                        pTooltip="Chọn thành phố tổ chức tour"
+                        tooltipPosition="top"
+                        class="w-full"
+                        [class.p-invalid]="tourForm.get('cityId')?.invalid && tourForm.get('cityId')?.touched"
+                    >
+                    </p-select>
+                    <small *ngIf="tourForm.get('cityId')?.invalid && tourForm.get('cityId')?.touched" class="p-error text-red-600"> Vui lòng chọn thành phố </small>
+                </div>
+            </div>
+
+            <!-- Dòng 2: Giá người lớn, Giá trẻ em, Phụ phí phòng đơn -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-4">
+                    <label for="price" class="field-label">Giá người lớn <span class="required">*</span></label>
+                    <p-inputNumber
+                        id="price"
+                        formControlName="price"
+                        mode="currency"
+                        currency="VND"
+                        locale="vi-VN"
+                        pTooltip="Nhập giá tour cho người lớn"
+                        tooltipPosition="top"
+                        class="w-full"
+                        [class.p-invalid]="tourForm.get('price')?.invalid && tourForm.get('price')?.touched"
+                    >
+                    </p-inputNumber>
+                    <small *ngIf="tourForm.get('price')?.invalid && tourForm.get('price')?.touched" class="p-error text-red-600"> Giá phải lớn hơn hoặc bằng 0 </small>
+                </div>
+                <div class="col-span-12 md:col-span-4">
+                    <label for="childPrice" class="field-label">Giá trẻ em <span class="required">*</span></label>
+                    <p-inputNumber
+                        id="childPrice"
+                        formControlName="childPrice"
+                        mode="currency"
+                        currency="VND"
+                        locale="vi-VN"
+                        pTooltip="Nhập giá tour cho trẻ em"
+                        tooltipPosition="top"
+                        class="w-full"
+                        [class.p-invalid]="tourForm.get('childPrice')?.invalid && tourForm.get('childPrice')?.touched"
+                    >
+                    </p-inputNumber>
+                    <small *ngIf="tourForm.get('childPrice')?.invalid && tourForm.get('childPrice')?.touched" class="p-error text-red-600"> Giá phải lớn hơn hoặc bằng 0 </small>
+                </div>
+                <div class="col-span-12 md:col-span-4">
+                    <label for="singleRoomSurcharge" class="field-label">Phụ phí phòng đơn <span class="required">*</span></label>
+                    <p-inputNumber
+                        id="singleRoomSurcharge"
+                        formControlName="singleRoomSurcharge"
+                        mode="currency"
+                        currency="VND"
+                        locale="vi-VN"
+                        pTooltip="Nhập phụ phí phòng đơn"
+                        tooltipPosition="top"
+                        class="w-full"
+                        [class.p-invalid]="tourForm.get('singleRoomSurcharge')?.invalid && tourForm.get('singleRoomSurcharge')?.touched"
+                    >
+                    </p-inputNumber>
+                    <small *ngIf="tourForm.get('singleRoomSurcharge')?.invalid && tourForm.get('singleRoomSurcharge')?.touched" class="p-error text-red-600"> Phụ phí phải lớn hơn hoặc bằng 0 </small>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 md:col-span-6">
+                    <label class="field-label">Hình ảnh bổ sung</label>
+                    <p-fileUpload
+                        mode="advanced"
+                        [multiple]="true"
+                        accept="image/*"
+                        chooseLabel="Chọn hình ảnh"
+                        cancelLabel="Hủy"
+                        [showUploadButton]="false"
+                        pTooltip="Chọn nhiều hình ảnh bổ sung cho tour (tối đa 5 ảnh)"
+                        tooltipPosition="top"
+                        class="w-full"
+                        (onSelect)="onPicturesSelect($event)"
+                    >
+                    </p-fileUpload>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
+                <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary mr-2" [routerLink]="['/admin/tours']"></p-button>
+                <p-button label="Thêm Tour" icon="pi pi-check" [disabled]="tourForm.invalid" (onClick)="submitTour()" styleClass="p-button-raised p-button-success"> </p-button>
+            </div>
+        </div>
+    </div>
+</div>

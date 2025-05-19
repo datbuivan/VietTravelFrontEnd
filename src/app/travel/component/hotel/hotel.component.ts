@@ -4,12 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Select } from 'primeng/select';
-import { HotelSearchComponent } from './hotel-search/hotel-search.component';
-import { HotelItemComponent } from './hotel-item/hotel-item.component';
+import { HotelSearchComponent } from '@travel/component/hotel/hotel-search/hotel-search.component';
+import { HotelItemComponent } from '@travel/component/hotel/hotel-item/hotel-item.component';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { HotelService } from '../../services/hotel.service';
-import { Observable } from 'rxjs';
+import { HotelService } from '@services/common/hotel.service';
+import { Hotel } from '@shared/models/hotel';
 
 @Component({
     selector: 'app-hotel',
@@ -19,8 +19,8 @@ import { Observable } from 'rxjs';
     standalone: true
 })
 export class HotelComponent implements OnInit {
-    hotels: any[] = [];
-    hotel: any;
+    hotels: Hotel[] = [];
+    hotel?: Hotel;
     selectedOption: any | undefined;
     items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Hotel', route: '/hotel' }, { label: 'Hà Nội' }];
     sortOptions = [
@@ -30,13 +30,17 @@ export class HotelComponent implements OnInit {
     ];
     constructor(private hotelService: HotelService) {}
     ngOnInit(): void {
+        this.initialiseHotel();
+    }
+
+    initialiseHotel() {
         this.getHotels();
     }
+
     getHotels() {
-        this.hotels = this.hotelService.getHotels();
-        console.log(this.hotel);
-    }
-    getHotel(id: number) {
-        this.hotel = this.getHotel(id);
+        this.hotelService.getHotels().subscribe({
+            next: (response) => (this.hotels = response),
+            error: (error) => console.error(error)
+        });
     }
 }

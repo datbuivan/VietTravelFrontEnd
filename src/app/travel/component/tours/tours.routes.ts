@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { TourDetailsComponent } from './tour-details/tour-details.component';
-import { ToursComponent } from './tours.component';
+import { TourDetailsComponent } from '@travel/component/tours/tour-details/tour-details.component';
+import { ToursComponent } from '@travel/component/tours/tours.component';
 
 export default [
     { path: '', component: ToursComponent },

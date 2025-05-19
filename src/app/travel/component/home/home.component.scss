@@ -1,13 +1,15 @@
 :host ::ng-deep {
-    .card {
-        padding: 0;
-    }
-
     img {
         display: inline;
     }
 
+    .p-tabs {
+        font-size: 1.5rem;
 
-
-
+        .p-tablist {
+            .p-tablist-content {
+                justify-items: center;
+            }
+        }
+    }
 }

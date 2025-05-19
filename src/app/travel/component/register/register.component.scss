@@ -1,0 +1,101 @@
+:host {
+    .register-container {
+        display: flex;
+        min-height: 100vh;
+        background-color: #FFFFFF;
+    }
+
+    .register-content {
+        flex: 1;
+        padding: 2.5rem;
+        z-index: 1;
+    }
+
+    .logo img {
+        height: 4rem;
+        width: auto;
+    }
+
+    h2 {
+        color: #1d959f;
+        text-align: center;
+    }
+
+    .p-field {
+        margin-bottom: 15px;
+    }
+
+    .p-field label {
+        display: block;
+        margin-bottom: 5px;
+        color: #1d959f;
+    }
+
+    .p-inputtext,
+    .p-password {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .p-button {
+        width: 100%;
+        background-color: #1d959f;
+        border-color: #1d959f;
+    }
+
+    .background-image {
+        flex: 1; // Tăng tỷ lệ cho hình ảnh
+        position: relative;
+        overflow: hidden;
+        height: 100vh; // Che phủ toàn bộ chiều cao màn hình
+    }
+
+    .background-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // Đảm bảo hình ảnh phủ kín mà không bị méo
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0; // Đặt hình nền phía sau form
+    }
+
+    @media (max-width: 768px) {
+        .register-container {
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .register-content {
+            margin-right: 0;
+            margin-bottom: 20px;
+            max-width: 100%; // Form chiếm toàn bộ chiều rộng trên mobile
+        }
+
+        .background-image {
+            flex: 1;
+            height: 300px; // Giảm chiều cao hình nền trên mobile
+        }
+
+        .background-image img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+:host::ng-deep {
+    .p-password {
+        width: 100%;
+
+        .p-inputtext {
+            width: 100%;
+        }
+    }
+
+    .p-button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,121 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <h2 class="card-title">Thêm Khách Sạn Mới</h2>
+        <div [formGroup]="hotelForm" class="form-container">
+            <!-- Dòng 1: Tên Khách Sạn và Khu Vực -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-12">
+                    <label for="name" class="field-label">Tên Khách Sạn <span class="required text-red-600">*</span></label>
+                    <input id="name" pInputText formControlName="name" type="text" pTooltip="Nhập tên khách sạn" tooltipPosition="top" class="w-full rounded-lg" [class.p-invalid]="hotelForm.get('name')?.invalid && hotelForm.get('name')?.touched" />
+                    <small *ngIf="hotelForm.get('name')?.invalid && hotelForm.get('name')?.touched" class="p-error text-red-600"> Tên khách sạn phải có ít nhất 3 ký tự </small>
+                </div>
+            </div>
+
+            <!-- Dòng 3: Số Điện Thoại và Địa Chỉ -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label for="phoneNumber" class="field-label">Số Điện Thoại <span class="required text-red-600">*</span></label>
+                    <input
+                        id="phoneNumber"
+                        pInputText
+                        formControlName="phoneNumber"
+                        type="text"
+                        pTooltip="Nhập số điện thoại khách sạn (VD: 090xxxxxxx)"
+                        tooltipPosition="top"
+                        class="w-full rounded-lg"
+                        [class.p-invalid]="hotelForm.get('phoneNumber')?.invalid && hotelForm.get('phoneNumber')?.touched"
+                    />
+                    <small *ngIf="hotelForm.get('phoneNumber')?.invalid && hotelForm.get('phoneNumber')?.touched" class="p-error text-red-600"> Số điện thoại phải là 10-11 số, bắt đầu bằng 0 </small>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="address" class="field-label">Địa Chỉ <span class="required text-red-600">*</span></label>
+                    <input
+                        id="address"
+                        pInputText
+                        formControlName="address"
+                        type="text"
+                        pTooltip="Nhập địa chỉ khách sạn"
+                        tooltipPosition="top"
+                        class="w-full rounded-lg"
+                        [class.p-invalid]="hotelForm.get('address')?.invalid && hotelForm.get('address')?.touched"
+                    />
+                    <small *ngIf="hotelForm.get('address')?.invalid && hotelForm.get('address')?.touched" class="p-error text-red-600"> Địa chỉ phải có ít nhất 5 ký tự </small>
+                </div>
+            </div>
+
+            <!-- Dòng 3: Tiêu Đề Giới Thiệu và Nội Dung Giới Thiệu -->
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label for="cityId" class="field-label">Thành Phố<span class="required text-red-600">*</span></label>
+                    <p-select
+                        id="cityId"
+                        formControlName="cityId"
+                        [options]="cities"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Chọn thành phố"
+                        pTooltip="Chọn thành phố của khách sạn"
+                        tooltipPosition="top"
+                        class="w-full"
+                        [class.p-invalid]="hotelForm.get('cityId')?.invalid && hotelForm.get('cityId')?.touched"
+                    >
+                    </p-select>
+                    <small *ngIf="hotelForm.get('cityId')?.invalid && hotelForm.get('cityId')?.touched" class="p-error text-red-600"> Vui lòng chọn khu vực </small>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="titleIntroduct" class="field-label">Tiêu Đề Giới Thiệu <span class="required text-red-600">*</span></label>
+                    <input
+                        id="titleIntroduct"
+                        pInputText
+                        formControlName="titleIntroduct"
+                        type="text"
+                        pTooltip="Nhập tiêu đề giới thiệu khách sạn"
+                        tooltipPosition="top"
+                        class="w-full rounded-lg"
+                        [class.p-invalid]="hotelForm.get('titleIntroduct')?.invalid && hotelForm.get('titleIntroduct')?.touched"
+                    />
+                    <small *ngIf="hotelForm.get('titleIntroduct')?.invalid && hotelForm.get('titleIntroduct')?.touched" class="p-error text-red-600"> Tiêu đề phải có ít nhất 3 ký tự </small>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label class="field-label">Hình Ảnh Bổ Sung</label>
+                    <p-fileUpload
+                        mode="advanced"
+                        [multiple]="true"
+                        accept="image/*"
+                        chooseLabel="Chọn hình ảnh"
+                        cancelLabel="Hủy"
+                        [showUploadButton]="false"
+                        pTooltip="Chọn nhiều hình ảnh bổ sung cho khách sạn (tối đa 5 ảnh)"
+                        tooltipPosition="top"
+                        class="w-full"
+                        (onSelect)="onPicturesSelect($event)"
+                    >
+                    </p-fileUpload>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="contentIntroduct" class="field-label">Nội Dung Giới Thiệu <span class="required text-red-600">*</span></label>
+                    <textarea
+                        id="contentIntroduct"
+                        pTextarea
+                        formControlName="contentIntroduct"
+                        rows="4"
+                        pTooltip="Nhập nội dung giới thiệu khách sạn"
+                        tooltipPosition="top"
+                        class="w-full rounded-lg"
+                        [class.p-invalid]="hotelForm.get('contentIntroduct')?.invalid && hotelForm.get('contentIntroduct')?.touched"
+                    >
+                    </textarea>
+                    <small *ngIf="hotelForm.get('contentIntroduct')?.invalid && hotelForm.get('contentIntroduct')?.touched" class="p-error text-red-600"> Nội dung phải có ít nhất 10 ký tự </small>
+                </div>
+            </div>
+
+            <!-- Button Container -->
+            <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
+                <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary mr-2" [routerLink]="['/admin/hotels']"></p-button>
+                <p-button label="Thêm Khách Sạn" icon="pi pi-check" [disabled]="hotelForm.invalid" (onClick)="submitHotel()" styleClass="p-button-raised p-button-success"></p-button>
+            </div>
+        </div>
+    </div>
+</div>

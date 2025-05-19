@@ -1,14 +1,15 @@
+import { Room } from '@shared/models/room';
 import { GalleriaModule } from 'primeng/galleria';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
 import { CarouselModule } from 'primeng/carousel';
-import { RoomItemComponent } from '../room-item/room-item.component';
+import { RoomItemComponent } from '@travel/component/hotel/room-item/room-item.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { RoomService } from '@services/common/room.service';
 
 @Component({
     selector: 'app-hotel-details',
@@ -17,7 +18,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     styleUrl: './hotel-details.component.scss',
     standalone: true
 })
-export class HotelDetailsComponent {
+export class HotelDetailsComponent implements OnInit {
     isExpanded = false;
     numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
     services: string[] = ['Spa/xông khô', 'Dịch vụ vé', 'Chuyến du lịch', 'Dịch vụ thanh toán không sử dụng tiền mặt', 'Dịch vụ taxi', 'Thuê xe đạp', 'Điều hòa', 'Áo choàng tắm'];
@@ -49,18 +50,19 @@ export class HotelDetailsComponent {
             title: 'Phú Quốc Hotel'
         }
     ];
-    rooms = [
-        {
-            name: 'Phòng Tiêu chuẩn hướng thành phố',
-            price: 7265538,
-            amenities: ['Bữa sáng', 'Bãi đỗ xe', 'Nước uống chào đón', 'Cà phê & trà', 'Wifi miễn phí'],
-            selected: false
-        },
-        {
-            name: 'Phòng Tiêu chuẩn hướng thành phố',
-            price: 7265538,
-            amenities: ['Bữa sáng', 'Bãi đỗ xe', 'Nước uống chào đón', 'Cà phê & trà', 'Wifi miễn phí'],
-            selected: false
-        }
-    ];
+    rooms: Room[] = [];
+    constructor(
+        private route: ActivatedRoute,
+        private roomService: RoomService
+    ) {}
+    ngOnInit(): void {}
+    // getRooms() {
+    //     const hotelId = this.route.snapshot.paramMap.get('id');
+    //     const hotelIdNumber = hotelId ? Number(hotelId) : null;
+    //     if (hotelIdNumber) {
+    //         this.roomService.getRoomByHotelId(hotelIdNumber).subscribe({
+    //             next: (response) => (this.rooms = response)
+    //         });
+    //     }
+    // }
 }

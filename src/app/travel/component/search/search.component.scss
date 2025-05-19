@@ -1,4 +1,10 @@
 :host ::ng-deep {
+    p-tabs {
+        p-tablist {
+            padding-bottom: 1rem;
+        }
+    }
+
     .p-tabpanels {
         padding: 0;
     }
@@ -7,6 +13,10 @@
     .p-button,
     .p-select {
         width: 100%;
+    }
+
+    .p-inputnumber {
+        height: 100%;
     }
 
     .p-select-empty-message {

@@ -1,0 +1,24 @@
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.lg\:h-80 {
+    @media (min-width: 1024px) {
+        height: 20rem; // Đảm bảo chiều cao 80 * 0.25rem
+    }
+}
+
+// Tùy chỉnh p-image
+:host ::ng-deep p-image {
+    display: block;
+    width: 100%;
+    height: 100%; // Đảm bảo p-image fill chiều cao của container
+
+    img {
+        width: 100%;
+        height: 100%; // Đảm bảo thẻ img bên trong fill chiều cao
+        object-fit: cover; // Hình ảnh sẽ được cắt để fill container mà không bị méo
+        object-position: center; // Căn giữa hình ảnh
+    }
+}
