@@ -10,6 +10,7 @@ import { TokenService } from '@app/services/common/token.service';
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
     const tokenService = inject(TokenService);
     const messageService = inject(MessageService);
+    const authService = inject(AuthService);
     const router = inject(Router);
 
     const token = tokenService.getAccessToken();
@@ -26,8 +27,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     return next(authReq).pipe(
         catchError((error: HttpErrorResponse) => {
             if (error.status === 401) {
-                const injector = inject(Injector); // Lấy Injector để tránh phụ thuộc vòng
-                const authService = injector.get(AuthService);
                 return handle401Error(authReq, next, authService, tokenService, messageService, router);
             }
             return throwError(() => error);

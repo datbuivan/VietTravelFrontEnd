@@ -1,53 +1,72 @@
-<div class="card tour-main lg:px-24 md:px-24">
-    <div class="tour-header lg:w-w-full md:w-full font-bold">
-        <div class="w-full flex">
-            <p-breadcrumb class="max-w-full" [model]="items">
-                <ng-template #item let-item>
-                    <ng-container *ngIf="item.route; else elseBlock">
-                        <a [routerLink]="item.route" class="p-breadcrumb-item-link">
-                            <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
-                            <span class="text-primary font-semibold">{{ item.label }}</span>
-                        </a>
-                    </ng-container>
-                    <ng-template #elseBlock>
-                        <a [href]="item.url">
-                            <span class="text-color">{{ item.label }}</span>
-                        </a>
-                    </ng-template>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <!-- Hotel Header -->
+    <div class="mb-6">
+        <p-breadcrumb [model]="items" class="max-w-full">
+            <ng-template pTemplate="item" let-item>
+                <ng-container *ngIf="item.route; else externalLink">
+                    <a [routerLink]="item.route" class="text-blue-600 font-semibold hover:underline">
+                        <i *ngIf="item.icon" [ngClass]="item.icon" class="mr-2"></i>
+                        {{ item.label }}
+                    </a>
+                </ng-container>
+                <ng-template #externalLink>
+                    <a [href]="item.url" class="text-gray-600 hover:underline">
+                        {{ item.label }}
+                    </a>
                 </ng-template>
-            </p-breadcrumb>
-        </div>
-        <div class="w-full">
-            <div class="text-center">
-                <h1 class="text-blue-600">DU LỊCH HÀ NỘI</h1>
-            </div>
-        </div>
+            </ng-template>
+        </p-breadcrumb>
+        <h1 class="text-3xl font-bold text-blue-600 text-center mt-4">DU LỊCH HÀ NỘI - KHÁCH SẠN</h1>
     </div>
-    <div class="lg:w-full md:w-full sm:w-full flex">
-        <div class="lg:w-1/4 md:w-1/4 sm:w-full pr-16">
+
+    <!-- Main Content -->
+    <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Sidebar: Hotel Search Component -->
+        <div class="lg:w-1/4 w-full">
             <app-hotel-search></app-hotel-search>
         </div>
-        <div class="lg:w-3/4 md:w-3/4 sm:w-full">
-            <div class="w-full">
-                <div class="w-full flex font-bold text-xl h-16 items-center mb-2 border-b-2">
-                    <div class="w-1/2">
-                        <span>Chúng thôi tìm thấy <i class="text-lg">3</i> chương trình tour cho quý khác</span>
-                    </div>
-                    <div class="w-1/2 flex items-center">
-                        <div class="w-1/3">
-                            <span>Sắp xếp theo:</span>
-                        </div>
-                        <div class="w-2/3">
-                            <p-select [(ngModel)]="selectedOption" [options]="sortOptions" optionLabel="name" placeholder="Giá" class="w-full md:w-56" />
-                        </div>
-                    </div>
+
+        <!-- Hotel List -->
+        <div class="lg:w-3/4 w-full">
+            <div class="flex flex-col sm:flex-row items-center justify-between mb-4 pb-2 border-b-2 border-gray-200">
+                <div class="mb-2 sm:mb-0">
+                    <span class="text-xl font-bold">
+                        Chúng tôi tìm thấy <span class="text-blue-600">{{ hotels.length || 0 }}</span> khách sạn cho quý khách
+                    </span>
                 </div>
-                <div class="w-full grid grid-cols-3 gap-4">
-                    <div class="col-span-1" *ngFor="let hotel of hotels">
-                        <app-hotel-item [hotel]="hotel"></app-hotel-item>
-                    </div>
+                <div class="flex items-center gap-4">
+                    <span class="text-lg">Sắp xếp theo:</span>
+                    <p-select [(ngModel)]="selectedOption" [options]="sortOptions" optionLabel="name" placeholder="Giá" class="w-full md:w-56" />
                 </div>
             </div>
+
+            <!-- Loading State -->
+            <ng-container *ngIf="loading">
+                <div class="p-4 mb-4">
+                    <p>Loading hotels...</p>
+                </div>
+            </ng-container>
+
+            <!-- Error State -->
+            <ng-container *ngIf="error">
+                <div class="p-4 mb-4">
+                    <p class="text-red-500">{{ error }}</p>
+                </div>
+            </ng-container>
+
+            <!-- Hotel Items -->
+            <ng-container *ngIf="hotels?.length && !loading && !error">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <app-hotel-item *ngFor="let hotel of hotels" [hotel]="hotel"></app-hotel-item>
+                </div>
+            </ng-container>
+
+            <!-- Empty State -->
+            <ng-container *ngIf="!hotels?.length && !loading && !error">
+                <div class="p-4 mb-4">
+                    <p>Không tìm thấy khách sạn nào.</p>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

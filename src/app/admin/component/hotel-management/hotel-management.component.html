@@ -12,7 +12,7 @@
                         <p-inputicon>
                             <i class="pi pi-search"></i>
                         </p-inputicon>
-                        <input pInputText type="text" placeholder="Search keyword" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt1, $event)" placeholder="Search keyword" />
                     </p-iconfield>
                 </div>
             </ng-template>
@@ -54,7 +54,7 @@
                     </td>
                     <td>
                         <div class="flex items-center gap-2">
-                            <p-image src="https://res.cloudinary.com/docff5snu/image/upload/v1745675652/tour_images/phuquoc.jpg" alt="Image" width="80" />
+                            <p-image [src]="hotel.images[0].url" alt="Image" width="80" />
                         </div>
                     </td>
                     <td>{{ hotel.titleIntroduct }}</td>

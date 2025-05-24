@@ -1,3 +1,9 @@
+:host {
+    .pi-heart-fill {
+        color: red;
+    }
+}
+
 :host::ng-deep {
     .main-tour-item {
         height: 20rem;

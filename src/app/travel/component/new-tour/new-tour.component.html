@@ -4,10 +4,15 @@
         <div class="w-[10%] h-[5px] rounded-lg bg-blue-800"></div>
     </div>
     <div class="w-full flex items-center justify-center">
-        <div class="tour-list grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="tour-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div *ngFor="let tour of tours" class="tour-card">
                 <div>
-                    <p-image [src]="tour.image" alt="Tour Image" class="tour-image" />
+                    <div class="relative">
+                        <img [src]="tour.image" alt="Tour Image" class="tour-image" />
+                        <button class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" aria-label="Add to favorites">
+                            <i class="pi pi-heart text-base"></i>
+                        </button>
+                    </div>
                     <div class="tour-content">
                         <div class="tour-rating">
                             <i class="pi pi-star-fill" style="color: #f1c40f"></i>

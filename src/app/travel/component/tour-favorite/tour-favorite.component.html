@@ -1,0 +1,22 @@
+<div class="mx-auto mb-16 max-w-2xl p-4 lg:max-w-7xl lg:px-8">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Danh sách yêu thích</h2>
+    <p-toast position="top-right"></p-toast>
+    <div *ngIf="favoriteTours.length > 0; else noFavorites" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let favorite of favoriteTours" class="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 relative min-h-[300px]">
+            <img *ngIf="favorite.imageUrl" [src]="sanitizeUrl(favorite.imageUrl)" alt="{{ favorite.name }}" class="w-full h-48 object-cover rounded-t-lg" />
+            <div class="p-4 text-center">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">{{ favorite.name }}</h3>
+            </div>
+            <div class="absolute bottom-2 left-2 text-left">
+                <p class="text-sm text-gray-600 mb-1">Giá</p>
+                <p class="text-2xl font-bold text-red-600">{{ favorite.price | vnd }} đ</p>
+            </div>
+            <div class="absolute bottom-2 right-2">
+                <p-button label="Xóa" icon="pi pi-trash" styleClass="p-button-danger p-button-sm" (onClick)="removeFavorite(favorite.tourId)"></p-button>
+            </div>
+        </div>
+    </div>
+    <ng-template #noFavorites>
+        <p class="text-gray-500 text-center">Chưa có tour yêu thích nào.</p>
+    </ng-template>
+</div>

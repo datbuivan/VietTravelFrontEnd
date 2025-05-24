@@ -12,28 +12,20 @@ export class HotelService {
     baseUrl = environment.apiUrl;
 
     hotels: Hotel[] = [];
-    hotel!: Hotel;
+    hotel: Hotel | null = null;
 
     hotelParams = new Params();
     constructor(private http: HttpClient) {}
     getHotel(id: number): Observable<Hotel> {
-        const city = this.hotels.find((p) => p.id === id);
-        if (city) {
-            return of(city);
-        }
         return this.http.get<{ data: Hotel }>(this.baseUrl + 'hotel/' + id).pipe(
             map((res) => {
-                const hotel = res.data;
-                this.hotels.push(hotel);
-                return hotel;
+                this.hotel = res.data;
+                return this.hotel;
             })
         );
     }
 
     getHotels(): Observable<Hotel[]> {
-        if (this.hotels.length > 0) {
-            return of(this.hotels);
-        }
         return this.http.get<{ data: Hotel[] }>(this.baseUrl + 'hotel').pipe(
             map((res) => {
                 this.hotels = res.data;

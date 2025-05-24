@@ -37,6 +37,13 @@ export class AuthService {
         return this.tokenService.getUser();
     }
 
+    getAuthHeaders(): HttpHeaders {
+        const token = this.tokenService.getAccessToken();
+        return new HttpHeaders({
+            Authorization: token ? `Bearer ${token}` : ''
+        });
+    }
+
     private updateAuthState(): void {
         const user = this.tokenService.getUser();
         this.loggedIn.next(!!user && !!user.accessToken);
@@ -47,13 +54,12 @@ export class AuthService {
         const token = this.tokenService.getAccessToken();
         const refreshToken = this.tokenService.getRefreshToken();
         if (!token) {
-            // this.clearStorage();
             this.tokenService.setUser(null);
             this.updateAuthState();
             return of(null);
         }
 
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        const headers = this.getAuthHeaders();
         return this.http.get<ApiResponse<User>>(this.baseUrl + 'Auth/current-user', { headers }).pipe(
             map((response: ApiResponse<User>) => {
                 if (response.statusCode === 200 && response.data) {
@@ -64,20 +70,14 @@ export class AuthService {
                     } as User;
                     this.tokenService.setUser(user);
                     this.updateAuthState();
-                    // localStorage.setItem('currentUser', JSON.stringify(user));
-                    // this.currentUserSubject.next(user);
-                    // this.roles.next(user.roles || []);
-                    // this.loggedIn.next(true);
                     return user;
                 }
-                // this.clearStorage();
                 this.tokenService.setUser(null);
                 this.updateAuthState();
                 return null;
             }),
             catchError((error) => {
                 console.log(error);
-                // this.clearStorage();
                 this.tokenService.setUser(null);
                 this.updateAuthState();
                 return of(null);
@@ -96,11 +96,7 @@ export class AuthService {
                     user.roles = user.roles || ['USER'];
                     this.tokenService.setUser(user);
                     this.updateAuthState();
-                    this.redirectBasedOnRole(user.roles);
-                    // localStorage.setItem('currentUser', JSON.stringify(user));
-                    // this.currentUserSubject.next(user);
-                    // this.roles.next(user.roles || []);
-                    // this.loggedIn.next(true);
+                    // this.redirectBasedOnRole(user.roles);
                     return user;
                 }
                 throw new Error(response.message || 'Đăng nhập thất bại');
@@ -119,41 +115,34 @@ export class AuthService {
     logout(): void {
         this.http.post(this.baseUrl + 'Auth/logout', {}).subscribe({
             error: () => {
-                // this.clearStorage()
                 this.tokenService.setUser(null);
                 this.updateAuthState();
             }
         });
-        // this.clearStorage();
         this.tokenService.setUser(null);
         this.updateAuthState();
         this.router.navigate(['/login']);
     }
 
     refreshToken(): Observable<User> {
-        const refreshToken = this.currentUserValue?.refreshToken;
+        const refreshToken = this.tokenService.getRefreshToken();
         if (!refreshToken) {
             throw new Error('No refresh token available');
         }
 
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.currentUserValue?.accessToken}`);
-        return this.http.post<ApiResponse<User>>(this.baseUrl + 'Auth/refresh-token', { refreshToken }, { headers }).pipe(
+        const headers = { Authorization: `Bearer ${refreshToken}` };
+        return this.http.post<ApiResponse<User>>(this.baseUrl + 'Auth/refresh-token', {}, { headers }).pipe(
             map((response: ApiResponse<User>) => {
                 if (response.statusCode === 200 && response.data) {
                     const user = response.data;
-                    this.tokenService.setUser(null);
+                    this.tokenService.setUser(user);
                     this.updateAuthState();
-                    // localStorage.setItem('currentUser', JSON.stringify(user));
-                    // this.currentUserSubject.next(user);
-                    // this.roles.next(user.roles || []);
-                    // this.loggedIn.next(true);
                     return user;
                 }
                 throw new Error(response.message || 'Làm mới token thất bại');
             }),
             catchError((error) => {
                 console.log(error);
-                // this.clearStorage();
                 this.tokenService.setUser(null);
                 this.updateAuthState();
                 return of(null as any);
@@ -170,13 +159,6 @@ export class AuthService {
             this.router.navigate(['/unauthorized']);
         }
     }
-
-    // private clearStorage(): void {
-    //     localStorage.removeItem('currentUser');
-    //     this.currentUserSubject.next(null);
-    //     this.roles.next([]);
-    //     this.loggedIn.next(false);
-    // }
 
     hasRole(role: string): boolean {
         return this.roles.value.includes(role);

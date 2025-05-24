@@ -1,0 +1,14 @@
+/* src/app/components/tour-favorite/tour-favorite.component.css */
+:host {
+    display: block;
+}
+
+p-button {
+    margin-top: 0;
+}
+
+.absolute {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+}

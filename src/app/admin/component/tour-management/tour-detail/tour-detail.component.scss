@@ -8,6 +8,11 @@
         margin: 0 auto;
         height: calc(100vh - 8rem);
 
+        .p-error {
+            color: red;
+            ;
+        }
+
         .card {
             background: white;
             border-radius: 12px;
@@ -122,3 +127,18 @@
         }
     }
 }
+
+// :host ::ng-deep {
+
+//     .p-datatable .p-datatable-thead>tr>th,
+//     .p-datatable .p-datatable-tbody>tr>td {
+//         height: 48px;
+
+//     }
+
+
+//     .p-datatable .p-datatable-tbody>tr {
+//         height: 48px;
+
+//     }
+// }

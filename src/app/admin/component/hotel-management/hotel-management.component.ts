@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SelectModule } from 'primeng/select';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { HotelService } from '@app/services/common/hotel.service';
 import { Image } from 'primeng/image';
@@ -69,4 +69,8 @@ export class HotelManagementComponent {
         });
     }
     deleteHotel(id: number) {}
+
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
 }

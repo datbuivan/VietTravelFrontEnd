@@ -10,8 +10,22 @@ import { City } from '@shared/models/city';
     selector: 'app-home-favourite',
     standalone: true,
     imports: [CommonModule, CardModule, ButtonModule, TabViewModule],
-    templateUrl: './home-favourite.component.html',
-    styleUrl: './home-favourite.component.scss'
+    template: `
+        <div class="grid mx-auto w-[90%] mt-8 max-h-[600px] grid grid-cols-5 grid-rows-3 gap-4" style="grid-template-columns: 1fr 0.5fr 1fr 1fr 1fr">
+            <div
+                *ngFor="let city of cities; let i = index"
+                class="relative rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-lg hover:brightness-50"
+                [style]="'grid-column: ' + layouts[i].colStart + ' / span ' + layouts[i].colSpan + ';' + 'grid-row: ' + layouts[i].rowStart + ' / span ' + layouts[i].rowSpan + ';'"
+            >
+                <img [src]="city.image.url" class="w-full h-full object-cover aspect-square hover:scale-105" alt="{{ city.name }}" />
+                <div class="absolute inset-0 bg-black bg-opacity-0 transition duration-300 hover:bg-opacity-50 hover:brightness-50"></div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white z-10">
+                    <label class="block text-2xl font-bold mb-4">{{ city.name }}</label>
+                    <p-button label="Khám phá" class="h-full hidden duration-300 hover:block" [raised]="true" severity="info" />
+                </div>
+            </div>
+        </div>
+    `
 })
 export class HomeFavouriteComponent implements OnInit, OnChanges {
     cities: City[] = [];

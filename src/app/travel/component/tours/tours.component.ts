@@ -20,7 +20,8 @@ import { Tour } from '@shared/models/tour';
 export class ToursComponent implements OnInit {
     selectedOption: any | undefined;
     tours: Tour[] = [];
-    tour!: Tour;
+    loading = true;
+    error: string | null = null;
     items = [
         { icon: 'pi pi-home', route: '/' },
         { label: 'Tour', route: '/tour' }
@@ -31,29 +32,23 @@ export class ToursComponent implements OnInit {
         { name: 'Giá: cao đến thấp', value: 'priceDesc' }
     ];
 
-    constructor(
-        private fb: FormBuilder,
-        private tourService: TourService
-    ) {}
+    constructor(private tourService: TourService) {}
     ngOnInit(): void {
-        this.getTours();
+        this.fetchTours();
     }
 
-    getTours() {
+    fetchTours() {
         this.tourService.getTours().subscribe({
             next: (response) => {
                 this.tours = response;
+                console.log('Tours:', this.tours);
+                this.loading = false;
             },
-            error: (error) => console.error(error)
-        });
-    }
-
-    getTour(id: number) {
-        this.tourService.getTour(id).subscribe({
-            next: (response) => {
-                this.tour = response;
-            },
-            error: (error) => console.error(error)
+            error: (error) => {
+                this.loading = false;
+                this.error = error.message;
+                console.log(error);
+            }
         });
     }
 }

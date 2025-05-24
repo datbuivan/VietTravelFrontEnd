@@ -1,160 +1,60 @@
-import { InputTextModule } from 'primeng/inputtext';
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
-    standalone: true,
     selector: 'app-footer',
-    styleUrls: ['./app.footer.scss'],
-    imports: [ButtonModule, InputTextModule],
-    template: `<div class="layout-footer lg:px-24 md:px-24 sm:px-24 pt-16 bg-blue-200">
-        <div class="grid lg:grid-cols-4 md:grid-cols-4 lg:gap-4 md:gap-4 grid-cols-1 flex ">
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-1 md:col-start-1 sm:col-start-1">
-                <div class="w-full pb-4">
-                    <span class=" font-bold text-lg">Du lịch trong nước</span>
+    standalone: true,
+    imports: [RouterModule],
+    template: `
+        <footer class="mx-auto mb-4 grid max-w-2xl gap-x-10 lg:gap-x-12 px-4 sm:grid-cols-1 sm:pb-6 md:grid-cols-4 lg:max-w-6xl lg:px-8">
+            <div class="flex flex-wrap items-center justify-between md:justify-around gap-y-4 md:flex-col">
+                <div class="flex items-center">
+                    <img alt="logo" fetchpriority="high" class="h-8 lg:h-10 w-auto object-cover" src="/images/icon/logo.png" />
+                    <span style="font-family: 'Pacifico', cursive; font-size: 1.2rem; font-weight: 600">Viet Travel</span>
                 </div>
-                <div class="grid grid-cols-2 gap-2 w-full">
-                    <div class="col-span-1 pb-4">
-                        <span>Hà Nội</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Huế</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Hạ Long</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Quảng Bình</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Đà Nẵng</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span> Quảng Nam</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Phan Thiết</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span> Hà Giang</span>
-                    </div>
+                <p class="text-center text-xs text-[#101010]">© 2025 viettravel. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                        <i class="pi pi-facebook" style="font-size: 1.5rem; margin-right: 0.5rem;"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                        <i class="pi pi-instagram" style="font-size: 1.5rem; margin-right: 0.5rem;"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                        <i class="pi pi-twitter" style="font-size: 1.5rem;"></i>
+                    </a>
                 </div>
             </div>
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-2 md:col-start-2 sm:col-start-1">
-                <div class="w-full pb-4">
-                    <span class="font-bold text-lg">Du lịch nước ngoài</span>
-                </div>
-                <div class="grid grid-cols-2 gap-2 w-full">
-                    <div class="col-span-1 pb-4">
-                        <span>Trung Quốc</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Thái Lan</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Malaysia</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Singapore</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Úc</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span> Hoa Kỳ</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Nhật Bản</span>
-                    </div>
-                    <div class="col-span-1 pb-4">
-                        <span>Nga</span>
-                    </div>
+
+            <!-- Cột 2: Khám phá -->
+            <div class="mt-6 md:mt-0">
+                <h2 class="font-semibold md:mb-6 md:text-lg">Khám phá</h2>
+                <div class="flex gap-4 text-sm text-gray-600 md:flex-col md:text-base">
+                    <a routerLink="/">Trang chủ</a>
+                    <a routerLink="/about">Giới thiệu</a>
+                    <a routerLink="/tour">Điểm đến</a>
                 </div>
             </div>
-            <div class="lg:col-span-2 md:col-span-2 sm:col-span-1 lg:col-start-3 md:col-start-3 sm:col-start-1">
-                <div class="w-full ">
-                    <span class="font-bold text-lg">Tra cứu Booking</span>
-                </div>
-                <div class="w-full flex pb-4">
-                    <div class="w-3/5 flex flex-col h-10 mr-4">
-                        <input pInputText type="text" class="rounded-lg" placeholder="Nhập mã booking của quý khác" />
-                    </div>
-                    <div class="w-2/5 h-10">
-                        <p-button label="Tìm kiếm" variant="outlined" severity="contrast"><i class="pi pi-search mr-2"></i></p-button>
-                    </div>
+
+            <!-- Cột 3: Liên kết nhanh -->
+            <div class="mt-6 md:mt-0">
+                <h2 class="mb-2 font-semibold md:mb-6 md:text-lg">Liên kết nhanh</h2>
+                <div class="flex gap-4 text-sm text-gray-600 md:flex-col md:text-base">
+                    <a routerLink="/gallery">Gallery</a>
+                    <a routerLink="/blog">Blog</a>
+                    <a routerLink="/contact">Liên hệ</a>
                 </div>
             </div>
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-1 md:col-start-1 sm:col-start-1">
-                <div class="w-full pb-4">
-                    <span class="font-bold text-lg">Liên hệ</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>190 Pasteur, Phường Võ Thị Sáu, Quận 3, TP.HCM</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>(+84 28) 3822 8898</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>(+84 28) 3829 9142</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>info:&#64;vietravel.com</span>
-                </div>
-                <div class="grid grid-cols-5 gap-2 lg:w-1/3 md:w-2/3 pb-4 ">
-                    <div class="col-span-1 pi pi-instagram"></div>
-                    <div class="col-span-1 pi pi-tiktok"></div>
-                    <div class="col-span-1 pi pi-whatsapp"></div>
-                    <div class="col-span-1 pi pi-telegram"></div>
-                    <div class="col-span-1 pi pi-facebook"></div>
-                </div>
-                <div class="lg:w-1/3 md:w-2/3 bg-red-500 flex h-10 rounded-lg items-center justify-item-center mb-4">
-                    <div class="w-1/3 p-2"><i class="pi pi-whatsapp"></i></div>
-                    <div class="w-2/3 flex"><span class="w-full text-white">1900 1839</span></div>
-                </div>
-                <div class="w-full">
-                    <span>Từ 8:00 - 23:00 hằng ngày</span>
+
+            <!-- Cột 4: Liên hệ -->
+            <div class="mt-6 md:mt-0">
+                <h2 class="mb-2 font-semibold md:mb-6 md:text-lg">Liên hệ</h2>
+                <div class="flex gap-4 text-sm text-gray-600 md:flex-col md:text-base">
+                    <p>Email: viettravel&#64;gmail.com</p>
+                    <p>Phone: 0123456789</p>
                 </div>
             </div>
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-2 md:col-start-2 sm:col-start-1">
-                <div class="w-full pb-4">
-                    <span class="font-bold text-lg">Thông tin</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Khảo sát tỷ lệ đạt visa</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Tạp chí du lịch</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Tin tức</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Sitemap</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Trợ giúp</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Chính sách riêng tư</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Thỏa thuận sử dụng</span>
-                </div>
-                <div class="w-full pb-4">
-                    <span>Chính sách bảo vệ dữ liệu cá nhân</span>
-                </div>
-            </div>
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-3 md:col-start-3 sm:col-start-1">
-                <div class="w-full ">
-                    <span class="font-bold text-lg">Chứng nhận</span>
-                </div>
-            </div>
-            <div class="lg:col-span-1 md:col-span-1 sm:col-span-1 lg:col-start-4 md:col-start-4 sm:col-start-1">
-                <div class="w-full ">
-                    <span class="font-bold text-lg">Chấp nhận thanh toán</span>
-                </div>
-            </div>
-        </div>
-    </div>`
+        </footer>
+    `
 })
 export class AppFooter {}

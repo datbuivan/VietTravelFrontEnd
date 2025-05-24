@@ -1,78 +1,156 @@
 <div class="container h-full">
-    <div class="card h-full">
+    <p-toast position="top-right"></p-toast>
+    <p-confirmDialog></p-confirmDialog>
+    <div *ngIf="tour" class="card h-full">
         <h2 class="card-title">{{ tour.name }}</h2>
         <div class="tour-details">
-            <!-- Hình ảnh tour -->
-            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.images?.length">
-                <div class="col-span-12">
-                    <label class="field-label">Hình Ảnh Tour</label>
-                    <div class="flex overflow-x-auto gap-4 mt-2">
-                        <div class="flex-none" *ngFor="let picture of tour?.images">
-                            <img [src]="picture" class="tour-image" width="250" />
-                        </div>
-                    </div>
-                </div>
+            <div class="flex mb-2 gap-2 justify-end">
+                <p-button (onClick)="value = 0" rounded="true" styleClass="w-8 h-8 p-0" [outlined]="value !== 0" label="1" />
+                <p-button (onClick)="value = 1" rounded="true" styleClass="w-8 h-8 p-0" [outlined]="value !== 1" label="2" />
+                <p-button (onClick)="value = 2" rounded="true" styleClass="w-8 h-8 p-0" [outlined]="value !== 2" label="3" />
             </div>
-
-            <!-- Thông tin cơ bản -->
-            <div class="grid grid-cols-12 gap-4 mb-6">
-                <div class="col-span-12 md:col-span-3">
-                    <label class="field-label">Giá Người Lớn</label>
-                    <p>{{ tour.price | vnd }}</p>
-                </div>
-                <div class="col-span-12 md:col-span-3">
-                    <label class="field-label">Giá Trẻ Em</label>
-                    <p>{{ tour.childPrice | vnd }}</p>
-                </div>
-                <div class="col-span-12 md:col-span-3">
-                    <label class="field-label">Phụ Thu Phòng Đơn</label>
-                    <p>{{ tour.singleRoomSurcharge | vnd }}</p>
-                </div>
-                <div class="col-span-12 md:col-span-3">
-                    <label class="field-label">Thành Phố</label>
-                    <p>{{ tour.cityId }}</p>
-                    <!-- Có thể thay bằng tên thành phố nếu có API -->
-                </div>
-            </div>
-
-            <!-- Ngày khởi hành -->
-            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.tourStartDates?.length">
-                <div class="col-span-12">
-                    <label class="field-label">Ngày Khởi Hành</label>
-                    <div class="flex flex-row overflow-x-auto gap-2 mt-2">
-                        <div *ngFor="let startDate of tour.tourStartDates" class="start-date-card">
-                            <div class="bg-red-500 text-white p-2 rounded-md text-sm min-w-[100px] text-center">
-                                {{ startDate.startDate | date: 'dd/MM/yyyy' }}
+            <p-tabs [value]="value">
+                <p-tablist>
+                    <p-tab [value]="0">Thông Tin Tour Cơ Bản</p-tab>
+                    <p-tab [value]="1">Lịch Trình</p-tab>
+                    <p-tab [value]="2">Ngày Khởi Hành</p-tab>
+                </p-tablist>
+                <p-tabpanels>
+                    <p-tabpanel [value]="0">
+                        <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour.images?.length">
+                            <div class="col-span-12">
+                                <label class="field-label">Hình Ảnh Tour</label>
+                                <div class="flex overflow-x-auto gap-4 mt-2">
+                                    <div class="flex-none" *ngFor="let image of tour?.images">
+                                        <img [src]="image.url" class="tour-image" width="250" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div class="grid grid-cols-12 gap-4 mb-6">
+                            <div class="col-span-12 md:col-span-6">
+                                <label class="field-label">Giá Người Lớn</label>
+                                <p>{{ tour.price | vnd }}</p>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                                <label class="field-label">Giá Trẻ Em</label>
+                                <p>{{ tour.childPrice | vnd }}</p>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                                <label class="field-label">Phụ Thu Phòng Đơn</label>
+                                <p>{{ tour.singleRoomSurcharge | vnd }}</p>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                                <label class="field-label">Thành Phố</label>
+                                <p>{{ tour.cityId }}</p>
+                            </div>
+                        </div>
+                    </p-tabpanel>
 
-            <!-- Lịch trình -->
-            <div class="grid grid-cols-12 gap-4 mb-6" *ngIf="tour?.tourSchedules?.length">
-                <div class="col-span-9">
-                    <label class="field-label">Lịch Trình Tour</label>
-                    <div class="overflow-y-auto max-h-[300px]">
-                        <p-table *ngIf="tour?.tourSchedules" [value]="tour.tourSchedules" [tableStyle]="{ 'min-width': '20rem' }">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Ngày</th>
-                                    <th>Mô Tả</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-schedule>
-                                <tr>
-                                    <td>{{ schedule.dayNumber }}</td>
-                                    <td>{{ schedule.description }}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-            </div>
+                    <p-tabpanel [value]="1">
+                        <div class="grid grid-cols-12 gap-4 mb-6">
+                            <div class="col-span-12">
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="field-label">Lịch Trình Tour</label>
+                                    <p-button label="Thêm Lịch Trình" icon="pi pi-plus" styleClass="p-button-sm p-button-success" (onClick)="openScheduleDialog()"></p-button>
+                                </div>
+                                <div class="overflow-y-auto max-h-[300px]" *ngIf="tour?.tourSchedules?.length">
+                                    <p-table [value]="tour.tourSchedules ?? []" [tableStyle]="{ 'min-width': '20rem' }">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Ngày</th>
+                                                <th>Mô Tả</th>
+                                                <th>Hành Động</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-schedule>
+                                            <tr>
+                                                <td>{{ schedule.dayNumber }}</td>
+                                                <td>{{ schedule.description }}</td>
+                                                <td class="gap-2 justify-center">
+                                                    <div class="flex gap-2 justify-center">
+                                                        <p-button icon="pi pi-pencil" styleClass="p-button-sm p-button-warning" (onClick)="editSchedule(schedule.id)"></p-button>
+                                                        <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger" (onClick)="deleteSchedule(schedule.id)"></p-button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Nút Quay lại -->
+                        <p-dialog header="{{ isEditMode ? 'Sửa Lịch Trình' : 'Thêm Lịch Trình' }}" [(visible)]="displayScheduleDialog" [modal]="true" [style]="{ width: '40rem' }">
+                            <div [formGroup]="scheduleForm">
+                                <div class="mb-4 p-4 border border-gray-200 rounded">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="text-lg m-0">Lịch trình</h3>
+                                    </div>
+                                    <div class="grid grid-cols-12 gap-2">
+                                        <div class="col-span-12">
+                                            <label for="title" class="field-label">Tiêu đề</label>
+                                            <input type="text" pInputText [id]="'title'" formControlName="title" />
+                                            <small *ngIf="scheduleForm.get('title')?.invalid && scheduleForm.get('title')?.touched" class="p-error"> Ngày là bắt buộc và phải là số dương. </small>
+                                        </div>
+                                        <div class="col-span-12">
+                                            <label for="description" class="field-label">Mô Tả</label>
+                                            <textarea pTextarea id="description" formControlName="description" rows="8" class="w-full"></textarea>
+                                            <small *ngIf="scheduleForm.get('description')?.invalid && scheduleForm.get('description')?.touched" class="p-error"> Mô tả là bắt buộc. </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4">
+                                    <p-button label="Hủy" icon="pi pi-times" styleClass="p-button-text p-button-secondary" (onClick)="closeScheduleDialog()"></p-button>
+                                    <p-button label="{{ isEditMode ? 'Cập Nhật' : 'Thêm' }}" icon="pi pi-check" styleClass="p-button-raised p-button-success" (onClick)="saveSchedule()" type="submit" [disabled]="scheduleForm.invalid"></p-button>
+                                </div>
+                            </div>
+                        </p-dialog>
+                    </p-tabpanel>
+
+                    <p-tabpanel [value]="2">
+                        <div class="grid grid-cols-12 gap-4 mb-6">
+                            <div class="col-span-12">
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="field-label">Ngày Khởi Hành</label>
+                                    <p-button label="Thêm Ngày Khởi Hành" icon="pi pi-plus" styleClass="p-button-sm p-button-success" (onClick)="openStartDateDialog()"></p-button>
+                                </div>
+                                <div class="flex flex-col overflow-x-auto gap-2 mt-2" *ngIf="tour.tourStartDates?.length">
+                                    <div *ngFor="let startDate of tour.tourStartDates" class="start-date-card flex gap-4">
+                                        <div class="border border-red-500 font-bold p-2 rounded-md text-sm min-w-[100px] text-center">
+                                            {{ startDate.startDate | date: 'dd/MM/yyyy' }}
+                                        </div>
+                                        <div class="flex gap-2 justify-center mt-2 items-center">
+                                            <p-button icon="pi pi-pencil" styleClass="p-button-sm p-button-warning" (onClick)="editStartDate(startDate.id)"></p-button>
+                                            <p-button icon="pi pi-trash" styleClass="p-button-sm p-button-danger" (onClick)="deleteStartDate(startDate.id)"></p-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p-dialog header="{{ isEditMode ? 'Sửa Ngày Khởi Hành' : 'Thêm Ngày Khởi Hành' }}" [(visible)]="displayStartDateDialog" [modal]="true" [style]="{ width: '30rem', height: '60%', position: 'relative' }">
+                            <div [formGroup]="startDateForm">
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-12">
+                                        <label for="startDate" class="field-label">Số Lượng Khách</label>
+                                        <p-inputnumber inputId="availableSlots" formControlName="availableSlots" class="w-full" />
+                                        <small *ngIf="startDateForm.get('availableSlots')?.hasError('required') && startDateForm.get('availableSlots')?.touched" class="p-error"> Số lượng khách là bắt buộc. </small>
+                                        <small *ngIf="startDateForm.get('availableSlots')?.hasError('min') && startDateForm.get('availableSlots')?.touched" class="p-error"> Số lượng khách phải lớn hơn 0. </small>
+                                    </div>
+                                    <div class="col-span-12">
+                                        <label for="startDate" class="field-label">Ngày Khởi Hành</label>
+                                        <p-datepicker id="startDate" formControlName="startDate" dateFormat="dd/mm/yy" [showIcon]="true" class="w-full"></p-datepicker>
+                                        <small *ngIf="startDateForm.get('startDate')?.invalid && startDateForm.get('startDate')?.touched" class="p-error"> Ngày khởi hành là bắt buộc. </small>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end mt-4 absolute bottom-4 right-4">
+                                    <p-button label="Hủy" icon="pi pi-times" styleClass="p-button-text p-button-secondary" (onClick)="closeStartDateDialog()"></p-button>
+                                    <p-button label="{{ isEditMode ? 'Cập Nhật' : 'Thêm' }}" icon="pi pi-check" styleClass="p-button-raised p-button-success" (onClick)="saveStartDate()" type="submit" [disabled]="startDateForm.invalid"></p-button>
+                                </div>
+                            </div>
+                        </p-dialog>
+                    </p-tabpanel>
+                </p-tabpanels>
+            </p-tabs>
             <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
                 <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary" [routerLink]="['/admin/tours']"></p-button>
             </div>

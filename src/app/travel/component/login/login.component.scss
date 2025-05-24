@@ -1,8 +1,11 @@
 :host {
+
+
     .login-container {
         display: flex;
         min-height: 100vh;
         background-color: #FFFFFF;
+        position: relative;
     }
 
     .login-content {
@@ -118,4 +121,6 @@
     .p-button {
         width: 100%;
     }
+
+
 }

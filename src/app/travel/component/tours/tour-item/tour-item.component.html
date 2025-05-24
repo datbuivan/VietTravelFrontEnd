@@ -1,58 +1,60 @@
-<div class="card flex main-tour-item">
-    <div class="w-2/5 h-full">
-        <img src="images/uploadImage/hanoicity.jpg" alt="" style="width: 100%; height: 100%" />
+<div class="max-w-6xl mx-auto my-4 shadow-md overflow-hidden flex flex-col md:flex-row rounded-lg">
+    <p-toast position="top-right"></p-toast>
+    <div class="md:w-2/5 relative">
+        <img *ngIf="tour.images?.length" [src]="tour.images[0].url" alt="Image" class="w-full h-full object-cover" />
+        <button class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" (click)="addFavorite(tour.id)" aria-label="Add to favorites">
+            <i class="pi text-base" [ngClass]="isFavorite ? 'pi-heart-fill' : 'pi-heart'"></i>
+        </button>
     </div>
-    <div class="w-3/5 flex h-full">
-        <div class="w-full p-4">
-            <div class="w-full font-bold text-2xl mb-4">
-                <a class="line-clamp-2" href="">Hà Nội - Sapa - Fansipan - Yên Tử - Hạ Long - Ninh Bình - Tràng An - Bái Đính - Tặng Vé tàu hỏa leo núi Mường Hoa</a>
-            </div>
-            <div class="w-full grid grid-cols-1 gap-4 mb-4">
-                <div class="col-span-1 w-full flex">
-                    <div class="w-1/2 flex gap-2">
-                        <i class="content-center pi pi-ticket text-xl"></i>
-                        <span class="content-center text-xl">Mã tour: </span>
-                        <span class="text-xl font-bold">NDSGN9013</span>
-                    </div>
-                    <div class="w-1/2 flex gap-2">
-                        <i class="content-center pi pi-map-marker text-xl"></i>
-                        <span class="content-center text-xl">Khởi hành: </span>
-                        <span class="text-xl font-bold text-bule-400">TP. Hồ Chí Minh</span>
-                    </div>
+    <div class="md:w-3/5 p-4 flex flex-col">
+        <h2 class="text-2xl font-bold mb-4 line-clamp-2">
+            <a [routerLink]="['/tour', tour.id]" class="text-gray-800 hover:text-blue-600">{{ tour.name }}</a>
+        </h2>
+        <div class="grid grid-cols-1 gap-4 mb-4">
+            <div class="flex flex-col sm:flex-row">
+                <div class="flex items-center sm:w-1/2 mb-2 sm:mb-0">
+                    <i class="pi pi-ticket text-xl mr-2"></i>
+                    <span class="text-lg">Mã tour:</span>
+                    <span class="text-lg font-bold ml-1">NDSGN9013</span>
                 </div>
-                <div class="col-span-1 w-full flex">
-                    <div class="w-1/2 flex gap-2">
-                        <i class="content-center pi pi-clock text-xl"></i>
-                        <span class="content-center text-xl">Thời gian: </span>
-                        <span class="content-center text-xl">Trong ngày</span>
-                    </div>
-                    <div class="w-1/2 flex gap-2">
-                        <i class="content-center pi pi-car text-xl"></i>
-                        <span class="content-center text-xl">Phương tiện: </span>
-                        <span class="content-center text-xl">Xe</span>
-                    </div>
-                </div>
-                <div class="col-span-1 w-full flex">
-                    <div class="w-1/2 flex gap-2">
-                        <i class="content-center pi pi-calendar text-xl"></i>
-                        <span class="content-center text-xl">Ngày khởi hành: </span>
-                    </div>
-                    <div class="w-1/2 flex gap-2">
-                        <p-button label="21/6" variant="outlined" severity="danger" />
-                        <p-button label="15/7" variant="outlined" severity="danger" />
-                        <p-button label="16/8" variant="outlined" severity="danger" />
-                    </div>
+                <div class="flex items-center sm:w-1/2">
+                    <i class="pi pi-map-marker text-xl mr-2"></i>
+                    <span class="text-lg">Khởi hành:</span>
+                    <span class="text-lg font-bold text-blue-600 ml-1">TP. Hồ Chí Minh</span>
                 </div>
             </div>
-            <div class="w-full flex">
-                <div>
-                    <div>Giá từ</div>
-                    <div class="text-red-500 font-bold text-2xl">159.990.000&nbsp; đ</div>
+            <div class="flex flex-col sm:flex-row">
+                <div class="flex items-center sm:w-1/2 mb-2 sm:mb-0">
+                    <i class="pi pi-clock text-xl mr-2"></i>
+                    <span class="text-lg">Thời gian:</span>
+                    <span class="text-lg ml-1">Trong ngày</span>
                 </div>
-                <div class="ml-auto">
-                    <p-button label="Xem chi tiết" severity="info" routerLink="{{ tour.id }}" />
+                <div class="flex items-center sm:w-1/2">
+                    <i class="pi pi-car text-xl mr-2"></i>
+                    <span class="text-lg">Phương tiện:</span>
+                    <span class="text-lg ml-1">Xe</span>
                 </div>
             </div>
+            <!-- Row 3 -->
+            <div class="flex flex-col sm:flex-row">
+                <div class="flex items-center sm:w-1/2 mb-2 sm:mb-0">
+                    <i class="pi pi-calendar text-xl mr-2"></i>
+                    <span class="text-lg">Ngày khởi hành:</span>
+                </div>
+                <div class="flex items-center sm:w-1/2 gap-2 flex-wrap">
+                    <p-button label="21/6" variant="outlined" severity="danger" outlined></p-button>
+                    <p-button label="15/7" variant="outlined" severity="danger" outlined></p-button>
+                    <p-button label="16/8" variant="outlined" severity="danger" outlined></p-button>
+                </div>
+            </div>
+        </div>
+        <!-- Price and CTA -->
+        <div class="flex items-center mt-auto">
+            <div>
+                <p class="text-sm text-gray-600">Giá từ</p>
+                <p class="text-2xl font-bold text-red-500">{{ tour.price | vnd }}</p>
+            </div>
+            <p-button label="Xem chi tiết" class="ml-auto rounded-lg bg-blue-500 hover:bg-blue-600" [routerLink]="['/tour', tour.id]"></p-button>
         </div>
     </div>
 </div>

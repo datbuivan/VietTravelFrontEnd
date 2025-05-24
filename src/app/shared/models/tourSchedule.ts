@@ -3,4 +3,5 @@ export interface TourSchedule {
     title: string;
     description: string;
     dayNumber?: number;
+    tourId: number;
 }

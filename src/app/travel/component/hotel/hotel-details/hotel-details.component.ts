@@ -1,5 +1,4 @@
 import { Room } from '@shared/models/room';
-import { GalleriaModule } from 'primeng/galleria';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -10,45 +9,30 @@ import { CarouselModule } from 'primeng/carousel';
 import { RoomItemComponent } from '@travel/component/hotel/room-item/room-item.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { RoomService } from '@services/common/room.service';
+import { DialogModule } from 'primeng/dialog';
+import { HotelRegulationComponent } from '@travel/component/hotel/hotel-regulation/hotel-regulation.component';
+import { HotelAmenitiesComponent } from '@travel/component/hotel/hotel-amenities/hotel-amenities.component';
 
 @Component({
     selector: 'app-hotel-details',
-    imports: [BreadcrumbModule, RouterModule, CommonModule, GalleriaModule, ButtonModule, AccordionModule, CarouselModule, RoomItemComponent, RoomItemComponent, ScrollPanelModule],
+    imports: [BreadcrumbModule, RouterModule, CommonModule, CarouselModule, ButtonModule, AccordionModule, CarouselModule, RoomItemComponent, RoomItemComponent, ScrollPanelModule, DialogModule, HotelRegulationComponent, HotelAmenitiesComponent],
     templateUrl: './hotel-details.component.html',
     styleUrl: './hotel-details.component.scss',
     standalone: true
 })
 export class HotelDetailsComponent implements OnInit {
+    displayDialog: boolean = false;
     isExpanded = false;
     numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
-    services: string[] = ['Spa/xông khô', 'Dịch vụ vé', 'Chuyến du lịch', 'Dịch vụ thanh toán không sử dụng tiền mặt', 'Dịch vụ taxi', 'Thuê xe đạp', 'Điều hòa', 'Áo choàng tắm'];
     items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Hotel', route: '/hotel' }, { label: 'Hà Nội' }];
     selectHotel: any | null = null;
     images = [
-        {
-            itemImageSrc: 'images/uploadImage/phuquochotel.jpg',
-            thumbnailImageSrc: 'images/uploadImage/phuquochotel.jpg',
-            alt: 'Phú Quốc Hotel',
-            title: 'Phú Quốc Hotel'
-        },
-        {
-            itemImageSrc: 'images/uploadImage/phuquochotel2.jpg',
-            thumbnailImageSrc: 'images/uploadImage/phuquochotel.jpg',
-            alt: 'Phú Quốc Hotel ',
-            title: 'Phú Quốc Hotel'
-        },
-        {
-            itemImageSrc: 'images/uploadImage/phuquochotel3.jpg',
-            thumbnailImageSrc: 'images/uploadImage/phuquochotel3.jpg',
-            alt: 'Phú Quốc Hotel',
-            title: 'Phú Quốc Hotel'
-        },
-        {
-            itemImageSrc: 'images/uploadImage/phuquochotel1.jpg',
-            thumbnailImageSrc: 'images/uploadImage/phuquochotel1.jpg',
-            alt: 'Phú Quốc Hotel',
-            title: 'Phú Quốc Hotel'
-        }
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg' },
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg' },
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg' },
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg' },
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg' },
+        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg' }
     ];
     rooms: Room[] = [];
     constructor(
@@ -56,13 +40,12 @@ export class HotelDetailsComponent implements OnInit {
         private roomService: RoomService
     ) {}
     ngOnInit(): void {}
-    // getRooms() {
-    //     const hotelId = this.route.snapshot.paramMap.get('id');
-    //     const hotelIdNumber = hotelId ? Number(hotelId) : null;
-    //     if (hotelIdNumber) {
-    //         this.roomService.getRoomByHotelId(hotelIdNumber).subscribe({
-    //             next: (response) => (this.rooms = response)
-    //         });
-    //     }
-    // }
+
+    showDialog() {
+        this.displayDialog = true;
+    }
+
+    hideDialog() {
+        this.displayDialog = false;
+    }
 }

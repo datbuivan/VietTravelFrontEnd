@@ -14,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SelectModule } from 'primeng/select';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { City } from '@app/shared/models/city';
 import { CityService } from '@app/services/common/city.service';
@@ -69,4 +69,8 @@ export class CityManagementComponent implements OnInit {
         });
     }
     deleteCity(id: number) {}
+
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
 }

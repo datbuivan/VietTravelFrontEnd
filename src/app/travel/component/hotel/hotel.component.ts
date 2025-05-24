@@ -20,7 +20,8 @@ import { Hotel } from '@shared/models/hotel';
 })
 export class HotelComponent implements OnInit {
     hotels: Hotel[] = [];
-    hotel?: Hotel;
+    loading = true;
+    error: string | null = null;
     selectedOption: any | undefined;
     items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Hotel', route: '/hotel' }, { label: 'Hà Nội' }];
     sortOptions = [
@@ -30,17 +31,21 @@ export class HotelComponent implements OnInit {
     ];
     constructor(private hotelService: HotelService) {}
     ngOnInit(): void {
-        this.initialiseHotel();
+        this.fetchHotels();
     }
 
-    initialiseHotel() {
-        this.getHotels();
-    }
-
-    getHotels() {
+    fetchHotels() {
         this.hotelService.getHotels().subscribe({
-            next: (response) => (this.hotels = response),
-            error: (error) => console.error(error)
+            next: (response) => {
+                this.hotels = response;
+                console.log(this.hotels);
+                this.loading = false;
+            },
+            error: (error) => {
+                this.loading = false;
+                this.error = error.message;
+                console.log(error);
+            }
         });
     }
 }

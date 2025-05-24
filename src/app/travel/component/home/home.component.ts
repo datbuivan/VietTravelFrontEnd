@@ -9,13 +9,14 @@ import { TabsModule } from 'primeng/tabs';
 import { Region } from '@shared/models/region';
 import { HomeExploreComponent } from '@travel/component/home/home-explore/home-explore.component';
 import { RegionService } from '@services/common/region.service';
+import { SubscribeSectionComponent } from './subscribe-section/subscribe-section.component';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
     standalone: true,
-    imports: [CommonModule, ImageModule, NewTourComponent, SearchComponent, HomeFavouriteComponent, HomeExploreComponent, TabsModule]
+    imports: [CommonModule, ImageModule, NewTourComponent, SearchComponent, HomeFavouriteComponent, HomeExploreComponent, TabsModule, SubscribeSectionComponent]
 })
 export class HomeComponent implements OnInit {
     regionId: number = 0;

@@ -1,41 +1,41 @@
-<div class="card tour-main lg:px-24 md:px-24">
-    <div class="tour-header lg:w-w-full md:w-full font-bold">
-        <div class="w-full flex">
-            <p-breadcrumb class="max-w-full" [model]="items">
-                <ng-template #item let-item>
-                    <ng-container *ngIf="item.route; else elseBlock">
-                        <a [routerLink]="item.route" class="p-breadcrumb-item-link">
-                            <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
-                            <span class="text-primary font-semibold">{{ item.label }}</span>
-                        </a>
-                    </ng-container>
-                    <ng-template #elseBlock>
-                        <a [href]="item.url">
-                            <span class="text-color">{{ item.label }}</span>
-                        </a>
-                    </ng-template>
+<div class="tour-main container mx-auto px-4 gap-8">
+    <div class="hotel-header w-full font-bold mb-8">
+        <p-breadcrumb class="max-w-full" [model]="items">
+            <ng-template #item let-item>
+                <ng-container *ngIf="item.route; else elseBlock">
+                    <a [routerLink]="item.route" class="p-breadcrumb-item-link">
+                        <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+                        <span class="text-primary font-semibold">{{ item.label }}</span>
+                    </a>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <a [href]="item.url">
+                        <span class="text-color">{{ item.label }}</span>
+                    </a>
                 </ng-template>
-            </p-breadcrumb>
-        </div>
-        <div class="w-full">
-            <div class="pb-8">
-                <h2 class="">Hà Nội - Quảng Ninh - Ninh Bình</h2>
-            </div>
+            </ng-template>
+        </p-breadcrumb>
+        <div class="mt-4">
+            <h2 class="text-2xl">Hà Nội - Quảng Ninh - Ninh Bình</h2>
         </div>
     </div>
-    <div class="w-full flex gap-4">
-        <div class="w-2/3">
-            <div class="w-full mb-16">
-                <p-galleria [value]="images" [thumbnailsPosition]="'left'" [numVisible]="5">
-                    <ng-template pTemplate="item" let-item>
-                        <img [src]="item.itemImageSrc" loading="lazy" style="width: 100%; display: block" />
-                    </ng-template>
-                    <ng-template pTemplate="thumbnail" let-item>
-                        <div class="grid gap-4 justify-center">
-                            <img [src]="item.thumbnailImageSrc" loading="lazy" class="block lg:w-[250px] md:w-[300px]" />
-                        </div>
-                    </ng-template>
-                </p-galleria>
+    <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full lg:w-2/3">
+            <div class="mb-8 max-h-[52rem]">
+                <div class="flex gap-4">
+                    <div class="w-1/5 flex flex-col gap-2">
+                        <ng-container *ngFor="let image of images.slice(1, 5); let last = last">
+                            <img *ngIf="!last" [src]="image.thumbnailImageSrc" alt="Thumbnail Image" style="width: 100%; height: 100%; object-fit: cover" (click)="showDialog()" />
+                            <div *ngIf="last" (click)="showDialog()" class="relative cursor-pointer">
+                                <img [src]="images[4].thumbnailImageSrc" alt="More Images" style="width: 100%; height: 100%; object-fit: cover" />
+                                <span class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold bg-black bg-opacity-50">{{ images.length > 5 ? '+' + (images.length - 5) : '' }} </span>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="w-4/5">
+                        <img [src]="images[0].itemImageSrc" alt="Main Tour Image" style="width: 100%; height: 100%; object-fit: cover" />
+                    </div>
+                </div>
             </div>
             <div class="w-full mb-8">
                 <div class="w-full">
@@ -43,39 +43,14 @@
                         <h3 class="text-center text-bold uppercase text-[#0b5da7]">GIỚI THIỆU</h3>
                         <div class="w-full text-lg font-medium text-justify">
                             <p-scroll-panel [style]="{ width: '100%', height: '150px' }">
-                                <p class="pr-4">
-                                    Chúng tôi luôn chú trọng đảm bảo quý khách có trải nghiệm thoải mái qua các dịch vụ và tiện nghi hàng đầu. Chia sẻ ảnh và trả lời email nhanh chóng với Internet và Wi-Fi miễn phí tại cơ sở lưu trú.Cơ sở lưu trú có
-                                    thể sắp xếp dịch vụ đón tiễn sân bay trước ngày quý khách đến. Cơ sở lưu trú cung cấp dịch vụ đưa đón để quý khách dễ dàng di chuyển xung quanh Hà Nội.Cơ sở lưu trú có chỗ đỗ xe cho khách đến bằng ô tô. Dễ dàng lên
-                                    kế hoạch cho các hoạt động hằng ngày và yêu cầu đi lại của quý khách với dịch vụ trợ giúp đặc biệt được cung cấp tại quầy lễ tân.Cơ sở lưu trú cũng cung cấp dịch vụ bán vé để hỗ trợ đặt vé và đảm bảo đặt chỗ cho
-                                    các hoạt động giải trí và phiêu lưu. Cho dù là lưu trú dài ngày hay cần quần áo giặt mới, dịch vụ giặt là tại cơ sở lưu trú sẽ giúp quần áo của quý khách lúc nào cũng sạch sẽ và phẳng phiu.Các tiện nghi trong phòng
-                                    như dịch vụ phòng góp phần tạo nên một kỳ lưu trú đáng nhớ. Cơ sở lưu trú cấm hút thuốc để mang lại bầu không khí thoải mái cho mọi khách lưu trú.Chỉ được phép hút thuốc tại các khu vực hút thuốc được cơ sở lưu trú
-                                    chỉ định.Cơ sở lưu trú được trang bị mọi tiện nghi cần thiết để mang đến một giấc ngủ ngon cho khách. Các phòng được trang bị điều hòa không khí hoặc dịch vụ cung cấp và làm sạch đồ vải để đảm bảo sự thoải mái và
-                                    thuận tiện cho quý khách.Một số phòng có các tiện ích giải trí trong phòng như truyền phát video trong phòng, báo hằng ngày hoặc TV, mang đến cho khách một kỳ nghỉ thoải mái. Các phòng tại cơ sở lưu trú có cung cấp
-                                    nước uống. Một số phòng có máy pha trà và cà phê.Hiểu được tầm quan trọng của tiện nghi phòng tắm trong việc nâng cao sự hài lòng của khách, cơ sở lưu trú này cung cấp áo choàng tắm, khăn tắm hoặc máy sấy tóc trong
-                                    một số phòng. Bắt đầu kỳ nghỉ của bạn một cách đầy cảm hứng. Tại Khách sạn May De Ville Lakeside , buổi sáng của bạn được chào đón bằng bữa sáng thú vị, miễn phí.Bắt đầu ngày mới với cảm giác sảng khoái và tràn đầy
-                                    sinh lực với một tách cà phê thơm ngon tại quán cà phê trong khuôn viên.Chỗ nghỉ cung cấp nhiều bữa ăn ngon với nhiều lựa chọn hấp dẫn. Hãy trải nghiệm một buổi tối khó quên với những người bạn đồng hành của quý
-                                    khách tại các địa điểm giải trí của cơ sở lưu trú chỉ cách đó một quãng ngắn.Hãy tham gia các hoạt động giải trí được cung cấp suốt cả ngày tại Khách sạn May De Ville Lakeside .Hãy thư giãn sau một ngày dài bằng
-                                    cách đến spa để hồi sinh các giác quan của quý khách.Có rất nhiều tiện nghi tại Khách sạn May De Ville Lakeside để đảm bảo một trải nghiệm trọn vẹn trong suốt kỳ nghỉ của quý khách. Hãy biến kỳ lưu trú của quý
-                                    khách trở thành một thời gian đáng nhớ với hoạt động thư giãn bên bể bơi. Hãy diện trang phục bơi yêu thích và nhâm nhi ly cocktail mát lạnh tại quầy pha chế bên bể bơi của khách sạn. Giảm bớt lượng calo nạp vào cơ
-                                    thể bằng cách sử dụng các dụng cụ luyện tập thể dục thể thao được trang bị tại cơ sở lưu trú.
-                                </p>
+                                <!-- <p class="pr-4">{{ hotel.contentIntroduct || 'No description available.' }}</p> -->
                             </p-scroll-panel>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-full flex flex-col mb-8">
-                <h3 class="text-center font-bold mb-8 uppercase">Tiện nghi chỗ ở</h3>
-                <div class="w-full p-6 border rounded-2xl">
-                    <p-carousel [value]="services" [numVisible]="4" [numScroll]="1" [circular]="false" class="p-6">
-                        <ng-template let-service pTemplate="item">
-                            <div class="flex flex-col text-lg font-bold">
-                                <i class="pi pi-check"></i>
-                                <span>{{ service }}</span>
-                            </div>
-                        </ng-template>
-                    </p-carousel>
-                </div>
+                <app-hotel-amenities></app-hotel-amenities>
             </div>
             <div class="w-full mb-8">
                 <h3 class="text-center font-bold mb-8 uppercase">Danh sách phòng</h3>
@@ -83,68 +58,11 @@
                     <app-room-item></app-room-item>
                 </div>
             </div>
-            <div class="w-full">
-                <h3 class="text-center font-bold mb-8 uppercase">Quy định chỗ nghỉ</h3>
-                <div class="w-full rounded-2xl border p-8">
-                    <div class="w-full flex flex-col gap-4">
-                        <div class="w-full flex flex-col gap-1 justify-start items-start">
-                            <label class="font-bold text-left text-xl">Trẻ em và giường phụ</label>
-                            <p class="text-lg m-0 font-medium text-justify">Giường phụ tùy thuộc vào loại phòng bạn chọn, xin vui lòng kiểm tra thông tin phòng để biết thêm chi tiết.</p>
-                            <p class="text-lg m-0 font-medium text-justify">Tất cả trẻ em đều được chào đón.</p>
-                            <div class="w-full flex justify-start items-stretch gap-4">
-                                <div class="w-1/3 border rounded-xl">
-                                    <div class="w-full bg-blue-900 text-white font-bold text-xl p-4 item-center text-center">
-                                        <span>Độ tuổi trẻ em: 0 - 5 tuổi</span>
-                                    </div>
-                                    <div class="w-full px-8 py-4">
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                    </div>
-                                </div>
-                                <div class="w-1/3 border rounded-xl">
-                                    <div class="w-full bg-blue-900 text-white font-bold text-xl p-4 item-center text-center">
-                                        <span>Độ tuổi trẻ em: 0 - 5 tuổi</span>
-                                    </div>
-                                    <div class="w-full px-8 py-4">
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                    </div>
-                                </div>
-                                <div class="w-1/3 border rounded-xl">
-                                    <div class="w-full bg-blue-900 text-white font-bold text-xl p-4 item-center text-center">
-                                        <span> > 6 tuổi tính là người lớn</span>
-                                    </div>
-                                    <div class="w-full px-8 py-4">
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                        <p><span>Ở miễn phí nếu sử dụng giường có sẵn</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full flex flex-col gap-1 justify-start items-start">
-                            <label class="font-bold text-left text-xl">Quy định hủy phòng</label>
-                            <p class="text-lg m-0 font-medium text-justify">
-                                Đơn đặt phòng này không hoàn tiền và không thể nào thay đổi hoặc chỉnh sửa được. Không đến khách sạn hoặc chỗ nghỉ sẽ được giải quyết như là Vắng Mặt và sẽ phải trả một khoản tiền là 100% giá trị đặt phòng (Quy định
-                                của khách sạn)..
-                            </p>
-                        </div>
-                        <div class="w-full flex flex-col gap-1 justify-start items-start">
-                            <label class="font-bold text-left text-xl">Quy định khác</label>
-                            <ul class="list-outside">
-                                <li class="text-lg m-0 font-medium text-justify">Đối với đặt phòng trả tiền tại khách sạn, khách cần liên hệ chỗ nghỉ trước để xác nhận thời gian nhận phòng. Nếu không, chỗ nghỉ có thể bác bỏ việc đặt phòng.</li>
-                                <li class="text-lg m-0 font-medium text-justify">Khi đặt trên 5 phòng, chính sách và điều khoản bổ sung có thể được áp dụng.</li>
-                            </ul>
-                        </div>
-                        <div class="w-full flex flex-col gap-1 justify-start items-start">
-                            <label>
-                                <span>Lưu ý của khách sạn</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            <div class="mb-8">
+                <app-hotel-regulation></app-hotel-regulation>
             </div>
         </div>
-        <div class="w-1/3">
+        <div class="w-full lg:w-1/3">
             <div class="w-full h-full">
                 <div class="w-full sticky top-16">
                     <div class="w-full rounded-2xl shadow-2xl">
@@ -193,4 +111,14 @@
             </div>
         </div>
     </div>
+    <p-dialog header="Tất cả hình ảnh tour" [(visible)]="displayDialog" [modal]="true" [draggable]="false" [resizable]="false" [style]="{ width: '800px' }">
+        <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
+            <ng-template let-image pTemplate="item">
+                <img [src]="image.thumbnailImageSrc" alt="Tour Image" style="width: 100%; height: 400px; object-fit: cover" />
+            </ng-template>
+        </p-carousel>
+        <ng-template pTemplate="footer">
+            <p-button label="Đóng" (click)="hideDialog()" severity="secondary"></p-button>
+        </ng-template>
+    </p-dialog>
 </div>
