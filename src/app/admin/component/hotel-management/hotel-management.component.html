@@ -4,7 +4,7 @@
             <div class="font-semibold text-xl mb-4">Danh Sách Thành Phố</div>
             <button pButton label="Thêm Khách Sạn" icon="pi pi-plus" class="p-button-info mb-2" [routerLink]="['/admin/add-hotel']"></button>
         </div>
-        <p-table #dt1 dataKey="id" [value]="hotels" [rows]="5" [rowHover]="true" [showGridlines]="true" [paginator]="true" [globalFilterFields]="['name', 'pictures', 'price', 'childPrice', 'singleRoomSurcharge']" responsiveLayout="scroll">
+        <p-table #dt1 dataKey="id" [value]="hotels" [rows]="5" [rowHover]="true" [showGridlines]="true" [paginator]="true" [globalFilterFields]="['name', 'address', 'phoneNumber', 'titleIntroduct', 'contentIntroduct']" responsiveLayout="scroll">
             <ng-template #caption>
                 <div class="flex justify-between items-center flex-column sm:flex-row">
                     <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"></button>

@@ -22,7 +22,7 @@ export class AdminMenu {
         this.model = [
             {
                 label: 'Trang chủ',
-                items: [{ label: 'Dashboard', icon: 'pi pi-chart-bar', routerLink: ['/'] }]
+                items: [{ label: 'Dashboard', icon: 'pi pi-chart-bar', routerLink: ['/admin/dashboard'] }]
             },
             {
                 label: 'Danh Mục Quản Lý',

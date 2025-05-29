@@ -10,6 +10,7 @@ import { TourDetailComponent } from '@admin/component/tour-management/tour-detai
 import { CityDetailComponent } from '@admin/component/city-management/city-detail/city-detail.component';
 import { HotelDetailComponent } from '@admin/component/hotel-management/hotel-detail/hotel-detail.component';
 import { AuthGuard } from '@core/guards/auth.guard';
+import { DashboardComponent } from '@admin/component/dashboard/dashboard.component';
 
 export const adminRoutes: Routes = [
     {
@@ -19,6 +20,7 @@ export const adminRoutes: Routes = [
         canActivateChild: [AuthGuard],
         data: { role: 'ADMIN' },
         children: [
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'tours', component: TourManagementComponent },
             { path: 'cities', component: CityManagementComponent },
             { path: 'hotels', component: HotelManagementComponent },

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ApiResponse } from '@shared/models/api-response';
 import { environment } from '@environments/environment';
 import { TokenService } from '@services/common/token.service';
+import { UserDto } from '@app/shared/models/user-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -85,6 +86,18 @@ export class AuthService {
         );
     }
 
+    getCurrentUser() {
+        const headers = this.getAuthHeaders();
+        return this.http.get<ApiResponse<UserDto>>(this.baseUrl + 'Auth/current-user', { headers }).pipe(
+            map((response: ApiResponse<UserDto>) => {
+                const user = {
+                    ...response.data
+                } as UserDto;
+                return user;
+            })
+        );
+    }
+
     login(email: string, password: string): Observable<User> {
         return this.http.post<ApiResponse<User>>(this.baseUrl + 'Auth/login', { email, password }).pipe(
             map((response: ApiResponse<User>) => {
@@ -109,7 +122,7 @@ export class AuthService {
     }
 
     register(username: string, email: string, password: string): Observable<any> {
-        return this.http.post<any>(this.baseUrl + 'register', { username, email, password });
+        return this.http.post<any>(this.baseUrl + 'Auth/register', { username, email, password });
     }
 
     logout(): void {
@@ -150,9 +163,13 @@ export class AuthService {
         );
     }
 
+    verifyEmail(userId: string, token: string): Observable<{ success: boolean; message: string }> {
+        return this.http.get<{ success: boolean; message: string }>(`${this.baseUrl}/Auth/confirm-email?userId=${userId}&token=${encodeURIComponent(token)}`);
+    }
+
     redirectBasedOnRole(roles: string[]): void {
         if (roles.includes('ADMIN')) {
-            this.router.navigate(['/admin/cities']);
+            this.router.navigate(['/admin/dashboard']);
         } else if (roles.includes('USER')) {
             this.router.navigate(['/']);
         } else {

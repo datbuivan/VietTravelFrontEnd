@@ -1,0 +1,50 @@
+<div class="container h-full">
+    <div class="card h-full p-4">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2 lg:col-span-1">
+                <form [formGroup]="filterForm" class="col-12 mb-4">
+                    <div class="grid gap-4">
+                        <div class="col-12 md:col-4">
+                            <p-select formControlName="selectedYear" [options]="years" placeholder="Chọn năm" [style]="{ width: '100%' }"></p-select>
+                            <div *ngIf="filterForm.get('selectedYear')?.hasError('required') && filterForm.get('selectedYear')?.touched" class="text-red-500 text-sm mt-1">Vui lòng chọn năm!</div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col-12 md:col-4">
+                    <h2 class="text-xl font-semibold mb-2">Doanh thu theo tháng trong năm {{ filterForm.get('selectedYear')?.value || '' }}</h2>
+                    <div class="chart-container">
+                        <p-chart *ngIf="combinedChartData" type="bar" [data]="combinedChartData" [options]="chartOptions" [responsive]="true"></p-chart>
+                        <div *ngIf="!combinedChartData" class="text-red-500 text-sm">Chưa có dữ liệu để hiển thị biểu đồ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bảng chi tiết -->
+            <div *ngIf="revenueData" class="col-span-2 lg:col-span-1">
+                <h2 class="text-xl font-semibold mb-2">Chi tiết doanh thu theo tháng</h2>
+                <p-table #table [value]="revenueData.monthlyRevenues" [responsive]="true" [scrollable]="true" [style]="{ 'min-width': '100%' }" [exportFilename]="'revenue-report'">
+                    <ng-template pTemplate="caption">
+                        <button pButton label="Xuất CSV" (click)="table.exportCSV()" class="p-button-outlined"></button>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="p-text-center">Tháng</th>
+                            <th class="p-text-center">Doanh thu khách sạn</th>
+                            <th class="p-text-center">Doanh thu tour</th>
+                            <th class="p-text-center">Tổng doanh thu</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-data>
+                        <tr>
+                            <td class="p-text-center">{{ data.month }}</td>
+                            <td class="p-text-right">{{ data.hotelRevenue | vnd }}</td>
+                            <td class="p-text-right">{{ data.tourRevenue | vnd }}</td>
+                            <td class="p-text-right">{{ data.totalRevenue | vnd }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,6 @@
         top: 6rem;
         max-width: 1200px;
         margin: 0 auto;
-        height: calc(100vh - 8rem);
 
         .card {
             background: white;
@@ -14,5 +13,17 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 2rem;
         }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        height: calc(100vh - 8rem);
+    }
+
+
+    .grid {
+        grid-template-columns: 1fr 1.5fr;
+
     }
 }

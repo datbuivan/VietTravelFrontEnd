@@ -8,6 +8,7 @@ export interface Tour {
     childPrice: number;
     singleRoomSurcharge: number | null;
     cityId: number;
+    cityName?: string;
     tourStartDates?: TourStartDate[];
     tourSchedules?: TourSchedule[];
     images: ImageDto[];

@@ -10,6 +10,9 @@ import { TourFavoriteService } from '@app/services/user/tour-favorite.service';
 import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { UserDto } from '@app/shared/models/user-dto';
+import { AuthService } from '@app/services/common/auth.service';
+import { User } from '@app/shared/models/user';
 
 @Component({
     selector: 'app-tour-item',
@@ -25,12 +28,14 @@ export class TourItemComponent implements OnInit {
     tour$: Observable<Tour | null> = of(null);
     error: string | null = null;
     loading = true;
+    curentUser: User | null = null;
 
     constructor(
         private tourService: TourService,
         private route: ActivatedRoute,
         private tourFavoriteService: TourFavoriteService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -41,9 +46,7 @@ export class TourItemComponent implements OnInit {
         } else {
             this.tour$ = of(this.tour);
         }
-        this.tourFavoriteService.isFavorite(this.tour.id).subscribe((isFavorite) => {
-            this.isFavorite = isFavorite;
-        });
+        this.loadUser();
     }
 
     private fetchTour(id: number) {
@@ -59,8 +62,21 @@ export class TourItemComponent implements OnInit {
         });
     }
 
+    loadFavorite(tourId: number) {
+        this.tourFavoriteService.isFavorite(tourId).subscribe((isFavorite) => {
+            this.isFavorite = isFavorite;
+        });
+    }
+
+    loadUser() {
+        this.curentUser = this.authService.currentUserValue;
+        if (this.curentUser) {
+            this.loadFavorite(this.tour.id);
+        }
+    }
+
     addFavorite(tourId: number) {
-        if (this.isFavorite) {
+        if (this.curentUser && this.isFavorite) {
             this.tourFavoriteService.removeFavorite(tourId).subscribe({
                 next: () => {
                     this.isFavorite = false;

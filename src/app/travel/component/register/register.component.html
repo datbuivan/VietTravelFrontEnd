@@ -18,21 +18,21 @@
                     <label for="email">Email</label>
                     <input id="email" type="email" pInputText formControlName="email" placeholder="Email" />
                 </div>
-                <div class="p-field">
+                <!-- <div class="p-field">
                     <label for="phone">Số điện thoại</label>
                     <input id="phone" type="text" pInputText formControlName="phone" placeholder="Số điện thoại" />
                 </div>
                 <div class="p-field">
                     <label for="address">Địa chỉ</label>
                     <input id="address" type="text" pInputText formControlName="address" placeholder="Địa chỉ" />
-                </div>
+                </div> -->
                 <div class="p-field">
                     <label for="password">Mật khẩu</label>
-                    <p-password id="password" formControlName="password" placeholder="Mật khẩu" [toggleMask]="true"></p-password>
+                    <p-password id="password" [feedback]="false" formControlName="password" placeholder="Mật khẩu" [toggleMask]="true"></p-password>
                 </div>
                 <div class="p-field">
                     <label for="confirmPassword">Nhập lại mật khẩu</label>
-                    <p-password id="confirmPassword" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu" [toggleMask]="true"></p-password>
+                    <p-password id="confirmPassword" [feedback]="false" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu" [toggleMask]="true"></p-password>
                 </div>
                 <p-button label="Đăng ký" type="submit" [disabled]="registerForm.invalid" styleClass="p-button-success" (onClick)="onSubmit()"></p-button>
                 <div class="text-center text-sm mt-2">Đã có tài khoản? <a class="underline underline-offset-4" href="/login">Đăng nhập ngay</a></div>

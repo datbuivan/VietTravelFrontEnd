@@ -1,8 +1,8 @@
-import { DatePickerModule } from 'primeng/datepicker';
+import { DatePicker, DatePickerModule, DatePickerMonthChangeEvent, DatePickerTypeView } from 'primeng/datepicker';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { TourService } from '@services/common/tour.service';
@@ -10,6 +10,9 @@ import { OverviewComponent } from '@travel/component/tours/overview/overview.com
 import { TourNoteComponent } from '@travel/component/tours/tour-note/tour-note.component';
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'primeng/carousel';
+import { Tour } from '@app/shared/models/tour';
+import { BookingService } from '@app/services/user/booking.service';
+import { AuthService } from '@app/services/common/auth.service';
 
 interface Month {
     label: string;
@@ -18,7 +21,7 @@ interface Month {
 
 @Component({
     selector: 'app-tour-details',
-    imports: [CommonModule, BreadcrumbModule, RouterModule, CommonModule, FormsModule, ButtonModule, DatePickerModule, OverviewComponent, TourNoteComponent, DialogModule, CarouselModule],
+    imports: [CommonModule, BreadcrumbModule, RouterModule, CommonModule, FormsModule, ButtonModule, DatePickerModule, OverviewComponent, TourNoteComponent, DialogModule, CarouselModule, ReactiveFormsModule],
     templateUrl: './tour-details.component.html',
     styleUrl: './tour-details.component.scss',
     standalone: true
@@ -31,44 +34,159 @@ export class TourDetailsComponent implements OnInit {
         { label: 'Tour', route: '/tour' },
         { label: 'Hà Nội', route: '/tour/1' }
     ];
-    tour?: any;
+    tour!: Tour;
+    tourId: number | null = null;
     months: Month[] = [];
-    selectedMonth: number | null = new Date().getMonth() + 1;
-    selectedDate: Date | null = null;
+    selectedMonth: number = new Date().getMonth() + 1;
     minDate: Date = new Date();
     maxDate: Date = new Date(new Date().setFullYear(new Date().getFullYear(), 11, 31));
-    images = [
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg' }
-    ];
+    bookingForm: FormGroup;
+    disabledDates: Date[] = [];
+    selectedTourDateId: number | null = null;
+    defaultDate: Date = new Date();
     constructor(
-        private activatedRoute: ActivatedRoute,
-        private tourService: TourService
+        private route: ActivatedRoute,
+        private tourService: TourService,
+        private fb: FormBuilder,
+        private router: Router,
+        private bookingService: BookingService
     ) {
+        this.bookingForm = this.fb.group({
+            selectedDate: [null]
+        });
         this.generateMonths();
         this.adjustMinDateTime();
     }
-    ngOnInit(): void {}
-    loadTour() {
-        const id = this.activatedRoute.snapshot.paramMap.get('id');
-        if (id) {
-            this.tour = this.tourService.getTour(+id);
+    ngOnInit(): void {
+        const id = this.route.snapshot.paramMap.get('id');
+        this.tourId = id ? +id : 0;
+        this.fetchTour(this.tourId);
+        this.updateDisabledDates();
+    }
+
+    fetchTour(id: number) {
+        this.tourService.getTour(id).subscribe({
+            next: (res) => {
+                this.tour = res;
+                this.generateMonths();
+                this.updateDisabledDates();
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+    }
+
+    bookTour() {
+        if (this.tourId != null && this.selectedTourDateId != null) {
+            this.bookingService.setBookingData(this.tourId, this.selectedTourDateId);
+            this.router.navigate(['/order-booking']);
+        } else {
+            console.warn('Không thể thanh toán: ', {
+                tourId: this.tourId,
+                selectedTourDateId: this.selectedTourDateId
+            });
+        }
+    }
+
+    updateDisabledDates() {
+        this.disabledDates = [];
+
+        if (!this.tour?.tourStartDates?.length) {
+            const startDate = new Date(2025, this.selectedMonth - 1, 1);
+            const endDate = new Date(2025, this.selectedMonth, 0);
+            while (startDate <= endDate) {
+                this.disabledDates.push(new Date(startDate));
+                startDate.setDate(startDate.getDate() + 1);
+            }
+            return;
+        }
+
+        const startDates: Date[] = this.tour.tourStartDates
+            .map((item) => new Date(item.startDate)) // Chuyển chuỗi ISO thành Date
+            .filter((date): date is Date => date instanceof Date && !isNaN(date.getTime()));
+
+        const startDate = new Date(2025, this.selectedMonth - 1, 1);
+        const endDate = new Date(2025, this.selectedMonth, 0);
+
+        while (startDate <= endDate) {
+            const currentDate = new Date(startDate);
+            if (!startDates.some((d) => d.getFullYear() === currentDate.getFullYear() && d.getMonth() === currentDate.getMonth() && d.getDate() === currentDate.getDate())) {
+                this.disabledDates.push(new Date(currentDate));
+            }
+            startDate.setDate(startDate.getDate() + 1);
         }
     }
     generateMonths() {
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth() + 1;
-
-        for (let i = 0; i < 4; i++) {
-            const monthValue = ((currentMonth + i - 1) % 12) + 1;
+        this.months = [];
+        const currentMonth = new Date().getMonth() + 1;
+        for (let month = currentMonth; month <= 12; month++) {
             this.months.push({
-                label: `Tháng ${monthValue}`,
-                value: monthValue
+                label: `Tháng ${month}`,
+                value: month
             });
+        }
+
+        if (this.months.length > 0 && !this.months.some((m) => m.value === this.selectedMonth)) {
+            this.selectedMonth = this.months[0].value;
+            this.resetFormDate();
+            this.updateDisabledDates();
+        }
+    }
+
+    onDateSelect(event: any): void {
+        const selectedDate = new Date(event);
+        if (!this.tour || !this.tour.tourStartDates) {
+            // this.resetFormDate();
+            return;
+        }
+        const selectedTourDate = this.tour.tourStartDates.find((item) => {
+            const tourDate = new Date(item.startDate);
+            return tourDate.getFullYear() === selectedDate.getFullYear() && tourDate.getMonth() === selectedDate.getMonth() && tourDate.getDate() === selectedDate.getDate();
+        });
+        if (selectedTourDate) {
+            this.selectedTourDateId = selectedTourDate.id ?? null;
+            this.bookingForm.patchValue({
+                selectedDate: selectedDate
+            });
+        }
+    }
+
+    changeMonth(month: number) {
+        this.selectedMonth = month;
+        if (this.tour && this.tour.tourStartDates && this.tour.tourStartDates.length > 0) {
+            const startDates = this.tour.tourStartDates.map((item) => ({ id: item.id, date: new Date(item.startDate) })).filter((item) => item.date.getFullYear() === 2025 && item.date.getMonth() === this.selectedMonth - 1);
+
+            startDates.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+            if (startDates.length > 0) {
+                const earliestDate = startDates[0].date;
+                this.selectedTourDateId = startDates[0].id ?? null;
+                this.bookingForm.patchValue({ selectedDate: earliestDate });
+            } else {
+                this.resetFormDate();
+                this.defaultDate = new Date(2025, this.selectedMonth - 1, 1);
+                this.selectedTourDateId = null;
+                // this.viewDate = new Date(2025, this.selectedMonth - 1, 1);
+            }
+        } else {
+            this.resetFormDate();
+            this.defaultDate = new Date(2025, this.selectedMonth - 1, 1);
+            this.selectedTourDateId = null;
+            // this.viewDate = new Date(2025, this.selectedMonth - 1, 1);
+        }
+
+        this.updateDisabledDates();
+    }
+
+    onMonthChange(event: DatePickerMonthChangeEvent): void {
+        const newMonth = event.month;
+        if (newMonth !== undefined && this.months.some((m) => m.value === newMonth)) {
+            this.selectedMonth = newMonth;
+            // this.bookingForm.patchValue({ selectedMonth: this.selectedMonth });
+            this.updateDisabledDates();
+        } else {
+            console.warn('Month is undefined or not valid in month list:', newMonth);
         }
     }
 
@@ -77,30 +195,20 @@ export class TourDetailsComponent implements OnInit {
         this.minDate.setHours(now.getHours(), now.getMinutes(), 0, 0);
     }
 
-    changeMonth(month: number) {
-        this.selectedMonth = month;
-        if (this.selectedDate) {
-            const newDate = new Date(this.selectedDate);
-            newDate.setMonth(month - 1);
-            // this.selectedDate = newDate;
-        } else {
-            this.selectedDate = new Date(new Date().getFullYear(), month - 1, 1);
-        }
+    resetFormDate() {
+        this.bookingForm.patchValue({
+            selectedDate: null
+        });
     }
-
-    scrollToSchedule() {
-        this.scheduleSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    resetDate() {
-        this.selectedDate = null;
-    }
-
     showDialog() {
         this.displayDialog = true;
     }
 
     hideDialog() {
         this.displayDialog = false;
+    }
+
+    scrollToSchedule() {
+        this.scheduleSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }

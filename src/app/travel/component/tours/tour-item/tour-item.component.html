@@ -2,7 +2,7 @@
     <p-toast position="top-right"></p-toast>
     <div class="md:w-2/5 relative">
         <img *ngIf="tour.images?.length" [src]="tour.images[0].url" alt="Image" class="w-full h-full object-cover" />
-        <button class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" (click)="addFavorite(tour.id)" aria-label="Add to favorites">
+        <button *ngIf="curentUser" class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" (click)="addFavorite(tour.id)" aria-label="Add to favorites">
             <i class="pi text-base" [ngClass]="isFavorite ? 'pi-heart-fill' : 'pi-heart'"></i>
         </button>
     </div>
@@ -54,7 +54,7 @@
                 <p class="text-sm text-gray-600">Giá từ</p>
                 <p class="text-2xl font-bold text-red-500">{{ tour.price | vnd }}</p>
             </div>
-            <p-button label="Xem chi tiết" class="ml-auto rounded-lg bg-blue-500 hover:bg-blue-600" [routerLink]="['/tour', tour.id]"></p-button>
+            <p-button label="Xem chi tiết" class="ml-auto rounded-lg bg-blue-500 hover:bg-blue-600" [routerLink]="['/tours', tour.id]"></p-button>
         </div>
     </div>
 </div>

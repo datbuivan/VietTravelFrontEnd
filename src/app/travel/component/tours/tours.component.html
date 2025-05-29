@@ -1,4 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <p-toast position="top-right"></p-toast>
     <div class="mb-6">
         <p-breadcrumb [model]="items" class="max-w-full">
             <ng-template pTemplate="item" let-item>
@@ -18,9 +19,9 @@
         <h1 class="text-3xl font-bold text-blue-600 text-center">DU LỊCH HÀ NỘI</h1>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-6">
+    <div class="flex flex-col lg:flex-row gap-4">
         <div class="lg:w-1/4 w-full">
-            <app-tour-search></app-tour-search>
+            <app-tour-search (filterChange)="onFilterChange($event)"></app-tour-search>
         </div>
         <div class="lg:w-3/4 w-full">
             <div class="flex flex-col sm:flex-row items-center justify-between mb-4 pb-2 border-b-2 border-gray-200">
@@ -34,7 +35,7 @@
                         <span>Sắp xếp theo:</span>
                     </div>
                     <div class="w-2/3">
-                        <p-select [(ngModel)]="selectedOption" [options]="sortOptions" optionLabel="name" placeholder="Giá" class="w-full md:w-56" />
+                        <p-select [(ngModel)]="selectedOption" (onChange)="onSortChange()" [options]="sortOptions" optionLabel="name" placeholder="Sắp xếp" class="w-full md:w-56" />
                     </div>
                 </div>
             </div>

@@ -1,0 +1,108 @@
+.container {
+    top: 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    height: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+:host ::ng-deep .p-chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+:host ::ng-deep .p-chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Responsive cho bảng */
+:host ::ng-deep .p-datatable-responsive .p-datatable-tbody>tr>td {
+    text-align: right !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+    border: 0;
+    padding: 0;
+}
+
+:host ::ng-deep .p-datatable-scrollable .p-datatable-wrapper {
+    overflow-x: auto;
+}
+
+/* Responsive cho p-select */
+:host ::ng-deep .p-select {
+    width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        height: calc(100vh - 8rem);
+        overflow-y: auto;
+    }
+
+    .chart-container {
+        min-height: 350px;
+        /* Tăng chiều cao tối thiểu cho màn hình lớn */
+        max-height: 50%;
+        /* Giới hạn 50% container */
+    }
+
+    .grid {
+        grid-template-columns: 1fr 1.5fr;
+        /* Tăng tỷ lệ cột bên phải cho bảng */
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-thead>tr>th,
+    :host ::ng-deep .p-datatable .p-datatable-tbody>tr>td {
+        font-size: 1rem;
+        /* Tăng font size cho bảng */
+        padding: 0.75rem;
+    }
+}
+
+/* Media queries cho màn hình nhỏ */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .card {
+        padding: 0.5rem;
+    }
+
+    .chart-container {
+        max-height: 300px;
+        min-height: 250px;
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-thead>tr>th,
+    :host ::ng-deep .p-datatable .p-datatable-tbody>tr>td {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .chart-container {
+        max-height: 250px;
+        min-height: 200px;
+    }
+
+    :host ::ng-deep .p-button {
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+}

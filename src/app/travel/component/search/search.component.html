@@ -4,32 +4,32 @@
         <p-tab class="w-1/2 pi pi-warehouse" value="1">Khách sạn</p-tab>
     </p-tablist>
     <p-tabpanels class="mt-2">
-        <p-tabpanel [formGroup]="tourForm" value="0">
+        <p-tabpanel [formGroup]="tourFilterForm" value="0">
             <div class="w-full pb-4">
                 <span class="text-blue-800 font-bold text-xl mb-4">Bạn muốn đi đâu?</span>
                 <div class="w-full text-lg">
-                    <p-select [options]="cities" formControlName="tourCity" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Chọn tour du lịch" class="w-full md:w-56" />
+                    <p-select [options]="cities" formControlName="cityId" [checkmark]="true" optionLabel="name" optionValue="id" [showClear]="true" placeholder="Chọn địa điểm du lịch" class="w-full md:w-56" />
                 </div>
             </div>
             <div class="w-full pb-4">
                 <span class="text-blue-800 font-bold text-xl mb-4">Ngày đi</span>
                 <div class="w-full text-lg">
-                    <p-datepicker formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+                    <p-datepicker formControlName="startDate" placeholder="Ngày đi" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
                 </div>
             </div>
             <div class="w-full pb-4">
                 <span class="text-blue-800 font-bold text-xl mb-4">Ngân sách</span>
                 <div class="w-full text-lg">
-                    <p-select [options]="prices" formControlName="price" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Chọn mức giá" class="w-full md:w-56" />
+                    <p-select [options]="prices" [checkmark]="true" optionLabel="name" (onChange)="onPriceChange($event.value)" [showClear]="true" placeholder="Chọn mức giá" class="w-full md:w-56" />
                 </div>
             </div>
             <p-button label="Tìm kiếm" class="h-10" severity="info" (click)="onSubmitTour()"><i class="pi pi-search mr-2"></i></p-button>
         </p-tabpanel>
-        <p-tabpanel [formGroup]="hotelForm" value="1">
+        <p-tabpanel [formGroup]="hotelFilterForm" value="1">
             <div class="w-full pb-4">
                 <span class="text-blue-800 font-bold text-xl mb-4">Địa điểm?</span>
                 <div class="w-full text-lg">
-                    <p-select [options]="cities" formControlName="city" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Khách sạn, địa điểm, thành phố" class="w-full md:w-56" />
+                    <p-select [options]="cities" formControlName="cityId" [checkmark]="true" optionLabel="name" [showClear]="true" placeholder="Khách sạn, địa điểm, thành phố" class="w-full md:w-56" />
                 </div>
             </div>
             <div class="w-full pb-4">

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '@app/services/common/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private http: HttpClient,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -29,8 +31,8 @@ export class RegisterComponent implements OnInit {
             {
                 username: ['', [Validators.required]],
                 email: ['', [Validators.required, Validators.email]],
-                phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-                address: ['', [Validators.required]],
+                // phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+                // address: ['', [Validators.required]],
                 password: ['', [Validators.required, Validators.minLength(6)]],
                 confirmPassword: ['', [Validators.required]]
             },
@@ -47,13 +49,17 @@ export class RegisterComponent implements OnInit {
     onSubmit(): void {
         if (this.registerForm.valid) {
             const formData = this.registerForm.value;
-            this.http.post('http://localhost:5000/api/auth/register', formData).subscribe({
+            this.authService.register(formData.username, formData.email, formData.password).subscribe({
                 next: (response) => {
-                    console.log('Registration successful', response);
-                    this.router.navigate(['/login']);
+                    console.log('Đăng ký thành công', response);
+                    if (response.message === 'Registration successful, please confirm your email') {
+                        this.router.navigate(['/confirm-email'], { state: { email: formData.email } });
+                    } else {
+                        this.router.navigate(['/login']);
+                    }
                 },
                 error: (error) => {
-                    console.error('Registration failed', error);
+                    console.error('Đăng ký thất bại', error);
                 }
             });
         }

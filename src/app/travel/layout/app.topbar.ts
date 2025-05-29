@@ -27,8 +27,8 @@ import { AuthService } from '@app/services/common/auth.service';
                 <!-- Thay p-menu bằng nav cho navItems -->
                 <nav class="nav-items lg:flex hidden" *ngIf="!isLoggedIn || isLoggedIn">
                     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Trang chủ</a>
-                    <a routerLink="/tour" routerLinkActive="active" class="nav-link">Chuyến đi</a>
-                    <a routerLink="/hotel" routerLinkActive="active" class="nav-link">Khách sạn</a>
+                    <a routerLink="/tours" routerLinkActive="active" class="nav-link">Chuyến đi</a>
+                    <a routerLink="/hotels" routerLinkActive="active" class="nav-link">Khách sạn</a>
                     <a routerLink="/history" routerLinkActive="active" class="nav-link">Lịch sử</a>
                 </nav>
                 <div *ngIf="!isLoggedIn" class="auth-buttons">
