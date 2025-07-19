@@ -5,34 +5,7 @@
     </div>
     <div class="w-full flex items-center justify-center">
         <div class="tour-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div *ngFor="let tour of tours" class="tour-card">
-                <div>
-                    <div class="relative">
-                        <img [src]="tour.image" alt="Tour Image" class="tour-image" />
-                        <button class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" aria-label="Add to favorites">
-                            <i class="pi pi-heart text-base"></i>
-                        </button>
-                    </div>
-                    <div class="tour-content">
-                        <div class="tour-rating">
-                            <i class="pi pi-star-fill" style="color: #f1c40f"></i>
-                            <span>{{ tour.rating }}</span>
-                            <i class="pi pi-heart-fill" style="color: #e74c3c; margin-left: 0.5rem"></i>
-                        </div>
-                        <h3 class="tour-title">{{ tour.title }}</h3>
-                        <div class="tour-price">
-                            <span class="original-price">{{ tour.price }}</span>
-                            <span class="discount-price">{{ tour.discountPrice }}</span>
-                        </div>
-                        <p-button label="Đặt từ hôm nay" styleClass="p-button-primary"></p-button>
-                        <div class="tour-info">
-                            <span><i class="pi pi-clock"></i> {{ tour.days }}</span>
-                            <span><i class="pi pi-users"></i> {{ tour.people }}</span>
-                            <span><i class="pi pi-map-marker"></i> {{ tour.location }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <app-new-tour-item *ngFor="let tour of tours" [tour]="tour"></app-new-tour-item>
         </div>
     </div>
 </div>

@@ -56,6 +56,7 @@ export class TourDetailComponent implements OnInit {
     startDateForm: FormGroup;
     scheduleForm: FormGroup;
     selectedSchedule: TourSchedule | null = null;
+    minDate: Date = new Date();
 
     constructor(
         private fb: FormBuilder,
@@ -70,9 +71,10 @@ export class TourDetailComponent implements OnInit {
         });
 
         this.startDateForm = this.fb.group({
-            availableSlots: [0, [Validators.required, Validators.min(1)]],
+            totalSlots: [0, [Validators.required, Validators.min(1)]],
             startDate: [null, Validators.required]
         });
+        this.minDate.setHours(0, 0, 0, 0);
     }
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');
@@ -94,10 +96,13 @@ export class TourDetailComponent implements OnInit {
         this.isEditMode = !!schedule;
         this.selectedSchedule = schedule ? { ...schedule } : null;
         if (schedule) {
+            console.log(schedule);
             this.scheduleForm.patchValue({
+                id: schedule.id,
                 title: schedule.title,
                 description: schedule.description
             });
+            console.log(this.scheduleForm.value);
         } else {
             this.scheduleForm.reset({ dayNumber: 0, description: '' });
         }
@@ -117,18 +122,21 @@ export class TourDetailComponent implements OnInit {
     saveSchedule(): void {
         if (this.scheduleForm.valid) {
             // const schedule: TourSchedule = this.scheduleForm.value;
+            console.log(this.scheduleForm.value);
             const schedule = {
+                id: this.selectedSchedule?.id,
                 ...this.scheduleForm.value,
                 tourId: this.tourId
             };
+            console.log('isEditMode:', this.isEditMode, 'schedule.id:', schedule.id);
             if (this.isEditMode && schedule.id) {
                 // Update existing schedule
                 this.tourService.editSchedule(schedule.id, schedule.title, schedule.description, this.tourId).subscribe({
                     next: () => {
-                        const index = this.tour.tourSchedules!.findIndex((s) => s.id === schedule.id);
-                        if (index !== -1) {
-                            this.tour.tourSchedules![index] = { ...schedule };
-                        }
+                        // const index = this.tour.tourSchedules!.findIndex((s) => s.id === schedule.id);
+                        // if (index !== -1) {
+                        //     this.tour.tourSchedules![index] = { ...schedule };
+                        // }
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Thành công',
@@ -240,7 +248,7 @@ export class TourDetailComponent implements OnInit {
 
     closeStartDateDialog(): void {
         this.displayStartDateDialog = false;
-        this.startDateForm.reset({ availableSlots: 0, startDate: '' });
+        this.startDateForm.reset({ totalSlots: 0, startDate: '' });
     }
 
     saveStartDate(): void {
@@ -248,12 +256,12 @@ export class TourDetailComponent implements OnInit {
             const formValue = this.startDateForm.value;
             const startDate = {
                 id: formValue.id,
-                availableSlots: formValue.availableSlots,
-                startDate: formValue.startDate.toISOString().split('T')[0],
+                totalSlots: formValue.totalSlots,
+                startDate: formValue.startDate.toLocaleDateString('en-CA'),
                 tourId: this.tourId
             };
             if (this.isEditMode && startDate.id) {
-                this.tourService.editStartDate(startDate.id, startDate.availableSlots, startDate.startDate, startDate.tourId).subscribe({
+                this.tourService.editStartDate(startDate.id, startDate.totalSlots, startDate.startDate, startDate.tourId).subscribe({
                     next: () => {
                         const index = this.tour.tourStartDates!.findIndex((s) => s.id === startDate.id);
                         if (index !== -1) {
@@ -276,7 +284,7 @@ export class TourDetailComponent implements OnInit {
                     }
                 });
             } else {
-                this.tourService.addStartDate(startDate.availableSlots, startDate.startDate, startDate.tourId).subscribe({
+                this.tourService.addStartDate(startDate.totalSlots, startDate.startDate, startDate.tourId).subscribe({
                     next: (response) => {
                         if (!this.tour.tourStartDates) {
                             this.tour.tourStartDates = [];

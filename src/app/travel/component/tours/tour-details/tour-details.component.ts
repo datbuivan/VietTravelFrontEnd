@@ -1,4 +1,5 @@
-import { DatePicker, DatePickerModule, DatePickerMonthChangeEvent, DatePickerTypeView } from 'primeng/datepicker';
+import { VndCurrencyPipe } from '@shared/pipes/vnd.pipe';
+import { DatePickerModule, DatePickerMonthChangeEvent, DatePickerTypeView } from 'primeng/datepicker';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +13,9 @@ import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'primeng/carousel';
 import { Tour } from '@app/shared/models/tour';
 import { BookingService } from '@app/services/user/booking.service';
-import { AuthService } from '@app/services/common/auth.service';
+import { ReviewComponent } from '@travel/component/tours/review/review.component';
+import { AccordionModule } from 'primeng/accordion';
+import { LinebreakPipe } from '@app/shared/pipes/linebreak.pipe';
 
 interface Month {
     label: string;
@@ -21,7 +24,24 @@ interface Month {
 
 @Component({
     selector: 'app-tour-details',
-    imports: [CommonModule, BreadcrumbModule, RouterModule, CommonModule, FormsModule, ButtonModule, DatePickerModule, OverviewComponent, TourNoteComponent, DialogModule, CarouselModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        BreadcrumbModule,
+        RouterModule,
+        CommonModule,
+        FormsModule,
+        ButtonModule,
+        DatePickerModule,
+        OverviewComponent,
+        TourNoteComponent,
+        DialogModule,
+        CarouselModule,
+        ReactiveFormsModule,
+        ReviewComponent,
+        VndCurrencyPipe,
+        AccordionModule,
+        LinebreakPipe
+    ],
     templateUrl: './tour-details.component.html',
     styleUrl: './tour-details.component.scss',
     standalone: true
@@ -29,6 +49,7 @@ interface Month {
 export class TourDetailsComponent implements OnInit {
     @ViewChild('scheduleSection') scheduleSection!: ElementRef;
     displayDialog: boolean = false;
+    activePanel: string = '0';
     items = [
         { icon: 'pi pi-home', route: '/' },
         { label: 'Tour', route: '/tour' },

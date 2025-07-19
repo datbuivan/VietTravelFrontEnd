@@ -132,13 +132,13 @@
                                 <div class="grid grid-cols-12 gap-4">
                                     <div class="col-span-12">
                                         <label for="startDate" class="field-label">Số Lượng Khách</label>
-                                        <p-inputnumber inputId="availableSlots" formControlName="availableSlots" class="w-full" />
-                                        <small *ngIf="startDateForm.get('availableSlots')?.hasError('required') && startDateForm.get('availableSlots')?.touched" class="p-error"> Số lượng khách là bắt buộc. </small>
-                                        <small *ngIf="startDateForm.get('availableSlots')?.hasError('min') && startDateForm.get('availableSlots')?.touched" class="p-error"> Số lượng khách phải lớn hơn 0. </small>
+                                        <p-inputnumber inputId="totalSlots" formControlName="totalSlots" class="w-full" />
+                                        <small *ngIf="startDateForm.get('totalSlots')?.hasError('required') && startDateForm.get('totalSlots')?.touched" class="p-error"> Số lượng khách là bắt buộc. </small>
+                                        <small *ngIf="startDateForm.get('totalSlots')?.hasError('min') && startDateForm.get('totalSlots')?.touched" class="p-error"> Số lượng khách phải lớn hơn 0. </small>
                                     </div>
                                     <div class="col-span-12">
                                         <label for="startDate" class="field-label">Ngày Khởi Hành</label>
-                                        <p-datepicker id="startDate" formControlName="startDate" dateFormat="dd/mm/yy" [showIcon]="true" class="w-full"></p-datepicker>
+                                        <p-datepicker id="startDate" formControlName="startDate" dateFormat="dd/mm/yy" [minDate]="minDate" [showIcon]="true" class="w-full"></p-datepicker>
                                         <small *ngIf="startDateForm.get('startDate')?.invalid && startDateForm.get('startDate')?.touched" class="p-error"> Ngày khởi hành là bắt buộc. </small>
                                     </div>
                                 </div>

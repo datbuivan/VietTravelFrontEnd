@@ -1,0 +1,87 @@
+:host {
+    .tour-card {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        :host ::ng-deep .p-card-body {
+            padding: 0;
+        }
+
+        :host ::ng-deep .p-card-content {
+            padding: 0;
+        }
+    }
+
+    .tour-image {
+        width: 100%;
+        height: 200px;
+
+        :host ::ng-deep img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .tour-content {
+        padding: 1rem;
+    }
+
+    .tour-rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .tour-title {
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .tour-price {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .discount-price {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    }
+
+    .tour-info {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+        color: #666;
+
+        i {
+            margin-right: 0.3rem;
+        }
+    }
+
+    .pi-heart-fill {
+        color: red;
+    }
+}
+
+:host::ng-deep {
+    .main-tour-item {
+        height: 20rem;
+        padding: 1rem 0 0 0;
+    }
+
+    .p-scroller-viewport {
+        flex: none;
+    }
+
+    .p-button {
+        height: 100%;
+    }
+}

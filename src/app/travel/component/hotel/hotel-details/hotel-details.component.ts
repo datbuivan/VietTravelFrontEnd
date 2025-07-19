@@ -12,10 +12,28 @@ import { RoomService } from '@services/common/room.service';
 import { DialogModule } from 'primeng/dialog';
 import { HotelRegulationComponent } from '@travel/component/hotel/hotel-regulation/hotel-regulation.component';
 import { HotelAmenitiesComponent } from '@travel/component/hotel/hotel-amenities/hotel-amenities.component';
+import { HotelService } from '@app/services/common/hotel.service';
+import { Hotel } from '@app/shared/models/hotel';
+import { VndCurrencyPipe } from '@app/shared/pipes/vnd.pipe';
 
 @Component({
     selector: 'app-hotel-details',
-    imports: [BreadcrumbModule, RouterModule, CommonModule, CarouselModule, ButtonModule, AccordionModule, CarouselModule, RoomItemComponent, RoomItemComponent, ScrollPanelModule, DialogModule, HotelRegulationComponent, HotelAmenitiesComponent],
+    imports: [
+        BreadcrumbModule,
+        RouterModule,
+        CommonModule,
+        CarouselModule,
+        ButtonModule,
+        AccordionModule,
+        CarouselModule,
+        RoomItemComponent,
+        RoomItemComponent,
+        ScrollPanelModule,
+        DialogModule,
+        HotelRegulationComponent,
+        HotelAmenitiesComponent,
+        VndCurrencyPipe
+    ],
     templateUrl: './hotel-details.component.html',
     styleUrl: './hotel-details.component.scss',
     standalone: true
@@ -26,20 +44,31 @@ export class HotelDetailsComponent implements OnInit {
     numbers: number[] = Array.from({ length: 5 }, (_, i) => i + 1);
     items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Hotel', route: '/hotel' }, { label: 'Hà Nội' }];
     selectHotel: any | null = null;
-    images = [
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1746984611/cities/3/hanoi.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747029366/cities/19/hoian.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030507/cities/4/hatinh.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747030985/cities/5/haiphong.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031044/cities/6/phuquoc.jpg' },
-        { itemImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg', thumbnailImageSrc: 'https://res.cloudinary.com/docff5snu/image/upload/v1747031095/cities/7/hanam.jpg' }
-    ];
     rooms: Room[] = [];
+    hotelId: number | null = null;
+    hotel!: Hotel;
     constructor(
         private route: ActivatedRoute,
+        private hotelService: HotelService,
         private roomService: RoomService
     ) {}
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        const id = this.route.snapshot.paramMap.get('id');
+        this.hotelId = id ? +id : 0;
+        this.fetchHotel(this.hotelId);
+    }
+
+    fetchHotel(id: number) {
+        this.hotelService.getHotel(id).subscribe({
+            next: (res) => {
+                this.hotel = res;
+                console.log(res);
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+    }
 
     showDialog() {
         this.displayDialog = true;

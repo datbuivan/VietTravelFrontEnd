@@ -29,7 +29,7 @@ import { AuthService } from '@app/services/common/auth.service';
                     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Trang chủ</a>
                     <a routerLink="/tours" routerLinkActive="active" class="nav-link">Chuyến đi</a>
                     <a routerLink="/hotels" routerLinkActive="active" class="nav-link">Khách sạn</a>
-                    <a routerLink="/history" routerLinkActive="active" class="nav-link">Lịch sử</a>
+                    <a routerLink="/payment-history" routerLinkActive="active" class="nav-link">Lịch sử</a>
                 </nav>
                 <div *ngIf="!isLoggedIn" class="auth-buttons">
                     <p-button label="Đăng nhập" styleClass="p-button-outlined mr-2" routerLink="/login"></p-button>
@@ -55,7 +55,6 @@ export class AppTopbar implements OnInit {
     @ViewChild('userMenu') userMenu!: Menu;
     isLoggedIn: boolean = false;
     userName: string | undefined;
-    navItems: MenuItem[] = [];
     userItems: MenuItem[] = [];
 
     constructor(
@@ -78,12 +77,6 @@ export class AppTopbar implements OnInit {
                 icon: 'pi pi-sign-out',
                 command: () => this.logout()
             }
-        ];
-        this.navItems = [
-            { label: 'Trang chủ', command: () => this.router.navigate(['/']) },
-            { label: 'Chuyến đi', command: () => this.router.navigate(['/tour']) },
-            { label: 'Khách sạn', command: () => this.router.navigate(['/hotel']) },
-            { label: 'Lịch sử', command: () => this.router.navigate(['/history']) }
         ];
     }
 

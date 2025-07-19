@@ -1,0 +1,44 @@
+<p-timeline [value]="events" align="alternate" styleClass="customized-timeline max-w-4xl mx-auto py-8">
+    <ng-template pTemplate="marker" let-event>
+        <span
+            class="flex w-12 h-12 items-center justify-center text-white rounded-full z-10 shadow-xl transition-transform duration-300 transform hover:scale-110"
+            [style]="{ background: event.status === 'Completed' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : event.status === 'Pending' ? 'linear-gradient(135deg, #FF9800, #f57c00)' : 'linear-gradient(135deg, #F44336, #d32f2f)' }"
+        >
+            <i class="pi text-lg" [class]="event.status === 'Completed' ? 'pi-check' : event.status === 'Pending' ? 'pi-clock' : 'pi-times'"></i>
+        </span>
+    </ng-template>
+    <ng-template pTemplate="content" let-event>
+        <div class="custom-content p-6 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 max-w-md">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="pi pi-map-marker text-blue-500 mr-2"></i>
+                {{ event.tour }}
+            </h3>
+            <img [src]="event.imageUrl" [alt]="event.tour" class="tour-image w-full h-48 object-cover rounded-lg mb-4" />
+            <div class="space-y-2">
+                <p class="text-gray-600 flex items-center">
+                    <i class="pi pi-calendar text-gray-500 mr-2"></i>
+                    Ngày đặt: {{ event.paymentDate | date: 'dd/MM/yyyy' }}
+                </p>
+                <p class="text-gray-600 flex items-center">
+                    <i class="pi pi-calendar-plus text-gray-500 mr-2"></i>
+                    Ngày khởi hành: {{ event.tourStartDate | date: 'dd/MM/yyyy' }}
+                </p>
+                <p class="text-gray-700 font-medium flex items-center">
+                    <i class="pi pi-tag text-gray-500 mr-2"></i>
+                    Trạng thái: {{ event.status === 'Completed' ? 'Đã thanh toán' : event.status === 'Pending' ? 'Chưa thanh toán' : 'Thất bại' }}
+                </p>
+                <p class="text-gray-700 font-medium flex items-center">
+                    <i class="pi pi-credit-card text-gray-500 mr-2"></i>
+                    Phương thức thanh toán: {{ event.paymentMethod }}
+                </p>
+                <p class="text-green-600 font-semibold flex items-center">
+                    <i class="text-green-500 mr-2"></i>
+                    Số tiền: {{ event.amount | vnd }}
+                </p>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="opposite" let-event>
+        <small class="text-gray-500 font-medium">{{ event.date | date: 'dd/MM/yyyy' }}</small>
+    </ng-template>
+</p-timeline>

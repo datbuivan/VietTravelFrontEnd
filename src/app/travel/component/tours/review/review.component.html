@@ -1,0 +1,31 @@
+<div class="review-section">
+    <h3 class="text-center text-xl font-bold mb-4">ĐÁNH GIÁ TOUR</h3>
+
+    <!-- Form gửi đánh giá -->
+    <div class="mb-8 p-4 shadow-xl rounded-lg">
+        <h4 class="text-lg font-semibold mb-2">Gửi đánh giá của bạn</h4>
+        <div [formGroup]="reviewForm" class="flex flex-col gap-4">
+            <p-rating formControlName="rating"></p-rating>
+            <textarea pTextarea formControlName="comment" placeholder="Nhập đánh giá của bạn" rows="4" class="w-full"></textarea>
+            <p-button label="Gửi đánh giá" severity="primary" type="submit" (onClick)="onSubmit()" [disabled]="reviewForm.invalid || isSubmitting" [loading]="isSubmitting"></p-button>
+        </div>
+    </div>
+
+    <!-- Danh sách đánh giá -->
+    <div *ngIf="loading" class="text-center">
+        <p>Đang tải đánh giá...</p>
+    </div>
+    <div *ngIf="!loading && reviews.length === 0" class="text-center">
+        <p>Chưa có đánh giá nào cho tour này.</p>
+    </div>
+    <div *ngIf="!loading && reviews.length > 0" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let review of reviews" class="p-4 shadow-xl rounded-lg bg-white">
+            <h5 class="text-lg font-semibold mb-2">{{ review.userName || 'Người dùng ẩn danh' }}</h5>
+            <div class="flex flex-col gap-2">
+                <p-rating [ngModel]="review.rating" [ngModelOptions]="{ standalone: true }" [readonly]="true"></p-rating>
+                <p>{{ review.comment }}</p>
+                <p class="text-sm text-gray-500">{{ review.createdAt | date: 'dd-MM-yyyy HH:mm' }}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -73,4 +73,19 @@ p-carousel .p-carousel-content .p-carousel-items .p-carousel-item img {
         height: 100%;
     }
 
+
+}
+
+:host ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+    background-color: #f3f4f6;
+    /* bg-gray-100 */
+    color: #1e40af;
+    /* text-blue-800 */
+    font-weight: 600;
+    /* font-semibold */
+}
+
+:host ::ng-deep .p-accordion .p-accordion-content {
+    background-color: #f9fafb;
+    /* bg-gray-50 */
 }

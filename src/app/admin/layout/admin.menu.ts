@@ -28,6 +28,11 @@ export class AdminMenu {
                 label: 'Danh Mục Quản Lý',
                 items: [
                     {
+                        label: 'Thanh toán',
+                        icon: 'pi pi-plus',
+                        routerLink: ['/admin/payments']
+                    },
+                    {
                         label: 'Tour',
                         icon: 'pi pi-plus',
                         routerLink: ['/admin/tours']
@@ -36,6 +41,11 @@ export class AdminMenu {
                         label: 'Khách Sạn',
                         icon: 'pi pi-plus',
                         routerLink: ['/admin/hotels']
+                    },
+                    {
+                        label: 'Người dùng',
+                        icon: 'pi pi-plus',
+                        routerLink: ['/admin/users']
                     },
                     {
                         label: 'Thành Phố',

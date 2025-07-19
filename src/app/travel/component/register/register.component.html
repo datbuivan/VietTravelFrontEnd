@@ -1,45 +1,67 @@
+<p-toast></p-toast>
 <div class="register-container">
     <div class="register-content">
         <div class="logo flex items-center">
-            <img src="images/icon/logo.png" alt="Binh Dinh Tour Logo" />
+            <img src="images/icon/logo.png" alt="VietTravel Tour Logo" />
             <span class="font-bold italic">VIET TRAVEL</span>
         </div>
-
-        <div class="flex flex-1 items-center justify-center">
+        <div class="flex flex-1 items-center justify-center max-h[80%]">
             <div [formGroup]="registerForm" class="w-full max-w-md">
-                <div class="items-center justify-center">
-                    <h2>Đăng ký</h2>
+                <h2 class="text-2xl font-semibold text-gray-900 text-center mb-6">Đăng ký</h2>
+                <div class="p-field mb-4">
+                    <label for="username" class="block text-gray-700 font-medium mb-1">Tên</label>
+                    <input id="username" type="text" pInputText formControlName="username" placeholder="Tên" class="w-full" />
+                    <small *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('username')?.errors?.['required']">Tên là bắt buộc.</span>
+                        <span *ngIf="registerForm.get('username')?.errors?.['minlength']">Tên phải có ít nhất 3 ký tự.</span>
+                        <span *ngIf="registerForm.get('username')?.errors?.['maxlength']">Tên không được vượt quá 50 ký tự.</span>
+                    </small>
                 </div>
-                <div class="p-field">
-                    <label for="username">Tên</label>
-                    <input id="username" type="text" pInputText formControlName="username" placeholder="Tên" />
+                <div class="p-field mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
+                    <input id="email" type="email" pInputText formControlName="email" placeholder="Email" class="w-full" />
+                    <small *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('email')?.errors?.['required']">Email là bắt buộc.</span>
+                        <span *ngIf="registerForm.get('email')?.errors?.['email']">Email không hợp lệ.</span>
+                    </small>
                 </div>
-                <div class="p-field">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" pInputText formControlName="email" placeholder="Email" />
+                <div class="p-field mb-4">
+                    <label for="phoneNumber" class="block text-gray-700 font-medium mb-1">Số điện thoại</label>
+                    <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber" placeholder="Số điện thoại" class="w-full" />
+                    <small *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Số điện thoại là bắt buộc.</span>
+                        <span *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Số điện thoại không hợp lệ (ví dụ: +84912345678 hoặc 0912345678).</span>
+                    </small>
                 </div>
-                <!-- <div class="p-field">
-                    <label for="phone">Số điện thoại</label>
-                    <input id="phone" type="text" pInputText formControlName="phone" placeholder="Số điện thoại" />
+                <div class="p-field mb-4">
+                    <label for="address" class="block text-gray-700 font-medium mb-1">Địa chỉ</label>
+                    <input id="address" type="text" pInputText formControlName="address" placeholder="Địa chỉ" class="w-full" />
+                    <small *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('address')?.errors?.['required']">Địa chỉ là bắt buộc.</span>
+                    </small>
                 </div>
-                <div class="p-field">
-                    <label for="address">Địa chỉ</label>
-                    <input id="address" type="text" pInputText formControlName="address" placeholder="Địa chỉ" />
-                </div> -->
-                <div class="p-field">
-                    <label for="password">Mật khẩu</label>
-                    <p-password id="password" [feedback]="false" formControlName="password" placeholder="Mật khẩu" [toggleMask]="true"></p-password>
+                <div class="p-field mb-4">
+                    <label for="password" class="block text-gray-700 font-medium mb-1">Mật khẩu</label>
+                    <p-password id="password" [feedback]="false" formControlName="password" placeholder="Mật khẩu" [toggleMask]="true" class="w-full"></p-password>
+                    <small *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('password')?.errors?.['required']">Mật khẩu là bắt buộc.</span>
+                        <span *ngIf="registerForm.get('password')?.errors?.['pattern']">Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.</span>
+                    </small>
                 </div>
-                <div class="p-field">
-                    <label for="confirmPassword">Nhập lại mật khẩu</label>
-                    <p-password id="confirmPassword" [feedback]="false" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu" [toggleMask]="true"></p-password>
+                <div class="p-field mb-6">
+                    <label for="confirmPassword" class="block text-gray-700 font-medium mb-1">Nhập lại mật khẩu</label>
+                    <p-password id="confirmPassword" [feedback]="false" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu" [toggleMask]="true" class="w-full"></p-password>
+                    <small *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors" class="text-red-500">
+                        <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Vui lòng nhập lại mật khẩu.</span>
+                        <span *ngIf="registerForm.get('confirmPassword')?.errors?.['mismatch']">Mật khẩu không khớp.</span>
+                    </small>
                 </div>
-                <p-button label="Đăng ký" type="submit" [disabled]="registerForm.invalid" styleClass="p-button-success" (onClick)="onSubmit()"></p-button>
-                <div class="text-center text-sm mt-2">Đã có tài khoản? <a class="underline underline-offset-4" href="/login">Đăng nhập ngay</a></div>
+                <p-button label="Đăng ký" type="submit" [disabled]="registerForm.invalid" styleClass="p-button-success w-full" (onClick)="onSubmit()"></p-button>
+                <div class="text-center text-sm mt-4">Đã có tài khoản? <a class="underline underline-offset-4 text-blue-600 hover:text-blue-800" href="/login">Đăng nhập ngay</a></div>
             </div>
         </div>
     </div>
-    <div class="background-image">
-        <img src="images/uploadImage/register.jpg" alt="Beach Background" />
+    <div class="background-image hidden md:block md:w-1/2">
+        <img src="images/uploadImage/register.jpg" alt="Beach Background" class="w-full h-full object-cover" />
     </div>
 </div>

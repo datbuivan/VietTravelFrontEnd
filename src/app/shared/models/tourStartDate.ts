@@ -1,6 +1,7 @@
 export interface TourStartDate {
     id?: number;
-    availableSlots: number;
+    totalSlots: number;
+    availableSlots?: number;
     startDate: Date;
     tourId: number;
 }

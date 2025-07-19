@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    background-color: #f5f7fa;
+
+    .container {
+        top: 6rem;
+        max-width: 1200px;
+        margin: 0 auto;
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            position: relative;
+        }
+    }
+}
+
+:host::ng-deep {
+    .p-table {
+        .p-datatable-thead>tr>th {
+            background-color: #f8f9fa;
+        }
+    }
+
+    .p-paginator {
+        background-color: #f8f9fa;
+        position: fixed;
+        bottom: 3rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        height: calc(100vh - 8rem);
+    }
+
+
+    .grid {
+        grid-template-columns: 1fr 1.5fr;
+
+    }
+}

@@ -121,8 +121,8 @@ export class AuthService {
         );
     }
 
-    register(username: string, email: string, password: string): Observable<any> {
-        return this.http.post<any>(this.baseUrl + 'Auth/register', { username, email, password });
+    register(username: string, email: string, phoneNumber: string, address: string, password: string): Observable<any> {
+        return this.http.post<any>(this.baseUrl + 'Auth/register', { username, email, phoneNumber, address, password });
     }
 
     logout(): void {

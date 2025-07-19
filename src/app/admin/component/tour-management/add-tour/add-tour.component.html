@@ -1,6 +1,7 @@
+<p-toast></p-toast>
 <div class="container h-full">
     <div class="card h-full">
-        <h2 class="card-title">Thêm Tour Mới</h2>
+        <h2 class="card-title">{{ isEditMode ? 'Chỉnh Sửa Tour' : 'Thêm Tour Mới' }}</h2>
         <div [formGroup]="tourForm" class="form-container">
             <!-- Dòng 1: Tên Tour và Thành phố -->
             <div class="grid grid-cols-12 gap-4 mb-6">
@@ -84,7 +85,7 @@
                 <div class="col-span-12 md:col-span-6">
                     <label class="field-label">Hình ảnh bổ sung</label>
                     <p-fileUpload
-                        mode="advanced"
+                        mode="basic"
                         [multiple]="true"
                         accept="image/*"
                         chooseLabel="Chọn hình ảnh"
@@ -97,12 +98,29 @@
                     >
                     </p-fileUpload>
                 </div>
+                <div class="col-span-12">
+                    <div *ngIf="previewImages.length > 0 || existingImages.length > 0" class="mt-4">
+                        <label class="field-label">Xem trước hình ảnh</label>
+                        <div class="grid grid-cols-12 gap-4">
+                            <!-- Existing Pictures (Edit Mode) -->
+                            <div *ngFor="let image of existingImages; let i = index" class="col-span-12 md:col-span-2 relative">
+                                <img [src]="image.url" alt="Existing Tour Image" class="w-full h-32 object-cover rounded-lg" />
+                                <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-sm absolute top-2 right-2" (onClick)="removeExistingPicture(i)"></p-button>
+                            </div>
+                            <!-- New Preview Pictures -->
+                            <div *ngFor="let image of previewImages; let i = index" class="col-span-12 md:col-span-2 relative">
+                                <img [src]="image" alt="Preview Image" class="w-full h-32 object-cover rounded-lg" />
+                                <p-button icon="pi pi-trash" styleClass="p-button-danger p-button-sm absolute top-2 right-2" (onClick)="removePicture(i)"></p-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Submit Button -->
             <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
                 <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary mr-2" [routerLink]="['/admin/tours']"></p-button>
-                <p-button label="Thêm Tour" icon="pi pi-check" [disabled]="tourForm.invalid" (onClick)="submitTour()" styleClass="p-button-raised p-button-success"> </p-button>
+                <p-button [label]="isEditMode ? 'Sửa Tour' : 'Thêm Tour'" icon="pi pi-check" [disabled]="tourForm.invalid" (onClick)="submitTour()" styleClass="p-button-raised p-button-success"> </p-button>
             </div>
         </div>
     </div>

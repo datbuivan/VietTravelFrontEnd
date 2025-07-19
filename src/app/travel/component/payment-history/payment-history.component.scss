@@ -1,0 +1,15 @@
+.customized-timeline .p-timeline-event-connector {
+    background-color: #e0e0e0;
+}
+
+.customized-timeline .p-timeline-event-content {
+    margin: 0;
+}
+
+.tour-image {
+    transition: transform 0.3s ease;
+}
+
+.custom-content:hover .tour-image {
+    transform: scale(1.05);
+}

@@ -1,0 +1,38 @@
+<div class="container h-full">
+    <div class="card h-full">
+        <h2 class="card-title">{{ isEditMode ? 'Chỉnh Sửa Người Dùng' : 'Thêm Người Dùng' }}</h2>
+        <div [formGroup]="userForm" class="form-container">
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label for="email" class="field-label">Email<span class="required">*</span></label>
+                    <input pInputText id="email" formControlName="email" class="w-full" [ngClass]="{ 'ng-invalid ng-dirty': userForm.get('email')?.touched && userForm.get('email')?.invalid }" />
+                    <small *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')" class="p-error text-red-600">Email là bắt buộc.</small>
+                    <small *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('email')" class="p-error text-red-600">Email không hợp lệ.</small>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="userName" class="field-label">Tên Người Dùng<span class="required">*</span></label>
+                    <input pInputText id="userName" formControlName="userName" class="w-full" [ngClass]="{ 'ng-invalid ng-dirty': userForm.get('userName')?.touched && userForm.get('userName')?.invalid }" />
+                    <small *ngIf="userForm.get('userName')?.touched && userForm.get('userName')?.hasError('required')" class="p-error text-red-600">Tên người dùng là bắt buộc.</small>
+                    <small *ngIf="userForm.get('userName')?.touched && userForm.get('userName')?.hasError('minlength')" class="p-error text-red-600">Tên người dùng phải có ít nhất 3 ký tự.</small>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-6">
+                <div class="col-span-12 md:col-span-6">
+                    <label for="phoneNumber" class="field-label">Số Điện Thoại<span class="required">*</span></label>
+                    <input pInputText id="phoneNumber" formControlName="phoneNumber" class="w-full" [ngClass]="{ 'ng-invalid ng-dirty': userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid }" />
+                    <small *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.hasError('pattern')" class="p-error text-red-600">Số điện thoại phải có 10-11 chữ số.</small>
+                </div>
+                <div class="col-span-12 md:col-span-6">
+                    <label for="password" class="field-label">Mật Khẩu<span class="required">*</span></label>
+                    <input pInputText id="password" type="password" formControlName="password" class="w-full" [ngClass]="{ 'ng-invalid ng-dirty': userForm.get('password')?.touched && userForm.get('password')?.invalid }" />
+                    <small *ngIf="userForm.get('password')?.touched && userForm.get('password')?.hasError('required')" class="p-error text-red-600">Mật </small>
+                </div>
+            </div>
+
+            <div class="button-container" style="position: absolute; bottom: 3rem; right: 3rem">
+                <p-button label="Quay lại" icon="pi pi-arrow-left" styleClass="p-button-raised p-button-secondary mr-2" [routerLink]="['/admin/users']"></p-button>
+                <p-button label="Thêm Người dùng" icon="pi pi-check" [disabled]="userForm.invalid" (onClick)="onSubmit()" styleClass="p-button-raised p-button-success"> </p-button>
+            </div>
+        </div>
+    </div>
+</div>

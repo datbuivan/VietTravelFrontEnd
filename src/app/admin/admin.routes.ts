@@ -11,6 +11,9 @@ import { CityDetailComponent } from '@admin/component/city-management/city-detai
 import { HotelDetailComponent } from '@admin/component/hotel-management/hotel-detail/hotel-detail.component';
 import { AuthGuard } from '@core/guards/auth.guard';
 import { DashboardComponent } from '@admin/component/dashboard/dashboard.component';
+import { UserManagementComponent } from '@admin/component/user-management/user-management.component';
+import { AddUserComponent } from '@admin/component/user-management/add-user/add-user.component';
+import { PaymentManagementComponent } from '@admin/component/payment-management/payment-management.component';
 
 export const adminRoutes: Routes = [
     {
@@ -24,13 +27,19 @@ export const adminRoutes: Routes = [
             { path: 'tours', component: TourManagementComponent },
             { path: 'cities', component: CityManagementComponent },
             { path: 'hotels', component: HotelManagementComponent },
+            { path: 'users', component: UserManagementComponent },
             { path: 'add-tour', component: AddTourComponent },
             { path: 'add-hotel', component: AddHotelComponent },
             { path: 'add-city', component: AddCityComponent },
+            { path: 'add-user', component: AddUserComponent },
             { path: 'tour/:id', component: TourDetailComponent },
             { path: 'city/:id', component: CityDetailComponent },
             { path: 'hotel/:id', component: HotelDetailComponent },
-            { path: 'city/:id/edit', component: AddCityComponent }
+            { path: 'city/:id/edit', component: AddCityComponent },
+            { path: 'tour/:id/edit', component: AddTourComponent },
+            { path: 'hotel/:id/edit', component: AddHotelComponent },
+            { path: 'user/id:edit', component: AddUserComponent },
+            { path: 'payments', component: PaymentManagementComponent }
         ]
     }
 ];

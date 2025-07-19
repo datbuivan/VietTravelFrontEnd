@@ -21,6 +21,7 @@ import { SubscribeSectionComponent } from './subscribe-section/subscribe-section
 export class HomeComponent implements OnInit {
     regionId: number = 0;
     regions: Region[] = [];
+    animationState = 'in';
     @Output() regionIdChange = new EventEmitter<number>();
 
     constructor(

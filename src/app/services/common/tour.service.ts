@@ -34,6 +34,14 @@ export class TourService {
         );
     }
 
+    editTour(formData: FormData, tourId: number): Observable<ApiResponse<Tour>> {
+        return this.http.put<ApiResponse<Tour>>(`${this.baseUrl}Tour/${tourId}`, formData);
+    }
+
+    addTour(formData: FormData): Observable<ApiResponse<Tour>> {
+        return this.http.post<ApiResponse<Tour>>(this.baseUrl + 'Tour', formData);
+    }
+
     getToursWithSpec(params: TourSpecParams): Observable<Tour[]> {
         let httpParams = new HttpParams();
         if (params.cityId) {
@@ -86,7 +94,7 @@ export class TourService {
     }
 
     editSchedule(id: number, title: string, description: string, tourId: number): Observable<ApiResponse<TourSchedule>> {
-        return this.http.post<ApiResponse<TourSchedule>>(this.baseUrl + 'TourSchedule/' + id, { title, description, tourId });
+        return this.http.put<ApiResponse<TourSchedule>>(this.baseUrl + 'TourSchedule/' + id, { title, description, tourId });
     }
     deleteSchedule(id: number): Observable<ApiResponse<TourSchedule>> {
         return this.http.delete<ApiResponse<TourSchedule>>(this.baseUrl + 'TourSchedule/' + id);
@@ -108,12 +116,12 @@ export class TourService {
         );
     }
 
-    addStartDate(availableSlots: number, startDate: Date, tourId: number): Observable<ApiResponse<TourStartDate>> {
-        return this.http.post<ApiResponse<TourStartDate>>(this.baseUrl + 'TourStartDate/create-start-date', { availableSlots, startDate, tourId });
+    addStartDate(totalSlots: number, startDate: Date, tourId: number): Observable<ApiResponse<TourStartDate>> {
+        return this.http.post<ApiResponse<TourStartDate>>(this.baseUrl + 'TourStartDate/create-start-date', { totalSlots, startDate, tourId });
     }
 
-    editStartDate(id: number, availableSlots: number, startDate: Date, tourId: number): Observable<ApiResponse<TourStartDate>> {
-        return this.http.post<ApiResponse<TourStartDate>>(this.baseUrl + 'TourStartDate/' + id, { availableSlots, startDate, tourId });
+    editStartDate(id: number, totalSlots: number, startDate: Date, tourId: number): Observable<ApiResponse<TourStartDate>> {
+        return this.http.post<ApiResponse<TourStartDate>>(this.baseUrl + 'TourStartDate/' + id, { totalSlots, startDate, tourId });
     }
     deleteStartDate(id: number): Observable<ApiResponse<TourStartDate>> {
         return this.http.delete<ApiResponse<TourStartDate>>(this.baseUrl + 'TourStartDate/' + id);

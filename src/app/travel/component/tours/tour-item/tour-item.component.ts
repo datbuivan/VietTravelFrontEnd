@@ -28,7 +28,7 @@ export class TourItemComponent implements OnInit {
     tour$: Observable<Tour | null> = of(null);
     error: string | null = null;
     loading = true;
-    curentUser: User | null = null;
+    currentUser: User | null = null;
 
     constructor(
         private tourService: TourService,
@@ -69,14 +69,14 @@ export class TourItemComponent implements OnInit {
     }
 
     loadUser() {
-        this.curentUser = this.authService.currentUserValue;
-        if (this.curentUser) {
+        this.currentUser = this.authService.currentUserValue;
+        if (this.currentUser) {
             this.loadFavorite(this.tour.id);
         }
     }
 
     addFavorite(tourId: number) {
-        if (this.curentUser && this.isFavorite) {
+        if (this.currentUser && this.isFavorite) {
             this.tourFavoriteService.removeFavorite(tourId).subscribe({
                 next: () => {
                     this.isFavorite = false;

@@ -1,0 +1,12 @@
+h1 {
+    margin: 0;
+}
+
+:host::ng-deep {
+
+    .p-button,
+    .p-select,
+    .p-datepicker {
+        width: 100%;
+    }
+}

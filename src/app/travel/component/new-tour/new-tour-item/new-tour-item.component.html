@@ -1,0 +1,29 @@
+<div class="tour-card">
+    <p-toast position="top-right"></p-toast>
+    <div>
+        <div class="relative">
+            <img [src]="tour.images[0].url" alt="Tour Image" class="tour-image" />
+            <button *ngIf="currentUser" class="absolute bg-white top-3 left-3 w-8 h-8 p-1 rounded-full shadow-md text-gray-500 flex items-center justify-center" (click)="addFavorite(tour.id)" aria-label="Add to favorites">
+                <i class="pi text-base" [ngClass]="isFavorite ? 'pi-heart-fill' : 'pi-heart'"></i>
+            </button>
+        </div>
+        <div class="tour-content">
+            <div class="tour-rating">
+                <i class="pi pi-star-fill" style="color: #f1c40f"></i>
+                <span>5</span>
+                <i class="pi pi-heart-fill" style="color: #e74c3c; margin-left: 0.5rem"></i>
+            </div>
+            <h3 class="tour-title line-clamp-1">{{ tour.name }}</h3>
+            <div class="tour-price">
+                <span class="original-price">{{ tour.price * 1.5 | vnd }}</span>
+                <span class="discount-price">{{ tour.price | vnd }}</span>
+            </div>
+            <p-button label="Đặt từ hôm nay" styleClass="p-button-primary" [routerLink]="['/tours', tour.id]"></p-button>
+            <div class="tour-info">
+                <span><i class="pi pi-clock"></i>1 Ngày </span>
+                <span><i class="pi pi-users"></i> 5</span>
+                <span><i class="pi pi-map-marker"></i> {{ tour.cityName }}</span>
+            </div>
+        </div>
+    </div>
+</div>

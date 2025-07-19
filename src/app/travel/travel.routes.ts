@@ -10,6 +10,7 @@ import { VerifyEmailComponent } from '@travel/component/login/verify-email/verif
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { PaymentSuccessComponent } from '@travel/component/booking/payment-success/payment-success.component';
 import { PaymentErrorComponent } from '@travel/component/booking/payment-error/payment-error.component';
+import { PaymentHistoryComponent } from '@travel/component/payment-history/payment-history.component';
 
 export const travelRoutes: Routes = [
     {
@@ -36,7 +37,14 @@ export const travelRoutes: Routes = [
             { path: 'tour-favorite', component: TourFavoriteComponent },
             { path: 'verify-email', component: VerifyEmailComponent },
             { path: 'success-payment', component: PaymentSuccessComponent },
-            { path: 'error-payment', component: PaymentErrorComponent }
+            { path: 'error-payment', component: PaymentErrorComponent },
+            {
+                path: 'payment-history',
+                component: PaymentHistoryComponent,
+                canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+                data: { role: 'USER' }
+            }
         ]
     },
     { path: 'register', component: RegisterComponent },

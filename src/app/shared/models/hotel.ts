@@ -1,3 +1,5 @@
+import { ImageDto } from './image-dto';
+
 export interface Hotel {
     id: number;
     name: string;
@@ -8,5 +10,5 @@ export interface Hotel {
     contentIntroduct: string;
     pictures: string;
     cityId: number;
-    images: string[];
+    images: ImageDto[];
 }
